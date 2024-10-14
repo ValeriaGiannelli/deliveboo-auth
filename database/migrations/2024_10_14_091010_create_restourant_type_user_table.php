@@ -12,8 +12,24 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('restourant_type_user', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+
+            // colonna FK
+            $table->unsignedBigInteger('restourant_type_id');
+
+            //valore FK
+            $table->foreign('restourant_type_id')
+                ->references('id')
+                ->on('restourant_types')
+                ->cascadeOnDelete();
+
+            // colonna FK
+            $table->unsignedBigInteger('user_id');
+
+            //valore FK
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->cascadeOnDelete();
         });
     }
 
