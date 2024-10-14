@@ -40,8 +40,8 @@ Route::middleware(['auth', 'verified'])
     ->prefix('admin')
     // tutti i name devono iniziare con admin.
     ->name('admin.')
-    ->group(function(){
+    ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('home');
     });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
