@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('types', function (Blueprint $table) {
+            /* tipi */
             $table->id();
             $table->string('name', 70);
             $table->timestamps();
