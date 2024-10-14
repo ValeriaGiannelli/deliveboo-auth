@@ -11,16 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            // Creo la colonna per la foreign key
-            $table->unsignedBigInteger('type_id')->nullable()->after('id');
+        Schema::create('menu_item_order', function (Blueprint $table) {
 
-            // Creo la FK sulla colonna creata
-            $table->foreign('type_id')
+            // COLONNA PER MENU ITEM FK
+            $table->unsignedBigInteger('menu_item_id');  //creo la colonna in relazione con post
+
+            // assegno FK
+            $table->foreign('menu_item_id')
                 ->references('id')
-                ->on('types')
-                // Quando cancello un tipo, metterà null nella foreign key
-                ->onDelete('set null');
+                ->on('menu_items')
+                ->cascadeOnDelete();    //se il tag viene eliminato elimina la connessione con l'elemento
+
+
+            // COLONNA PER ORDER FK
+            $table->unsignedBigInteger('order_id');  //creo la colonna in relazione con tag
+
+            // assegno FK
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
+                ->cascadeOnDelete();    //se il tag viene eliminato elimina la connessione con l'elemento
         });
     }
 
@@ -29,12 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('projects', function (Blueprint $table) {
-            // Rimuovo la foreign key prima di rimuovere la colonna
-            $table->dropForeign(['type_id']);
-
-            // Rimuovo la colonna 'type_id'
-            $table->dropColumn('type_id');
-        });
+        Schema::dropIfExists('menu_item_order');
     }
 };
