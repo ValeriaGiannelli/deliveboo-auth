@@ -34,6 +34,9 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'restourant_name' =>['required', 'string', 'max:100'],
+            'restourant_address' =>['required', 'string', 'max:100'],
+            'piva' =>['required', 'string', 'min:11', 'max:11'],
         ]);
 
         $user = User::create([
