@@ -1,0 +1,58 @@
+CREAZIONE TEMPLATE
+
+- clonare https://github.com/ValerioViteritti/example-app
+- installazione di npm e composer
+    ( se da errore npm run dev rinominare vite config .mjs)
+- file env + key
+- creazione database e migration
+
+- serve + run dev
+
+- registrazione + login & logout (TEST)
+
+
+\\ CREO LA HOME DELLA DASHBOARD \\
+
+La visualizzazione della dashboard voglio che sia unicamente per l'Admin del sito quindi:
+-creo il controller per la Dashboard e la sua cartella corrispondente che vede essere Admin
+
+    => php artisan make:controller Admin\DashboardController
+
+Al suo interno creo la funzione e la testo col dump
+    => public function 'index' + dump('DasboardController')
+
+Nel web.php elimino le rotte della dashboard e le raggruppo facendo il controllo con middleware. Le rotte avranno un prefisso nella url
+e i nomi che do devono essere preceduti da admin.
+
+    Route::middleware(['auth', 'verified'])
+        ->prefix('admin')
+        ->name('admin.')
+        ->group(function(){
+            \\ TUTTE LE ROTTE DI Admin
+            eg Route::get('/', [DashboardController::class, 'index'])->name('home');
+            .......
+        });
+
+Modificare home admin di default in App\Providers\RouteServiceProvider da dashboard ad admin (a questo punto vedo il dumb di debug)
+
+Creo una cartella admin nelle view, in cui sposto la view dashboard (rename=index)
+
+Nella funzione index di DashboardController ritorno la view admin.index
+
+Modifico anche la rotta in layouts->app.blade nel menu a tendina
+
+
+\\ CREO LA HOME GUEST \\
+
+- come lo hai creato per l'admin lo crei anche per il guest, quindi con relativa cartella. 
+	=> php artisan make:controller Guest\PageController
+	=> creare index function nel controller 
+
+- personalizzare layout guest 
+	=> creare nelle views cartella guest
+	=> creare file index nella cartella guest che estenda il layout guest e abbia una section 'content'
+	=> nel layout guest cancellare il div dentro il body e fare @yield('content')
+	=> nella web.php la prima foute è da modificare togliendo la funzione ed usano il PageController
+	=> ritornare la view 'guest.index' in Guest\PageController
+
+
