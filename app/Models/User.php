@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'slug',
+        'restourant_name',
+        'restourant_address',
+        'piva'
     ];
 
     /**
