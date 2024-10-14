@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Restaurant;
+use App\Models\Sale;
 
 class Product extends Model
 {
@@ -17,5 +18,10 @@ class Product extends Model
     // relazione one to many con restaurant
     public function restaurant(){
         return $this->belongsTo(Restaurant::class);
+    }
+
+    // relazione many to many con sale
+    public function sales(){
+        return $this->belongsToMany(Sale::class);
     }
 }
