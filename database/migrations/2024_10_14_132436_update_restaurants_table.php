@@ -6,27 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::table('menu_items', function (Blueprint $table) {
-            //creo la colonna per la foregin key
-            $table->unsignedBigInteger('user_id')->nullable()->after('id');
-
-            //Creo la FK sulla colonna creata
+        Schema::table('restaurants', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->after('id')->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                //quando cancello una categoria metterà null nella foregin key
                 ->onDelete('set null');
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::table('menu_items', function (Blueprint $table) {
+        Schema::table('restaurants', function (Blueprint $table) {
             $table->dropForeign(['user_id']);
-
-
             $table->dropColumn('user_id');
         });
     }

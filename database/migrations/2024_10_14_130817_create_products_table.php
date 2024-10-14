@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('restourant_type_user', function (Blueprint $table) {
+
+
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 70);
+            $table->text('ingredients_descriptions');
+            $table->string('img', 255);
+            $table->decimal('price', 6, 2);
+            $table->boolean('visible');
             $table->timestamps();
         });
     }
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('restourant_type_user');
+        Schema::dropIfExists('products');
     }
 };
