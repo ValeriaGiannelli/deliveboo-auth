@@ -44,7 +44,7 @@ Route::middleware(['auth', 'verified'])
     // tutti i name devono iniziare con admin.
     ->name('admin.')
     ->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('home');
+        Route::get('/', [RestaurantController::class, 'index'])->name('home');
         Route::resource('products', ProductController::class);
         Route::resource('restaurants', RestaurantController::class)->except([
             'update',
