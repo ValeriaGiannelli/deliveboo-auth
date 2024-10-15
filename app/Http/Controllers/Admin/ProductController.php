@@ -37,7 +37,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('view.products.create');
+        return view('admin.products.create');
     }
 
     /**
@@ -55,10 +55,14 @@ class ProductController extends Controller
         $product = $request->all();
 
         // creo nuovo prodotto con i dati salvati
-        $newProduct = new Product();
+        // $newProduct = new Product();
         $product['restaurant_id'] = $restaurant_id;
-        $newProduct->fill($product);
+        // $newProduct->fill($product);
+        $newProduct = Product::create($product);
+        
         $newProduct->save();
+
+        return redirect()->route('admin.products.show', $newProduct->id);
     }
 
     /**
