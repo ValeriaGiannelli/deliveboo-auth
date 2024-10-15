@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         // prendo l'id dell'user
         $user_id = Auth::id();
-        
+
         // prendo l'id del ristorante associato all'id dell'user
         $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
 
@@ -27,11 +27,11 @@ class ProductController extends Controller
 
             return json_decode($products);
         } else {
-            // altrimenti stampo 
+            // altrimenti stampo
             return ('Prima di vedere i piatti, crea un ristorante');
         }
 
-        
+
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // return view('view.create');
+        return view('view.products.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductController extends Controller
     {
         // prendo l'id dell'user
         $user_id = Auth::id();
-        
+
         // prendo l'id del ristorante associato all'id dell'user
         $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
 
