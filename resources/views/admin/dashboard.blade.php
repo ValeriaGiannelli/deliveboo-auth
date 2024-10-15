@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (!$restaurant_id)
+@if (!$restaurant)
     @section('form')
         <div class="container my-5">
             <h1>Registra il tuo nuovo ristorante</h1>
@@ -15,7 +15,7 @@
             </div>
         @endif --}}
 
-            <form class="row g-3" action="" method="" enctype="multipart/form-data">
+            <form class="row g-3" action="{{ route('admin.restaurants.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nome del ristorante (*)</label>
@@ -96,7 +96,11 @@
     @endsection
 @else
     @section('content')
+        <div class="container">
+            <h1>Benvenuto nel tuo ristorante: {{ $restaurant }}</h1>
+        </div>
         <div class="container-fluid d-flex">
+
             @auth
                 @include('admin.partials.aside')
             @endauth

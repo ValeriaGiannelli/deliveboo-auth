@@ -13,21 +13,29 @@ class Restaurant extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'address', 'piva', 'img', 'description'
+        'user_id',
+        'name',
+        'address',
+        'piva',
+        'img',
+        'description'
     ];
 
     // relazione one to one con user
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
     // relazione many to many con type
-    public function types(){
+    public function types()
+    {
         return $this->belongsToMany(Type::class);
     }
 
     // relazione one to many con product: restourant one - product many
-    public function products(){
+    public function products()
+    {
         return $this->hasMany(Product::class);
     }
 }
