@@ -14,11 +14,11 @@ class DashboardController extends Controller
     //creo la funzione pubblica index
     public function index()
     {
-        // prendo l'id dell'user
+        /* // prendo l'id dell'user
         $user_id = Auth::id();
 
         // prendo l'id del ristorante associato all'id dell'user
-        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
-        return view('admin.dashboard', compact('restaurant_id'));
+        $restaurant = Restaurant::where('user_id', $user_id)->value('name');
+        return view('admin.dashboard', compact('restaurant')); */
     }
 }

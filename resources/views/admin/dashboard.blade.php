@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if (!$restaurant_id)
+@if (!$restaurant)
     @section('form')
         <div class="container my-5">
             <h1>Registra il tuo nuovo ristorante</h1>
@@ -15,7 +15,7 @@
             </div>
         @endif --}}
 
-            <form class="row g-3" action="" method="" enctype="multipart/form-data">
+            <form class="row g-3" action="{{ route('admin.restaurants.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-6">
                     <label for="name" class="form-label">Nome del ristorante (*)</label>
@@ -65,17 +65,17 @@
                         placeholder="Descrivi il tuo ristorante">{{ old('description') }}</textarea>
                 </div>
 
-                {{-- chechbox per le tecnologie --}}
-                {{--  <label for="technologies" class="form-label">Tecnologie: (*)</label>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                @foreach ($technologies as $technology)
-                    <input name="technologies[]" value="{{ $technology->id }}" type="checkbox" class="btn-check"
-                        id="tech-{{ $technology->id }}" autocomplete="off" @if (in_array($technology->id, old('technologies', []))) checked @endif>
-                    <label class="btn btn-outline-primary"
-                        for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
-                @endforeach
+                {{-- chechbox per le Tipologia di ristorante --}}
+                <label for="types" class="form-label">Tipologia di ristorante: (*)</label>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    @foreach ($types as $type)
+                        <input name="types[]" value="{{ $type->id }}" type="checkbox" class="btn-check"
+                            id="type-{{ $type->id }}" autocomplete="off"
+                            @if (in_array($type->id, old('types', []))) checked @endif>
+                        <label class="btn btn-outline-primary" for="type-{{ $type->id }}">{{ $type->name }}</label>
+                    @endforeach
 
-            </div> --}}
+                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Invia</button>
                 </div>
@@ -96,7 +96,11 @@
     @endsection
 @else
     @section('content')
+        <div class="container">
+            <h1>Benvenuto nel tuo ristorante: {{ $restaurant }}</h1>
+        </div>
         <div class="container-fluid d-flex">
+
             @auth
                 @include('admin.partials.aside')
             @endauth

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\Route;
 
 
@@ -42,8 +44,12 @@ Route::middleware(['auth', 'verified'])
     // tutti i name devono iniziare con admin.
     ->name('admin.')
     ->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('home');
+        Route::get('/', [RestaurantController::class, 'index'])->name('home');
         Route::resource('products', ProductController::class);
+        Route::resource('restaurants', RestaurantController::class)->except([
+            'update',
+            'delete',
+            'show'
+        ]);
     });
-
 require __DIR__ . '/auth.php';
