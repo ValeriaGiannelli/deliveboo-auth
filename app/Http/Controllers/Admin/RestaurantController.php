@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Type;
 
 class RestaurantController extends Controller
 {
@@ -16,10 +17,12 @@ class RestaurantController extends Controller
     {
         // prendo l'id dell'user
         $user_id = Auth::id();
+        //prendo i tipi
+        $types = Type::all();
 
         // prendo l'id del ristorante associato all'id dell'user
         $restaurant = Restaurant::where('user_id', $user_id)->value('name');
-        return view('admin.dashboard', compact('restaurant'));
+        return view('admin.dashboard', compact('restaurant', 'types'));
     }
 
     /**
@@ -38,6 +41,10 @@ class RestaurantController extends Controller
         $data = $request->all();
         $data['user_id'] = Auth::id();
         $restaurant = Restaurant::create($data);
+        //controllo se sono stati inseriti tipi
+        if (array_key_exists('types', $data)) {
+            $restaurant->types()->attach($data['types']);
+        }
         return redirect()->route('admin.restaurants.index');
     }
 

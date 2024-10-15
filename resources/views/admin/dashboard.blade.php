@@ -65,17 +65,17 @@
                         placeholder="Descrivi il tuo ristorante">{{ old('description') }}</textarea>
                 </div>
 
-                {{-- chechbox per le tecnologie --}}
-                {{--  <label for="technologies" class="form-label">Tecnologie: (*)</label>
-            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                @foreach ($technologies as $technology)
-                    <input name="technologies[]" value="{{ $technology->id }}" type="checkbox" class="btn-check"
-                        id="tech-{{ $technology->id }}" autocomplete="off" @if (in_array($technology->id, old('technologies', []))) checked @endif>
-                    <label class="btn btn-outline-primary"
-                        for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
-                @endforeach
+                {{-- chechbox per le Tipologia di ristorante --}}
+                <label for="types" class="form-label">Tipologia di ristorante: (*)</label>
+                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                    @foreach ($types as $type)
+                        <input name="types[]" value="{{ $type->id }}" type="checkbox" class="btn-check"
+                            id="type-{{ $type->id }}" autocomplete="off"
+                            @if (in_array($type->id, old('types', []))) checked @endif>
+                        <label class="btn btn-outline-primary" for="type-{{ $type->id }}">{{ $type->name }}</label>
+                    @endforeach
 
-            </div> --}}
+                </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Invia</button>
                 </div>
