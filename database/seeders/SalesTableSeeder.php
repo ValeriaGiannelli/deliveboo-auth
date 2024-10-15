@@ -15,7 +15,7 @@ class SalesTableSeeder extends Seeder
     {
         $sales = config('sales');
 
-        foreach($sales as $sale){
+        foreach ($sales as $sale) {
             $new_sale = new Sale();
             $new_sale->full_name = $sale['full_name'];
             $new_sale->email = $sale['email'];
@@ -23,7 +23,6 @@ class SalesTableSeeder extends Seeder
             $new_sale->total_price = $sale['total_price'];
             $new_sale->phone_number = $sale['phone_number'];
             $new_sale->save();
-
         }
     }
 }
