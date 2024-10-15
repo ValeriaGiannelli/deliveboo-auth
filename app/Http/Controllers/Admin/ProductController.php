@@ -57,9 +57,10 @@ class ProductController extends Controller
         // creo nuovo prodotto con i dati salvati
         // $newProduct = new Product();
         $product['restaurant_id'] = $restaurant_id;
+
         // $newProduct->fill($product);
         $newProduct = Product::create($product);
-        
+
         $newProduct->save();
 
         return redirect()->route('admin.products.show', $newProduct->id);

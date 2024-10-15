@@ -12,7 +12,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'ingredients_descriptions', 'img', 'price', 'visible'
+        'name', 'ingredients_descriptions', 'img', 'price', 'visible', 'restaurant_id'
     ];
 
     // relazione one to many con restaurant
