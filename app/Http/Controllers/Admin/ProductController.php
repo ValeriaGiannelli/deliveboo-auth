@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        // return view('view.create');
     }
 
     /**
@@ -47,38 +47,61 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // prendo l'id dell'user
+        $user_id = Auth::id();
+        
+        // prendo l'id del ristorante associato all'id dell'user
+        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
+
+        // prendo i dati mandati dall'utente
+        $product = $request->all();
+
+        // creo nuovo prodotto con i dati salvati
+        $newProduct = new Product();
+        $product['restaurant_id'] = $restaurant_id;
+        $newProduct->fill($product);
+        $newProduct->save();
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return view('view.show', compact('product'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        // return view('view.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        // prendo i dati modificati
+        $data = $request->all();
+
+        // faccio update
+        $product->update($data);
+
+        // return redirect()->route('view.show', $product);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+        // eliminamo il prodotto
+        $product->delete();
+
+        // return redirect()->route('view.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
+
     }
 }
