@@ -22,10 +22,13 @@
 <body>
     <div id="app">
         @include('admin.partials.header')
-        @yield('content')
-        @auth
-            @include('admin.partials.aside')
-        @endauth
+        <div class="container-fluid d-flex">
+            @auth
+                @include('admin.partials.aside')
+            @endauth
+            @yield('content')
+        </div>
+
     </div>
     </div>
 </body>
