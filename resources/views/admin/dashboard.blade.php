@@ -96,15 +96,13 @@
     @endsection
 @else
     @section('content')
-        <div class="container">
-            <h1>Benvenuto nel tuo ristorante: {{ $restaurant }}</h1>
-        </div>
-        <div class="container-fluid d-flex">
-
+        <div class="container-fluid">
             @auth
                 @include('admin.partials.aside')
             @endauth
             <div class="container hide" id="dashboard">
+                <h1>Benvenuto nel tuo ristorante: {{ $restaurant }}</h1>
+
                 <h2 class="fs-4 text-secondary my-4">
                     Benvenuto nella pagina di gestione del tuo ristorante
                 </h2>
