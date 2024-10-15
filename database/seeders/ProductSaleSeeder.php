@@ -14,21 +14,22 @@ class ProductSaleSeeder extends Seeder
      */
     public function run(): void
     {
-        //estrazione random dei prodotti per gli ordini
-        for($i = 0; $i < 15; $i++){
-            // estraggo ristorante
-            $product = Product::inRandomOrder()->first();
+        // Recupera tutte le vendite e i prodotti
+        $sales = Sale::all();
+        $products = Product::all();
 
-            // estraggo l'id di un type
-            $sale_id = Sale::inRandomOrder()->first()->id;
+        foreach ($sales as $sale) {
+                // Seleziona casualmente 1-5 prodotti per ciascuna vendita
+                $randomProducts = $products->random(rand(1, 5));
 
-            // dump($restaurant);
-
-            // aggiungo la relazione fra il ristorante estratto e l'ide del type estratto
-            // $product->types()->attach($sale_id);
-
-            dump($product->name);
-        }
-
+                foreach ($randomProducts as $product) {
+                    // Qui creiamo la relazione nella tabella pivot
+                    $sale->products()->attach($product->id, [
+                        'product_name' => $product->name,
+                        'amount' => rand(1, 5), // Quantità casuale
+                        'price' => $product->price,
+                    ]);
+                }
+            }
     }
 }
