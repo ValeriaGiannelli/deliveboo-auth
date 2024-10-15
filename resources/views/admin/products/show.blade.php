@@ -2,31 +2,23 @@
 
 @section('content')
     <h1>Dettagli piatto</h1>
-    <div>
-        {{-- @if(session('message'))
-        <div class="alert alert-success">{{ session('message') }}</div>
-        @endif --}}
-        <a href="#" class="btn btn-secondary">Modifica</a>
-        {{-- @include('admin.partials.formdelete', [
-                            'route' => route('admin.posts.destroy', $post),
-                            'message' => "Confermi l\'eliminazione del post: $post->title ?"
-                            ]) --}}
-    </div>
+   
     <ul>
-        <h3>Nome: {{ $products->name }}</h3>
-        <li>Ingredienti/Descrizione: {{ $products->ingredients_descriptions }}</li>
+        <h3>Nome: {{ $product->name }}</h3>
+        <li>Ingredienti/Descrizione: {{ $product->ingredients_descriptions }}</li>
         <li> 
             <div class="container mb-5">
                 <img
                 class="img-fluid"
-                alt="{{ $products->img}}"
-                src="">
+                alt="{{ $product->name}}"
+                src="{{$product->img}}">
             </div>
         </li>
-        <li>Prezzo: {{ $products->price }}</li>
-        <li>Viisibile al clientte : {{ $products->price }}</li>
+        <li>Prezzo: {{ $product->price }}</li>
+        <li> Mostra: {!! $product->visible ? '<span class="text-success">SI</span>' : '<span class="text-danger">SI</span>' !!}</li>
     </ul>
-
-    <a href="#" class="btn btn-primary">Torna all'elenco dei piatti</a>
+ 
+    <a href="#" class="btn btn-secondary">Modifica</a>
+    <a href="{{route('admin.products.index')}}" class="btn btn-primary">Torna all'elenco dei piatti</a>
 
 @endsection

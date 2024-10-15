@@ -24,7 +24,7 @@
                                         Mostra: {!! $product->visible ? '<span class="text-success">SI</span>' : '<span class="text-danger">SI</span>' !!}
 
                                     </p>
-                                    <a href="#" class="btn btn-primary">Dettagli</a>
+                                    <a href="{{route('admin.products.show', $product)}}" class="btn btn-primary">Dettagli</a>
                                     <a href="#" class="btn btn-warning">Modifica</a>
                                     <a href="#" class="btn btn-danger">Elimina</a>
                                 </div>
