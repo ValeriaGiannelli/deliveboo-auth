@@ -1,1 +1,14 @@
-
+.tooltip-error {
+    display: none;
+    position: absolute;
+    top: 35px; /* Adjust this depending on your layout */
+    left: 0;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    font-size: 0.8em;
+    z-index: 1000;
+    white-space: nowrap; /* Prevent text wrap */
+}
