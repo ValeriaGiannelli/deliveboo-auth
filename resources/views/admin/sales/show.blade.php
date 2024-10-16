@@ -17,6 +17,7 @@
             <li class="list-group-item"><span class="fw-bold">Indirizzo: </span>{{ $sale->address}}</li>
             <li class="list-group-item"><span class="fw-bold">Totale Ordine: </span>{{ $sale->total_price}}&euro;</li>
             <li class="list-group-item"><span class="fw-bold">Numero di Telefono: </span>{{ $sale->phone_number}}</li>
+            <li class="list-group-item"><span class="fw-bold">Effettuato il: </span>{{ $sale->created_at->format('d-m-Y H:i') }}</li>
         </ul>
 
         @if (count($sale->products))
