@@ -1,0 +1,35 @@
+$primary-color: rgba(254, 111, 97);
+
+aside {
+    background-color: rgb(255, 255, 255);
+    .active a{
+        background-color: darken($primary-color, 10%);
+        color: #fff;
+    }
+}
+
+aside {
+    .list-group-item{
+        background-color: transparent;
+        border: none;
+        color: $primary-color;
+        margin-bottom: 5px;
+
+    }
+    a{
+        color: $primary-color;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+
+        &:hover, &:focus {
+            background-color: darken($primary-color, 10%);
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+    }
+}
+

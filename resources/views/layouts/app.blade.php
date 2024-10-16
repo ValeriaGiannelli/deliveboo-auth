@@ -27,7 +27,6 @@
         @include('admin.partials.header')
         @yield('form')
         @yield('content')
-
     </div>
     </div>
 </body>
