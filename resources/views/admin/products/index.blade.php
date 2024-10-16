@@ -10,9 +10,9 @@
                     @foreach ($products as $product)
                         <div class="col-2">
                             @if ($product->visible)
-                                <div class="card">
+                                <div class="card my-3">
                             @else
-                                <div class="card hidden">
+                                <div class="card hidden my-3">
                             @endif
                                 <img src="{{asset('storage/' .  $product->img) }}" class="card-img-top" alt="{{ $product->name }}" onerror="this.src='{{asset('storage/uploads/no_img.jpg')}}'">
                                 <div class="card-body d-flex flex-column justify-content-between">
@@ -30,7 +30,7 @@
                                         </p>
                                     </div>
                                     <div class="buttons">
-                                        <form action="{{ route('admin.products.update', $product) }}" method="POST" style="display: inline;">
+                                        {{-- <form action="{{ route('admin.products.update', $product) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('PUT')
                                             <div class="form-check form-switch">
@@ -39,9 +39,9 @@
                                                     <i class="fa-solid fa-eye{{ $product->visible ? '' : '-slash' }}"></i>
                                                 </label>
                                             </div>
-                                        </form>
+                                        </form> --}}
     
-                                        <a href="{{ route('admin.products.show', $product) }}"class="btn btn-primary"><i class="fa-solid fa-info"></i></a>
+                                        <a href="{{ route('admin.products.show', $product) }}"class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
                                         <a href="{{route('admin.products.edit', $product)}}" class="btn btn-warning"><i class="fa-solid fa-pen"></i></a>
                                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto?');" style="display: inline;">
                                             @csrf

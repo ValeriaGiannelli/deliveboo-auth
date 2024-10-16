@@ -92,22 +92,21 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        // prendo i dati modificati
+        // Prendo tutti i dati inviati nel form
         $data = $request->all();
 
-        // gestione immagine  dove deve cancellare la relazione precedente e sostituirla??
-        if ($product->img) {
-            Storage::delete($product->img);
+        if (array_key_exists('img', $data)) {
+            $img = Storage::delete($product->img);
+            //cancello la vecchia e metto la nuova img
+            $img = Storage::put('public/uploads', $data['img']);
+            $data['img'] = $img;
         }
 
-        $data['img'] = Storage::put('uploads', $data['img']);
-
-        // faccio update
+        // Aggiorno il prodotto con i nuovi dati (o quelli esistenti)
         $product->update($data);
 
-        return redirect()->route('admin.products.show', $product);
+        return redirect()->route('admin.products.index', $product);
     }
-
     /**
      * Remove the specified resource from storage.
      */
