@@ -11,7 +11,7 @@
                 <img
                 class="img-fluid"
                 alt="{{ $product->name}}"
-                src="{{$product->img}}">
+                src="{{asset('storage/' . $product->img)}}">
             </div>
         </li>
         <li>Prezzo: {{ $product->price }}</li>

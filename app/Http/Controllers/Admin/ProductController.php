@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -55,6 +56,9 @@ class ProductController extends Controller
         // prendo i dati mandati dall'utente
         $product = $request->all();
 
+        // gestione immagini
+        $product['img'] = Storage::put('uploads', $product['img']);
+
         // creo nuovo prodotto con i dati salvati
         // $newProduct = new Product();
         $product['restaurant_id'] = $restaurant_id;
@@ -91,6 +95,13 @@ class ProductController extends Controller
         // prendo i dati modificati
         $data = $request->all();
 
+        // gestione immagine  dove deve cancellare la relazione precedente e sostituirla??
+        if($product->img){
+            Storage::delete($product->img);
+        }
+
+        $data['img'] = Storage::put('uploads', $data['img']);
+
         // faccio update
         $product->update($data);
 
@@ -107,5 +118,5 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
 
     }
-   
+
 }

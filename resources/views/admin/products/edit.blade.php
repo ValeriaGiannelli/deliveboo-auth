@@ -48,15 +48,12 @@
             <div class="col-12">
                 <label for="img" class="form-label">Immagine prodotto (*)</label>
                 <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)">
+                {{-- @error('img')
+                    <small class="text-danger"> {{$message}} </small>
+                @enderror --}}
 
-                {{-- anteprima dell'immagine caricata --}}
-                <img src="" class="thumb-mini" id="thumb">
+                <img src="{{asset('storage/' . $product->img)}}" alt="{{ $product->name }}" onerror="this.src='/img/no_img.jpg'" class="thumb-mini" id="thumb">
             </div>
-            {{-- @error('img')
-                <small class="text-danger"> {{$message}} </small>
-            @enderror --}}
-
-            {{-- <img src="{{asset('storage/' . $product->img)}}" alt="{{ $product->name }}" onerror="this.src='/img/no_img.jpg'" class="thumb-mini" id="thumb"> --}}
 
             {{-- inserimento prezzo --}}
             <div class="col-md-3">

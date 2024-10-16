@@ -49,11 +49,12 @@
                 <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)">
 
                 {{-- anteprima dell'immagine caricata --}}
-                <img src="" class="thumb-mini" id="thumb">
+                <img src="/img/no_img.jpg" class="thumb-mini" id="thumb">
+
+                @error('img')
+                    <small class="text-danger"> {{$message}} </small>
+                @enderror
             </div>
-            @error('img')
-                <small class="text-danger"> {{$message}} </small>
-            @enderror
 
             {{-- inserimento prezzo --}}
             <div class="col-md-3">
