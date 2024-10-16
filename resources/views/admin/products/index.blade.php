@@ -30,13 +30,23 @@
                                         </p>
                                     </div>
                                     <div class="buttons">
-                                        <a class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                        <form action="{{ route('admin.products.update', $product) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="visible" id="flexSwitchCheckDefault" value="1" {{ $product->visible ? 'checked' : '' }} onchange="this.form.submit();">
+                                                <label class="form-check-label" for="flexSwitchCheckDefault">
+                                                    <i class="fa-solid fa-eye{{ $product->visible ? '' : '-slash' }}"></i>
+                                                </label>
+                                            </div>
+                                        </form>
+    
                                         <a href="{{ route('admin.products.show', $product) }}"class="btn btn-primary"><i class="fa-solid fa-info"></i></a>
                                         <a href="{{route('admin.products.edit', $product)}}" class="btn btn-warning"><i class="fa-solid fa-pen"></i></a>
                                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto?');" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></i></button>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                         </form>
                                     </div>
                                 </div>

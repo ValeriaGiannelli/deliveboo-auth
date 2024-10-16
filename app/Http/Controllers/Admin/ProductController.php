@@ -96,7 +96,7 @@ class ProductController extends Controller
         $data = $request->all();
 
         // gestione immagine  dove deve cancellare la relazione precedente e sostituirla??
-        if($product->img){
+        if ($product->img) {
             Storage::delete($product->img);
         }
 
@@ -116,7 +116,5 @@ class ProductController extends Controller
         // eliminamo il prodotto
         $product->delete();
         return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
-
     }
-
 }
