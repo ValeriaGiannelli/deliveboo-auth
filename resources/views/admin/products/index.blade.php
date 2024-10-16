@@ -26,13 +26,13 @@
                                         </p>
                                     </div>
                                     <div class="buttons">
-                                        <a href="{{ route('admin.products.show', $product) }}"
-                                            class="btn btn-primary">Dettagli</a>
-                                        <a href="{{route('admin.products.edit', $product)}}" class="btn btn-warning">Modifica</a>
+                                        <a class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+                                        <a href="{{ route('admin.products.show', $product) }}"class="btn btn-primary"><i class="fa-solid fa-info"></i></a>
+                                        <a href="{{route('admin.products.edit', $product)}}" class="btn btn-warning"><i class="fa-solid fa-pen"></i></a>
                                         <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto?');" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Elimina</button>
+                                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></i></button>
                                         </form>
                                     </div>
                                 </div>
