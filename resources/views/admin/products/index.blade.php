@@ -9,7 +9,11 @@
                 @if (count($products))
                     @foreach ($products as $product)
                         <div class="col-2">
-                            <div class="card">
+                            @if ($product->visible)
+                                <div class="card">
+                            @else
+                                <div class="card hidden">                               
+                            @endif
                                 <img src="{{ $product->img }}" class="card-img-top" alt="{{ $product->name }}">
                                 <div class="card-body d-flex flex-column justify-content-between">
                                     <div class="card-info">

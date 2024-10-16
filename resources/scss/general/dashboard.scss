@@ -1,7 +1,8 @@
 .tooltip-error {
     display: none;
     position: absolute;
-    top: 35px; /* Adjust this depending on your layout */
+    top: 35px;
+    /* Adjust this depending on your layout */
     left: 0;
     background-color: #f8d7da;
     color: #721c24;
@@ -10,9 +11,15 @@
     border-radius: 5px;
     font-size: 0.8em;
     z-index: 1000;
-    white-space: nowrap; /* Prevent text wrap */
+    white-space: nowrap;
+    /* Prevent text wrap */
 }
 
 .tooltip-error.visible {
     display: block;
+}
+
+.card.hidden {
+    filter: grayscale(1);
+    opacity: 0.6;
 }
