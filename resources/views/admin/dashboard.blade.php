@@ -35,10 +35,15 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label for="address" class="form-label">Indirizzo (*)</label>
+                    <label for="address" class="form-label" id="addressErrorLabel">Indirizzo (*)</label>
                     <input type="text" class="form-control {{-- @error('address') is-invalid @enderror --}}" id="address" name="address"
                         placeholder="Inserisci l'indirizzo" value="{{ old('address') }}" required>
-
+                    {{-- Errori front-office --}}
+                    <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è obbligatorio e deve avere
+                        almeno
+                        5
+                        caratteri.</div>
+                    <small class="text-danger" id="addressError"></small>
                     {{-- @error('address')
                     <small class="text-danger"> {{ $message }} </small>
                 @enderror --}}
@@ -98,16 +103,28 @@
             function validateForm() {
                 let valid = true;
                 //prendo elementi in pagina
+                //NAME
                 const nameError = document.getElementById('nameError');
                 const nameErrorLabel = document.getElementById('nameErrorLabel');
-                const nameInput = document.getElementById('name');
+                const nameInput = document.getElementById('name').value;
+                //ADDRESS
+                const addressError = document.getElementById('addressError');
+                const addressErrorLabel = document.getElementById('addressErrorLabel');
+                const addressInput = document.getElementById('address').value;
 
                 // validazione nome
-                const name = document.getElementById('name').value;
-                if (name.length < 2) {
+                if (nameInput.length < 2) {
+                    //NAME
                     nameError.innerHTML = "Il Nome del ristorante deve avere almeno due caratteri.";
                     nameErrorLabel.style = "color:red";
                     nameInput.style = "border-color:red";
+                    valid = false;
+
+                } else if (addressInput.length < 5) {
+                    //ADDRESS
+                    addressError.innerHTML = "L'indirizzo del ristorante deve avere almeno cinque caratteri.";
+                    addressErrorLabel.style = "color:red";
+                    addressInput.style = "border-color:red";
                     valid = false;
                 }
 
@@ -115,38 +132,35 @@
             }
             //Listener per i campi
             document.getElementById('name').addEventListener('input', checkForm);
+            document.getElementById('address').addEventListener('input', checkForm);
             //Check campi
             function checkForm() {
                 let valid = true;
                 const name = document.getElementById('name').value;
+                const address = document.getElementById('address').value;
                 const nameTooltip = document.getElementById('nameTooltip');
+                const addressTooltip = document.getElementById('addressTooltip');
 
 
                 //controllo campo nome
                 if (name.length = 0) {
-                    nameTooltip.classList.add('visible');
                     valid = false;
+                } else if (name.length > 0 && name.length < 2) {
+                    nameTooltip.classList.add('visible');
+                } else {
+                    nameTooltip.classList.remove('visible');
+
+                }
+                if (address.length = 0) {
+                    valid = false;
+                } else if (address.length > 0 && address.length < 5) {
+                    addressTooltip.classList.add('visible');
+                } else {
+                    addressTooltip.classList.remove('visible');
+
                 }
                 document.getElementById('submitBtn').disabled = !valid;
             }
-
-            /* //Listener su click
-            document.getElementById('name').addEventListener('input', checkInput);
-
-            function checkInput() {
-                let valid = true;
-                const name = document.getElementById('name').value;
-                const nameError = document.getElementById('nameError');
-
-                //controllo campo nome
-                if (!name.length > 0) {
-                    nameError.innerHTML = "Il Nome del ristorante è obbligatorio";
-                    valid = false;
-                } else {
-                    nameError.innerHTML = "";
-                }
-            } */
-
 
             // funzione che cambia l'anteprima del file caricato
             function showImg(event) {
