@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Guest\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Restaurant;
@@ -51,5 +52,6 @@ Route::middleware(['auth', 'verified'])
             'delete',
             'show'
         ]);
+        Route::resource('sales', SaleController::class);
     });
 require __DIR__ . '/auth.php';
