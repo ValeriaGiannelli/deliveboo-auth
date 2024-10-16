@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
 
 class RestaurantController extends Controller
 {
@@ -41,7 +42,11 @@ class RestaurantController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = Auth::id();
+        // gestione immagini
+        $data['img'] = Storage::put('uploads', $data['img']);
+
         $restaurant = Restaurant::create($data);
+
         //controllo se sono stati inseriti tipi
         if (array_key_exists('types', $data)) {
             $restaurant->types()->attach($data['types']);
