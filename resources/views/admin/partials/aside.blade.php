@@ -11,7 +11,7 @@
                     piatti</span></a>
         </li>
         <li>
-            <a href="{{ route('admin.sales.index') }}"><span class="d-md-none d-lg-inline-block">Gestione Menu
+            <a href="{{ route('admin.sales.index') }}"><span class="d-md-none d-lg-inline-block">Gestione Ordini
                     </span></a>
         </li>
     </ul>
