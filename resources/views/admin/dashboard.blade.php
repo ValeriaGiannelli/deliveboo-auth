@@ -224,8 +224,8 @@
                 </h2>
                 <div class="row justify-content-center">
                     <div class="col">
-                        <a href="#" class="btn btn-warning">Gestione menu</a>
-                        <a href="#" class="btn btn-warning">Gestione ordini</a>
+                        <a href="{{route('admin.products.index')}}" class="btn btn-warning">Gestione menu</a>
+                        <a href="{{route('admin.sales.index')}}" class="btn btn-warning">Gestione ordini</a>
                     </div>
                 </div>
             </div>
