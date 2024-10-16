@@ -22,7 +22,7 @@ class ProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:1|max:70',
+            'name' => 'required|min:2|max:70',
             'ingredients_descriptions' => 'required|min:1',
             'img' => 'required|min:1',
             'price' => 'required|numeric',
@@ -41,7 +41,7 @@ class ProductRequest extends FormRequest
             'ingredients_descriptions.required' => 'Descrizione del piatto richiesta',
             'ingredients_descriptions.min' => 'Sono richiesti :min caratteri',
             'img.required' => 'Immagine obbligatoria',
-            'img.min'=> 'Immagine troppo corta',
+            'img.min' => 'Immagine troppo corta',
             'price.required' => 'Prezzo obbligatorio',
             'price.numeric' => 'Il prezzo deve essere inserito con delle cifre',
             'visible.required' => 'Selezionare un opzione',

@@ -4,104 +4,195 @@
 
 
 @section('content')
-<div class="container-fluid d-flex">
+    <div class="container-fluid d-flex">
         @auth
             @include('admin.partials.aside')
         @endauth
-    <div class="container my-5">
+        <div class="container my-5">
 
-        {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
-        @if($errors->any())
-            <div class="alert alert-danger" role="alert">
-                <ul>
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
+            {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
+            @if ($errors->any())
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-        @endif
+            <form class="row g-3" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                {{-- Name --}}
+                <div class="col-md-6 position-relative">
+                    <label for="name" class="form-label">Nome del piatto (*)</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                        name="name" placeholder="Scrivi il nome del piatto" value="{{ old('name') }}" required>
+                    {{-- Errori client --}}
+                    <div class="tooltip-error" id="nameTooltip">Il nome è obbligatorio e deve avere due caratteri</div>
+                    {{-- se esiste l'errore title stampa un messaggio anche sotto l'input --}}
+                    @error('name')
+                        <small class="text-danger"> {{ $message }} </small>
+                    @enderror
 
-        <form class="row g-3" action="{{route('admin.products.store')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="col-md-6">
-            <label for="name" class="form-label">Nome del piatto (*)</label>
-            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Scrivi il nome del piatto" value="{{old('name')}}">
-                {{-- se esiste l'errore title stampa un messaggio anche sotto l'input --}}
-                @error('name')
-                    <small class="text-danger"> {{$message}} </small>
-                @enderror
-
-            </div>
-
-            <div class="col-md-12">
-                <label for="ingredients_descriptions" class="form-label">Ingredienti / Descrizione (*)</label>
-                <input type="text" class="form-control @error('ingredients_descriptions') is-invalid @enderror" id="ingredients_descriptions" name="ingredients_descriptions" placeholder="Inserisci gli ingredienti e la descrizione del piatto" value="{{old('ingredients_descriptions')}}">
-
-                @error('ingredients_descriptions')
-                    <small class="text-danger"> {{$message}} </small>
-                @enderror
-            </div>
-
-            {{-- caricamento img --}}
-            <div class="col-12">
-                <label for="img" class="form-label">Immagine prodotto (*)</label>
-                <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)">
-
-                {{-- anteprima dell'immagine caricata --}}
-                <img src="/img/no_img.jpg" class="thumb-mini" id="thumb">
-
-                @error('img')
-                    <small class="text-danger"> {{$message}} </small>
-                @enderror
-            </div>
-
-            {{-- inserimento prezzo --}}
-            <div class="col-md-3">
-                <label for="price" class="form-label">Prezzo unitario (*)</label>
-                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="Inserisci gli ingredienti e la descrizione del piatto" value="{{old('price')}}" step="0.01">
-
-                @error('price')
-                    <small class="text-danger"> {{$message}} </small>
-                @enderror
-            </div>
-
-            {{-- radio button per la visibilità --}}
-            <div class="col-12">
-                <label for="img" class="form-label">Prodotto visibile al pubblico: (*)</label>
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="visible" name="visible" class="custom-control-input" value=1>
-                    <label class="custom-control-label" for="visible">Sì</label>
+                </div>
+                {{-- Ingredienti --}}
+                <div class="col-md-12 position-relative">
+                    <label for="ingredients_descriptions" class="form-label">Ingredienti / Descrizione (*)</label>
+                    <input type="text" class="form-control @error('ingredients_descriptions') is-invalid @enderror"
+                        id="ingredients_descriptions" name="ingredients_descriptions"
+                        placeholder="Inserisci gli ingredienti e la descrizione del piatto"
+                        value="{{ old('ingredients_descriptions') }}" required>
+                    {{-- Errori client --}}
+                    <div class="tooltip-error" id="ingredientsTooltip">Campo obbligatorio</div>
+                    @error('ingredients_descriptions')
+                        <small class="text-danger"> {{ $message }} </small>
+                    @enderror
                 </div>
 
-                <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="not_visible" name="visible" class="custom-control-input" value=0>
-                    <label class="custom-control-label" for="not_visible">No</label>
+                {{-- caricamento img --}}
+                <div class="col-12">
+                    <label for="img" class="form-label">Immagine prodotto (*)</label>
+                    <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)"
+                        required>
+
+                    {{-- anteprima dell'immagine caricata --}}
+                    <img src="{{ asset('storage/uploads/no_img.jpg') }}" class="thumb-mini" id="thumb">
+
+                    @error('img')
+                        <small class="text-danger"> {{ $message }} </small>
+                    @enderror
                 </div>
 
-                @error('visible')
-                    <small class="text-danger"> {{$message}} </small>
-                @enderror
-            </div>
+                {{-- inserimento prezzo --}}
+                <div class="col-md-3 position-relative">
+                    <label for="price" class="form-label">Prezzo unitario (*)</label>
+                    <input type="text" class="form-control @error('price') is-invalid @enderror" id="price"
+                        name="price" placeholder="Inserisci gli ingredienti e la descrizione del piatto"
+                        value="{{ old('price') }}" step="0.01" required>
+                    {{-- Errori client --}}
+                    <div class="tooltip-error" id="priceTooltip">Il prezzo è obbligatorio e deve essere un numero</div>
+                    @error('price')
+                        <small class="text-danger"> {{ $message }} </small>
+                    @enderror
+                </div>
+
+                {{-- radio button per la visibilità --}}
+                <div class="col-12">
+                    <label for="img" class="form-label">Prodotto visibile al pubblico: (*)</label>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="visible" name="visible" class="custom-control-input" value=1>
+                        <label class="custom-control-label" for="visible">Sì</label>
+                    </div>
+
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="not_visible" name="visible" class="custom-control-input" value=0>
+                        <label class="custom-control-label" for="not_visible">No</label>
+                    </div>
+
+                    <small id="visibleError" class="text-danger" style="display: none;">Devi selezionare una delle
+                        opzioni.</small>
+
+                    @error('visible')
+                        <small class="text-danger"> {{ $message }} </small>
+                    @enderror
+                </div>
 
 
-            {{-- bottoni --}}
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary">Invia</button>
-            </div>
-            <div class="col-12">
-                <button type="reset" class="btn btn-primary">Cancella</button>
-            </div>
-        </form>
+                {{-- bottoni --}}
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Invia</button>
+                </div>
+                <div class="col-12">
+                    <button type="reset" class="btn btn-primary" onclick="checkForm()">Cancella</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-{{-- funzioni --}}
-<script>
-    // funzione che cambia l'anteprima del file caricato
-    function showImg(event){
-        const thumb = document.getElementById('thumb');
-        thumb.src = URL.createObjectURL(event.target.files[0]);
-    }
-</script>
+    {{-- funzioni --}}
+    <script>
+        //Listener per i campi
+        document.getElementById('name').addEventListener('input', checkForm);
+        document.getElementById('ingredients_descriptions').addEventListener('input', checkForm);
+        document.getElementById('price').addEventListener('input', checkForm);
+        document.getElementById('visible').addEventListener('click', checkForm);
+        document.getElementById('not_visible').addEventListener('click', checkForm);
+
+
+        //Check campi
+        function checkForm() {
+            let validName = false;
+            let validIngredients = false;
+            let validPrice = false;
+            const name = document.getElementById('name').value;
+            const ingredients_descriptions = document.getElementById('ingredients_descriptions').value;
+            const price = document.getElementById('price').value;
+            const nameTooltip = document.getElementById('nameTooltip');
+            const ingredientsTooltip = document.getElementById('ingredientsTooltip');
+            const priceTooltip = document.getElementById('priceTooltip');
+
+
+
+            //controllo campo nome
+            if (name.length >= 0 && name.length < 2) {
+                nameTooltip.classList.add('visible');
+                validName = false;
+            } else {
+                validName = true;
+                nameTooltip.classList.remove('visible');
+            }
+            //Controllo ingredienti
+            if (ingredients_descriptions.length >= 0 && ingredients_descriptions.length < 2) {
+                ingredientsTooltip.classList.add('visible');
+                validIngredients = false;
+            } else {
+                validIngredients = true;
+                ingredientsTooltip.classList.remove('visible');
+
+            }
+            //Controllo price
+            if (!isNaN(price) && price > 0) {
+                priceTooltip.classList.remove('visible');
+                validPrice = true;
+                console.log(validPrice);
+
+            } else {
+                validPrice = false;
+                priceTooltip.classList.add('visible');
+                console.log(validPrice);
+
+            }
+
+            checkboxValidate();
+
+            //Bottoni
+            if (validName && validIngredients && validPrice && checkboxValidate()) {
+                document.getElementById('submitBtn').disabled = false;
+            } else {
+                document.getElementById('submitBtn').disabled = true;
+            }
+
+        }
+
+        function checkboxValidate() {
+            const visibleChecked = document.querySelector('input[name="visible"]:checked');
+            const visibleError = document.getElementById('visibleError');
+
+            if (!visibleChecked) {
+                visibleError.style.display = 'block';
+                return false;
+            } else {
+                visibleError.style.display = 'none';
+                return true;
+            }
+        }
+
+
+        // funzione che cambia l'anteprima del file caricato
+        function showImg(event) {
+            const thumb = document.getElementById('thumb');
+            thumb.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 
 @endsection
