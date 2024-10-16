@@ -8,7 +8,7 @@
             <div class="row">
                 @if (count($products))
                     @foreach ($products as $product)
-                        <div class="col-2 ">
+                        <div class="col-sm-4 col-md-3 col-lg-2">
                             @if ($product->visible)
                                 <div class="card">
                                 @else
