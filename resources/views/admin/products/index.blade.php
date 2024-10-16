@@ -29,7 +29,11 @@
                                         <a href="{{ route('admin.products.show', $product) }}"
                                             class="btn btn-primary">Dettagli</a>
                                         <a href="{{route('admin.products.edit', $product)}}" class="btn btn-warning">Modifica</a>
-                                        <a href="#" class="btn btn-danger">Elimina</a>
+                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto?');" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Elimina</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
