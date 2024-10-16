@@ -24,7 +24,7 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|min:2|max:70',
             'ingredients_descriptions' => 'required|min:1',
-            'img' => 'required|min:1',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric',
             'visible' => 'required|boolean'
 

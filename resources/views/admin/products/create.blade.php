@@ -68,7 +68,7 @@
                 <div class="col-md-3 position-relative">
                     <label for="price" class="form-label">Prezzo unitario (*)</label>
                     <input type="text" class="form-control @error('price') is-invalid @enderror" id="price"
-                        name="price" placeholder="Inserisci gli ingredienti e la descrizione del piatto"
+                        name="price" placeholder="Inserisci il prezzo"
                         value="{{ old('price') }}" step="0.01" required>
                     {{-- Errori client --}}
                     <div class="tooltip-error" id="priceTooltip">Il prezzo è obbligatorio e deve essere un numero</div>
