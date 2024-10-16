@@ -12,3 +12,7 @@
     z-index: 1000;
     white-space: nowrap; /* Prevent text wrap */
 }
+
+.tooltip-error.visible {
+    display: block;
+}

@@ -119,11 +119,12 @@
             function checkForm() {
                 let valid = true;
                 const name = document.getElementById('name').value;
-                const nameError = document.getElementById('nameError');
+                const nameTooltip = document.getElementById('nameTooltip');
+
 
                 //controllo campo nome
-                if (!name.length > 0) {
-                    nameError.innerHTML = "Il Nome del ristorante è obbligatorio";
+                if (name.length = 0) {
+                    nameTooltip.classList.add('visible');
                     valid = false;
                 }
                 document.getElementById('submitBtn').disabled = !valid;
