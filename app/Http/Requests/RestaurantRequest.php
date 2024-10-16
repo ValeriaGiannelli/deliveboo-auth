@@ -25,12 +25,13 @@ class RestaurantRequest extends FormRequest
             'name' => 'required|min:2|max:100',
             'address' => 'required|min:5|max:100',
             'piva' => 'required|min:11|max:11',
-            'img' => 'required|min:3|max:255',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'max:500',
         ];
     }
 
-    public function messages(): array{
+    public function messages(): array
+    {
         return [
             'name.required' => 'Il nome è obbligatorio',
             'name.min' => 'Il nome deve avere minimo :min caratteri',
@@ -41,9 +42,10 @@ class RestaurantRequest extends FormRequest
             'piva.required' => 'La partita iva è obbligatoria',
             'piva.min' => 'La partita iva deve avere minimo :min caratteri',
             'piva.max' => 'La partita iva deve avere massimo :max caratteri',
-            'img.required' => 'L\'immagine è obbligatoria',
-            'img.min' => 'L\'immagine deve avere minimo :min caratteri',
-            'img.max' => 'L\'immagine deve avere massimo :max caratteri',
+            'img.required' => 'Devi caricare un\'immagine del ristorante.',
+            'img.image' => 'Il file deve essere un\'immagine.',
+            'img.mimes' => 'Le immagini devono essere di tipo jpeg, png, jpg o gif.',
+            'img.max' => 'L\'immagine non deve superare i 2 MB.',
             'description.max' => 'La descrizione deve avere massimo :max caratteri',
         ];
     }
