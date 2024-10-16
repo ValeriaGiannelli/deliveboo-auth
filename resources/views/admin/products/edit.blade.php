@@ -52,7 +52,7 @@
                     <small class="text-danger"> {{$message}} </small>
                 @enderror --}}
 
-                <img src="{{asset('storage/' . $product->img)}}" alt="{{ $product->name }}" onerror="this.src='/img/no_img.jpg'" class="thumb-mini" id="thumb">
+                <img src="{{asset('storage/' . $product->img)}}" alt="{{ $product->name }}" onerror="this.src='{{asset('storage/uploads/no_img.jpg')}}'" class="thumb-mini" id="thumb">
             </div>
 
             {{-- inserimento prezzo --}}
