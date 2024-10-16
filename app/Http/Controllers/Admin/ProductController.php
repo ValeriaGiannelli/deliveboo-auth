@@ -104,8 +104,8 @@ class ProductController extends Controller
     {
         // eliminamo il prodotto
         $product->delete();
-
-        // return redirect()->route('view.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
+        return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
 
     }
+   
 }
