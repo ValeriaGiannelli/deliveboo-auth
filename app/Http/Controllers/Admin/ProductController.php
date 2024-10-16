@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Restaurant;
@@ -43,7 +44,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         // prendo l'id dell'user
         $user_id = Auth::id();
@@ -85,7 +86,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         // prendo i dati modificati
         $data = $request->all();
@@ -103,8 +104,8 @@ class ProductController extends Controller
     {
         // eliminamo il prodotto
         $product->delete();
-
-        // return redirect()->route('view.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
+        return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
 
     }
+   
 }

@@ -19,6 +19,11 @@
     </ul>
 
     <a href="#" class="btn btn-secondary">Modifica</a>
+    <form action="{{ route('admin.products.destroy', $product) }}" method="POST" onsubmit="return confirm('Sei sicuro di voler eliminare questo prodotto?');" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger">Elimina</button>
+    </form>
     <a href="{{route('admin.products.index')}}" class="btn btn-primary">Torna all'elenco dei piatti</a>
 
 @endsection

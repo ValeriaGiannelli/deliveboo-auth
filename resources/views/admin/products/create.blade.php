@@ -11,7 +11,7 @@
     <div class="container my-5">
 
         {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
-        {{-- @if($errors->any())
+        @if($errors->any())
             <div class="alert alert-danger" role="alert">
                 <ul>
                     @foreach($errors->all() as $error)
@@ -20,7 +20,7 @@
                 </ul>
             </div>
 
-        @endif --}}
+        @endif
 
         <form class="row g-3" action="{{route('admin.products.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -28,9 +28,9 @@
             <label for="name" class="form-label">Nome del piatto (*)</label>
             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="Scrivi il nome del piatto" value="{{old('name')}}">
                 {{-- se esiste l'errore title stampa un messaggio anche sotto l'input --}}
-                {{-- @error('name')
+                @error('name')
                     <small class="text-danger"> {{$message}} </small>
-                @enderror --}}
+                @enderror
 
             </div>
 
@@ -38,9 +38,9 @@
                 <label for="ingredients_descriptions" class="form-label">Ingredienti / Descrizione (*)</label>
                 <input type="text" class="form-control @error('ingredients_descriptions') is-invalid @enderror" id="ingredients_descriptions" name="ingredients_descriptions" placeholder="Inserisci gli ingredienti e la descrizione del piatto" value="{{old('ingredients_descriptions')}}">
 
-                {{-- @error('ingredients_descriptions')
+                @error('ingredients_descriptions')
                     <small class="text-danger"> {{$message}} </small>
-                @enderror --}}
+                @enderror
             </div>
 
             {{-- caricamento img --}}
@@ -51,18 +51,18 @@
                 {{-- anteprima dell'immagine caricata --}}
                 <img src="" class="thumb-mini" id="thumb">
             </div>
-            {{-- @error('img')
+            @error('img')
                 <small class="text-danger"> {{$message}} </small>
-            @enderror --}}
+            @enderror
 
             {{-- inserimento prezzo --}}
             <div class="col-md-3">
                 <label for="price" class="form-label">Prezzo unitario (*)</label>
                 <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price" placeholder="Inserisci gli ingredienti e la descrizione del piatto" value="{{old('price')}}" step="0.01">
 
-                {{-- @error('price')
+                @error('price')
                     <small class="text-danger"> {{$message}} </small>
-                @enderror --}}
+                @enderror
             </div>
 
             {{-- radio button per la visibilità --}}
@@ -78,9 +78,9 @@
                     <label class="custom-control-label" for="not_visible">No</label>
                 </div>
 
-                {{-- @error('visible')
+                @error('visible')
                     <small class="text-danger"> {{$message}} </small>
-                @enderror --}}
+                @enderror
             </div>
 
 
