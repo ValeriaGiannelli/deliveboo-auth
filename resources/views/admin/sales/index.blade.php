@@ -16,6 +16,7 @@
                 <th scope="col">Indirizzo</th>
                 <th scope="col">Prezzo Totale</th>
                 <th scope="col">Telefono</th>
+                <th scope="col">Effettuato</th>
                 <th scope="col">Visualizza</th>
               </tr>
             </thead>
@@ -28,6 +29,7 @@
                     <td>{{ $sale->address }}</td>
                     <td>{{ $sale->total_price }}&euro;</td>
                     <td>{{ $sale->phone_number }}</td>
+                    <td>{{ $sale->created_at->format('d-m-Y H:i') }}</td>
                     <td><a href="{{route('admin.sales.show', $sale) }}" class="btn btn-primary">Dettagli</a></td>
                 </tr>
                 @endforeach
