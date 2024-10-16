@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\DB;
+use App\Models\Restaurant;
+use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Sale;
 use Illuminate\Http\Request;
@@ -14,7 +17,20 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $sales = Sale::all();
+
+        // prendo l'id dell'user
+        $user_id = Auth::id();
+        
+        // prendo l'id del ristorante associato all'id dell'user
+        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
+        
+        // array con tutti gli id dei prodotti del ristorante
+        $products_ids = Product::where('restaurant_id', $restaurant_id)->get('id');
+        
+        // query basta sulla relazione tra sale e product, che filtra tutti gli ordini che comprendono i prodotti presenti nell'array
+        $sales = Sale::whereHas('products', function ($query) use ($products_ids){
+            $query->whereIn('product_id', $products_ids);
+        })->get();
 
         return view('admin.sales.index', compact('sales'));
     }
