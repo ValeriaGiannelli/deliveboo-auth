@@ -35,7 +35,15 @@ class RegisteredUserController extends Controller
      */
     public function store(RestaurantRequest $request): RedirectResponse
     {
-        
+
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ],
+        );
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -50,7 +58,7 @@ class RegisteredUserController extends Controller
         $data['user_id'] = Auth::id();
         // gestione immagini
         if ($request->hasFile('img')) {
-        $data['img'] = Storage::put('uploads', $request->file('img'));
+            $data['img'] = Storage::put('uploads', $request->file('img'));
         }
 
         $restaurant = Restaurant::create($data);
