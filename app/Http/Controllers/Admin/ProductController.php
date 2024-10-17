@@ -76,7 +76,16 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('admin.products.show', compact('product'));
+
+        // prendo l'id dell'user
+        $user_id = Auth::id();
+
+        // prendo l'id del ristorante associato all'id dell'user
+        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
+
+        if ($restaurant_id != $product->restaurant_id) {
+            abort(404);
+        }
     }
 
     /**
@@ -113,6 +122,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        
         // eliminamo il prodotto
         $product->delete();
         return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
