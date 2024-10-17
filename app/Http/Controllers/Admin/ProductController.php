@@ -68,7 +68,7 @@ class ProductController extends Controller
 
         $newProduct->save();
 
-        return redirect()->route('admin.products.show', $newProduct->id);
+        return redirect()->route('admin.products.index');
     }
 
     /**
