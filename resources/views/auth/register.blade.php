@@ -165,7 +165,7 @@
                             </div>
                             {{-- Piva --}}
                             <div class="col-md-6 position-relative">
-                                <label for="piva" class="form-label" id="pivaErrorLabel">P.Iva (11 caratteri)</label>
+                                <label for="piva" class="form-label" id="pivaErrorLabel">P.Iva (11 caratteri) (*)</label>
                                 <input type="text" class="form-control {{-- @error('piva') is-invalid @enderror --}}" id="piva"
                                     name="piva" placeholder="Inserisci la tua P.Iva" value="{{ old('piva') }}"
                                     required pattern="\d{11}">
@@ -181,7 +181,7 @@
 
                             {{-- caricamento img --}}
                             <div class="col-12">
-                                <label for="img" class="form-label">Immagine</label>
+                                <label for="img" class="form-label">Immagine (*)</label>
                                 <input type="file" name="img" id="img" class="form-control" multiple
                                     accept="image/*" required>
 
@@ -196,7 +196,7 @@
                             <div class="col-12">
                                 <label for="description" class="form-label">Descrizione del ristorante</label>
                                 <textarea class="form-control" name="description" id="description" cols="30" rows="10"
-                                    placeholder="Descrivi il tuo ristorante" required>{{ old('description') }}</textarea>
+                                    placeholder="Descrivi il tuo ristorante">{{ old('description') }}</textarea>
                             </div>
 
                             {{-- chechbox per le Tipologia di ristorante --}}
