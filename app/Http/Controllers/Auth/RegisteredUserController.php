@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Type;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Restaurant;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +23,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $types = Type::all();
+        return view('auth.register', compact('types'));
     }
 
     /**
@@ -30,11 +34,13 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'regex:/^[^@]+@[^@]+\.[^@]+$/', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'regex:/^[^@]+@[^@]+\.[^@]+$/', 'max:255', 'unique:' . User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ],
+        );
 
         $user = User::create([
             'name' => $request->name,
@@ -42,9 +48,22 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+
         event(new Registered($user));
 
         Auth::login($user);
+
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
+        // gestione immagini
+        $data['img'] = Storage::put('uploads', $data['img']);
+
+        $restaurant = Restaurant::create($data);
+
+        //controllo se sono stati inseriti tipi
+        if (array_key_exists('types', $data)) {
+            $restaurant->types()->attach($data['types']);
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }

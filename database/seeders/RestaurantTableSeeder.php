@@ -18,9 +18,9 @@ class RestaurantTableSeeder extends Seeder
 
         $id = 1;
 
-        foreach($restaurants as $restaurant){
+        foreach ($restaurants as $restaurant) {
             $new_restaurant = new Restaurant();
-            $new_restaurant->name = $restaurant['name'];
+            $new_restaurant->restaurant_name = $restaurant['restaurant_name'];
             $new_restaurant->address = $restaurant['address'];
             $new_restaurant->piva = $restaurant['piva'];
             $new_restaurant->img = $restaurant['img'];

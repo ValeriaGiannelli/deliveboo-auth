@@ -23,7 +23,7 @@ class RestaurantController extends Controller
         $types = Type::all();
 
         // prendo l'id del ristorante associato all'id dell'user
-        $restaurant = Restaurant::where('user_id', $user_id)->value('name');
+        $restaurant = Restaurant::where('user_id', $user_id)->value('restaurant_name');
         return view('admin.dashboard', compact('restaurant', 'types'));
     }
 
@@ -51,7 +51,7 @@ class RestaurantController extends Controller
         if (array_key_exists('types', $data)) {
             $restaurant->types()->attach($data['types']);
         }
-        return redirect()->route('admin.restaurants.index');
+        //return redirect()->route('admin.restaurants.index');
     }
 
     /**
