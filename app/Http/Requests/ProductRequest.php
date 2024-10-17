@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
                 'max:2048',
                 Rule::requiredIf(function (){
                     // se non c'è un'immagine esistente, rendi il campo obbligatorio
-                    return !request()->product->img;
+                    return $this->isMethod('post');
                 }),
             ],
             'price' => 'required|numeric',
