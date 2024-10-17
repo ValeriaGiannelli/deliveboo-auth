@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProductRequest extends FormRequest
 {
@@ -24,7 +25,16 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|min:2|max:70',
             'ingredients_descriptions' => 'required|min:1',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,gif',
+                'max:2048',
+                Rule::requiredIf(function (){
+                    // se non c'è un'immagine esistente, rendi il campo obbligatorio
+                    return !request()->product->img;
+                }),
+            ],
             'price' => 'required|numeric',
             'visible' => 'required|boolean'
 

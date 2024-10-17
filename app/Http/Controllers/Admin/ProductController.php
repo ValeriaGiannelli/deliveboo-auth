@@ -106,17 +106,23 @@ class ProductController extends Controller
         // prendo i dati modificati
         $data = $request->all();
 
-        // gestione immagine  dove deve cancellare la relazione precedente e sostituirla??
-        if($product->img){
-            Storage::delete($product->img);
-        }
+        // se la request ha file img sostituiamo col nuovo
+        if($request->hasFile('img')){
+            // gestione immagine  dove deve cancellare la relazione precedente
+            if($product->img){
+                Storage::delete($product->img);
+            }
+            // sostituisco con la nuova
+            $data['img'] = Storage::put('uploads', $data['img']);
+        } else {
 
-        $data['img'] = Storage::put('uploads', $data['img']);
+            $data['img'] = $product->img;
+        }
 
         // faccio update
         $product->update($data);
 
-        return redirect()->route('admin.products.show', $product);
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -124,7 +130,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        
+
         // eliminamo il prodotto
         $product->delete();
         return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');

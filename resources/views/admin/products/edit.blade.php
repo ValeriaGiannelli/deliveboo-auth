@@ -55,7 +55,7 @@
             {{-- caricamento img --}}
             <div class="col-12 position-relative">
                 <label for="img" class="form-label">Immagine prodotto (*)</label>
-                <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)">
+                <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)" accept="image/*">
 
                 {{-- Errori client --}}
                 {{-- <div class="tooltip-error" id="imgTooltip">L'immagine è obbligatoria e deve rispettare il formato</div> --}}
@@ -65,7 +65,7 @@
                     <small class="text-danger"> {{$message}} </small>
                 @enderror
 
-                <img src="{{asset('storage/' . $product->img)}}" alt="{{ $product->name }}" onerror="this.src='{{asset('storage/uploads/no_img.jpg')}}'" class="thumb-mini" id="thumb">
+                <img src="{{ old('img') ? asset('storage/' . old(img)) : asset('storage/' . $product->img)}}" alt="{{ $product->name }}" onerror="this.src='{{asset('storage/uploads/no_img.jpg')}}'" class="thumb-mini" id="thumb">
             </div>
 
             {{-- inserimento prezzo --}}
