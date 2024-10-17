@@ -38,6 +38,18 @@ class RestaurantRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'name.required' => 'nome utente necessario',
+            'name.string' => 'Il nome utente deve essere una stringa di caratteri.',
+            'name.max' => 'Il nome utente non può superare i 255 caratteri',
+            'email.required' => 'L\'indirizzo email è obbligatorio.',
+            'email.string' => 'L\'indirizzo email deve essere una stringa di caratteri.',
+            'email.lowercase' => 'L\'indirizzo email deve essere tutto in lettere minuscole.',
+            'email.email' => 'Inserisci un indirizzo email valido.',
+            'email.regex' => 'Il formato dell\'email non è corretto. Assicurati di utilizzare un formato valido (esempio: nome@dominio.com).',
+            'email.max' => 'L\'indirizzo email non può superare i 255 caratteri.',
+            'email.unique' => 'L\'indirizzo email inserito è già stato registrato. Scegli un altro indirizzo.',
+            'password.required' => 'La password è obbligatoria.',
+            'password.confirmed' => 'La conferma della password non corrisponde.',
             'restaurant_name.required' => 'Il nome è obbligatorio',
             'restaurant_name.min' => 'Il nome deve avere minimo :min caratteri',
             'restaurant_name.max' => 'Il nome deve avere massimo :max caratteri',
