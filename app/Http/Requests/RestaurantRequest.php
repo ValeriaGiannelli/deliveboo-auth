@@ -22,7 +22,7 @@ class RestaurantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:2|max:100',
+            'restaurant_name' => 'required|min:2|max:100',
             'address' => 'required|min:5|max:100',
             'piva' => 'required|min:11|max:11',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -33,9 +33,9 @@ class RestaurantRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Il nome è obbligatorio',
-            'name.min' => 'Il nome deve avere minimo :min caratteri',
-            'name.max' => 'Il nome deve avere massimo :max caratteri',
+            'restaurant_name.required' => 'Il nome è obbligatorio',
+            'restaurant_name.min' => 'Il nome deve avere minimo :min caratteri',
+            'restaurant_name.max' => 'Il nome deve avere massimo :max caratteri',
             'address.required' => 'L\'indirizzo è obbligatorio',
             'address.min' => 'L\'indirizzo deve avere minimo :min caratteri',
             'address.max' => 'L\'indirizzo deve avere massimo :max caratteri',

@@ -117,13 +117,13 @@
                                     </button>
                                 </div>
                             </div> --}}
-                        </form>
-                        {{-- ************************************************************************************ --}}
-                        {{-- Form ristorante --}}
-                        {{-- Name --}}
-                        <form class="row g-3" action="{{ route('admin.restaurants.store') }}" method="POST"
+                            {{-- </form> --}}
+                            {{-- ************************************************************************************ --}}
+                            {{-- Form ristorante --}}
+                            {{-- Name --}}
+                            {{-- <form class="row g-3" method="POST"
                             enctype="multipart/form-data" onsubmit="return validateForm()" id="form2">
-                            @csrf
+                            @csrf --}}
                             <div class="col-md-6 position-relative">
                                 <label for="restaurant_name" class="form-label " id="nameErrorLabelRestaurant">Nome del
                                     ristorante
