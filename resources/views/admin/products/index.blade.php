@@ -69,10 +69,10 @@
             </div>
             
         @else
-            <h2>Non ci sono prodotti</h2>
+            <div class="container-fluid my-5 text-center">  
+                <h2 class="text-center my-5">Non ci sono prodotti</h2>
 
-            <div class="container-fluid my-5">
-                <a href="{{ route('admin.products.create') }}" class="btn btn-warning d-block">Aggiungi Nuovo Piatto</a>
+                <a href="{{ route('admin.products.create') }}" class="btn btn-warning">Aggiungi Nuovo Piatto</a>
             </div>
         @endif
     </div>

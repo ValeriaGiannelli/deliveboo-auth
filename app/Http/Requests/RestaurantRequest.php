@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
+use Illuminate\Validation\Rules;
 
 class RestaurantRequest extends FormRequest
 {
@@ -22,6 +24,9 @@ class RestaurantRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'regex:/^[^@]+@[^@]+\.[^@]+$/', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'restaurant_name' => 'required|min:2|max:100',
             'address' => 'required|min:5|max:100',
             'piva' => 'required|min:11|max:11',
