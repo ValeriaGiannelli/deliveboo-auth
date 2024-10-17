@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// route per filtrare ristoranti con la tipologia
+Route::get('/restaurants/types', [ApiController::class, 'restaurantsTypes']);
+
+// route per i prodotti
+Route::get('/restaurant/products', [ApiController::class, 'restaurantProducts']);
