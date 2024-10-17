@@ -9,7 +9,8 @@
 
                     <div class="card-body">
                         {{-- FORM UTENTE --}}
-                        <form method="POST" action="{{ route('register') }}" id="form1">
+                        <form method="POST" action="{{ route('register') }}" onsubmit="return validateForm()"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="mb-4 row">
@@ -159,8 +160,8 @@
                                     caratteri.</div>
                                 <small class="text-danger" id="addressError"></small>
                                 {{-- @error('address')
-                <small class="text-danger"> {{ $message }} </small>
-            @enderror --}}
+                                <small class="text-danger"> {{ $message }} </small>
+                            @enderror --}}
                             </div>
                             {{-- Piva --}}
                             <div class="col-md-6 position-relative">
@@ -174,22 +175,22 @@
                                     caratteri.</div>
                                 <small class="text-danger" id="pivaError"></small>
                                 {{-- @error('piva')
-                <small class="text-danger"> {{ $message }} </small>
-            @enderror --}}
+                                    <small class="text-danger"> {{ $message }} </small>
+                                @enderror --}}
                             </div>
 
                             {{-- caricamento img --}}
                             <div class="col-12">
                                 <label for="img" class="form-label">Immagine</label>
-                                <input type="file" name="img" id="img" class="form-control"
-                                    onchange="showImg(event)" required>
+                                <input type="file" name="img" id="img" class="form-control" multiple
+                                    accept="image/*" required>
 
                                 {{-- anteprima dell'immagine caricata --}}
                                 {{-- <img src="/img/no_img.jpg" class="thumb-mini" id="thumb"> --}}
                             </div>
                             {{-- @error('img')
-            <small class="text-danger"> {{ $message }} </small>
-        @enderror --}}
+                                    <small class="text-danger"> {{ $message }} </small>
+                                @enderror --}}
 
                             {{-- Descrizione --}}
                             <div class="col-12">
@@ -211,152 +212,32 @@
                                     <small class="text-danger" name="typesError"></small>
                                 @endforeach
                             </div>
-                            {{-- Bottoni --}}
-                            {{-- <div class="col-12">
+                            {{-- BOTTONI PER INVIO FORM
+                            ******************************************************************************** --}}
+                            <div class="col-12">
                                 <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Invia</button>
                             </div>
                             <div class="col-12">
                                 <button type="reset" class="btn btn-primary">Cancella</button>
-                            </div> --}}
+                            </div>
                         </form>
-                        {{-- BOTTONI PER INVIO FORM
-                        ******************************************************************************** --}}
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary" id="submitBtn" onclick="submitBothForms()"
-                                disabled>Invia</button>
-                        </div>
-                        <div class="col-12">
-                            <button type="reset" class="btn btn-primary">Cancella</button>
-                        </div>
                     </div>
-                    {{-- SCRIPT INVIO FORMS --}}
-                    <script>
-                        function submitBothForms() {
-                            // Invia il primo form
-                            document.getElementById('form1').submit();
 
-                            // Invia anche il secondo form
-                            document.getElementById('form2').submit();
-                        }
-                    </script>
-
-                    {{-- funzioni --}}
-                    <script>
-                        //VALIDAZIONE FORM
-                        function validateForm() {
-                            let valid = true;
-                            //prendo elementi in pagina
-                            //NAME
-                            const nameError = document.getElementById('nameErrorRestaurant');
-                            const nameErrorLabel = document.getElementById('nameErrorLabelRestaurant');
-                            const nameInput = document.getElementById('restaurant_name').value;
-                            //ADDRESS
-                            const addressError = document.getElementById('addressError');
-                            const addressErrorLabel = document.getElementById('addressErrorLabel');
-                            const addressInput = document.getElementById('address').value;
-                            //PIVA
-                            const pivaError = document.getElementById('pivaError');
-                            const pivaErrorLabel = document.getElementById('pivaErrorLabel');
-                            const pivaInput = document.getElementById('piva').value;
-
-                            // validazione nome
-                            if (nameInput.length < 2) {
-                                //NAME
-                                nameError.innerHTML = "Il Nome del ristorante deve avere almeno due caratteri.";
-                                nameErrorLabel.style = "color:red";
-                                nameInput.style = "border-color:red";
-                                valid = false;
-
-                            } else if (addressInput.length < 5) {
-                                //ADDRESS
-                                addressError.innerHTML = "L'indirizzo del ristorante deve avere almeno cinque caratteri.";
-                                addressErrorLabel.style = "color:red";
-                                addressInput.style = "border-color:red";
-                                valid = false;
-                            } else if (pivaInput.length != 11) {
-                                //ADDRESS
-                                pivaError.innerHTML = "La partita iva deve avere 11 caratteri.";
-                                pivaErrorLabel.style = "color:red";
-                                pivaInput.style = "border-color:red";
-                                valid = false;
-                            }
-                            return valid;
-                        }
-
-
-                        //Listener per i campi
-                        document.getElementById('restaurant_name').addEventListener('input', checkForm);
-                        document.getElementById('address').addEventListener('input', checkForm);
-                        document.getElementById('piva').addEventListener('input', checkForm);
-
-                        //Check campi
-                        function checkForm() {
-                            let validName = false;
-                            let validAddress = false;
-                            let validPiva = false;
-                            let validTypes = true;
-                            const name = document.getElementById('restaurant_name').value;
-                            const address = document.getElementById('address').value;
-                            const piva = document.getElementById('piva').value;
-                            const nameTooltip = document.getElementById('nameRestaurantTooltip');
-                            const addressTooltip = document.getElementById('addressTooltip');
-                            const pivaTooltip = document.getElementById('pivaTooltip');
-
-
-
-                            //controllo campo nome
-                            if (name.length >= 0 && name.length < 2) {
-                                nameTooltip.classList.add('visible');
-                                validName = false;
-                            } else {
-                                validName = true;
-                                nameTooltip.classList.remove('visible');
-                            }
-                            //Controllo indirizzo
-                            if (address.length >= 0 && address.length < 5) {
-                                addressTooltip.classList.add('visible');
-                                validAddress = false;
-                            } else {
-                                validAddress = true;
-                                addressTooltip.classList.remove('visible');
-
-                            }
-                            //Controllo Piva
-                            if (piva.length >= 0 && piva.length != 11) {
-                                pivaTooltip.classList.add('visible');
-                                validPiva = false;
-                            } else {
-                                validPiva = true;
-                                pivaTooltip.classList.remove('visible');
-                            }
-                            //Bottone
-                            if (validName && validAddress && validPiva) {
-                                document.getElementById('submitBtn').disabled = false;
-                            } else {
-                                document.getElementById('submitBtn').disabled = true;
-                            }
-
-                        }
-
-                        // funzione che cambia l'anteprima del file caricato
-                        function showImg(event) {
-                            const thumb = document.getElementById('thumb');
-                            thumb.src = URL.createObjectURL(event.target.files[0]);
-                        }
-                    </script>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
     {{-- funzioni --}}
+    {{-- SCRIPT INVIO FORMS --}}
     <script>
+        {{-- funzioni --}}
         //VALIDAZIONE FORM
         function validateForm() {
+
             let valid = true;
             //prendo elementi in pagina
-            //NAME
+            //NAME User
             const nameError = document.getElementById('nameError');
             const nameErrorLabel = document.getElementById('nameErrorLabel');
             const nameInput = document.getElementById('name').value;
@@ -372,6 +253,18 @@
             const passwordConfirmError = document.getElementById('password-confirmError');
             const passwordConfirmErrorLabel = document.getElementById('password-confirmErrorLabel');
             const passwordConfirmInput = document.getElementById('password').value;
+            //NAME REStAURANT
+            const nameErrorR = document.getElementById('nameErrorRestaurant');
+            const nameErrorLabelR = document.getElementById('nameErrorLabelRestaurant');
+            const nameInputR = document.getElementById('restaurant_name').value;
+            //ADDRESS
+            const addressError = document.getElementById('addressError');
+            const addressErrorLabel = document.getElementById('addressErrorLabel');
+            const addressInput = document.getElementById('address').value;
+            //PIVA
+            const pivaError = document.getElementById('pivaError');
+            const pivaErrorLabel = document.getElementById('pivaErrorLabel');
+            const pivaInput = document.getElementById('piva').value;
 
             // validazione nome
             if (nameInput.length < 2) {
@@ -399,11 +292,34 @@
                 passwordConfirmErrorLabel.style = "color:red";
                 passwordConfirmInput.style = "border-color:red";
                 valid = false;
+            } else if (nameInputR.length < 2) {
+                //NAME
+                nameErrorR.innerHTML = "Il Nome del ristorante deve avere almeno due caratteri.";
+                nameErrorLabelR.style = "color:red";
+                nameInputR.style = "border-color:red";
+                valid = false;
+
+            } else if (addressInput.length < 5) {
+                //ADDRESS
+                addressError.innerHTML = "L'indirizzo del ristorante deve avere almeno cinque caratteri.";
+                addressErrorLabel.style = "color:red";
+                addressInput.style = "border-color:red";
+                valid = false;
+            } else if (pivaInput.length != 11) {
+                //ADDRESS
+                pivaError.innerHTML = "La partita iva deve avere 11 caratteri.";
+                pivaErrorLabel.style = "color:red";
+                pivaInput.style = "border-color:red";
+                valid = false;
             }
             return valid;
         }
 
 
+        //Listener per i campi
+        document.getElementById('restaurant_name').addEventListener('input', checkForm);
+        document.getElementById('address').addEventListener('input', checkForm);
+        document.getElementById('piva').addEventListener('input', checkForm);
         //Listener per i campi
         document.getElementById('name').addEventListener('input', checkForm);
         document.getElementById('email').addEventListener('input', checkForm);
@@ -412,12 +328,23 @@
 
         //Check campi
         function checkForm() {
+            //restaurant
+            let validNameR = false;
+            let validAddress = false;
+            let validPiva = false;
+            let validTypes = true;
+            //user
             let validName = false;
             let validEmail = false;
             let validPswd = false;
             let validPswdConfirm = false;
-
-            // let validTypes = true;
+            const nameR = document.getElementById('restaurant_name').value;
+            const address = document.getElementById('address').value;
+            const piva = document.getElementById('piva').value;
+            const nameTooltipR = document.getElementById('nameRestaurantTooltip');
+            const addressTooltip = document.getElementById('addressTooltip');
+            const pivaTooltip = document.getElementById('pivaTooltip');
+            //user
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -429,6 +356,31 @@
 
 
 
+            //controllo campo nome
+            if (nameR.length >= 0 && nameR.length < 2) {
+                nameTooltipR.classList.add('visible');
+                validNameR = false;
+            } else {
+                validNameR = true;
+                nameTooltipR.classList.remove('visible');
+            }
+            //Controllo indirizzo
+            if (address.length >= 0 && address.length < 5) {
+                addressTooltip.classList.add('visible');
+                validAddress = false;
+            } else {
+                validAddress = true;
+                addressTooltip.classList.remove('visible');
+
+            }
+            //Controllo Piva
+            if (piva.length >= 0 && piva.length != 11) {
+                pivaTooltip.classList.add('visible');
+                validPiva = false;
+            } else {
+                validPiva = true;
+                pivaTooltip.classList.remove('visible');
+            }
             //controllo campo nome
             if (name.length >= 0 && name.length < 2) {
                 nameTooltip.classList.add('visible');
@@ -463,18 +415,20 @@
                 passwordConfirmTooltip.classList.remove('visible');
             }
             //Bottone
-            if (validName && validEmail && validPswd && validPswdConfirm) {
-                document.getElementById('btn-register').disabled = false;
+            if (validNameR && validAddress && validPiva && validName && validEmail && validPswd && validPswdConfirm) {
+                document.getElementById('submitBtn').disabled = false;
             } else {
-                document.getElementById('btn-register').disabled = true;
+                document.getElementById('submitBtn').disabled = true;
             }
 
+            //validName && validEmail && validPswd && validPswdConfirm
         }
 
+
         // funzione che cambia l'anteprima del file caricato
-        function showImg(event) {
+        /* function showImg(event) {
             const thumb = document.getElementById('thumb');
             thumb.src = URL.createObjectURL(event.target.files[0]);
-        }
+        } */
     </script>
 @endsection
