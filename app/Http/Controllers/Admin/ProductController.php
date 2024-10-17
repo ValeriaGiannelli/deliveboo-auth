@@ -85,6 +85,8 @@ class ProductController extends Controller
 
         if ($restaurant_id != $product->restaurant_id) {
             abort(404);
+        } else {
+            abort(404);
         }
     }
 
