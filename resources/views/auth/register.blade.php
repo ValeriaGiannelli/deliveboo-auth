@@ -20,7 +20,7 @@
                                 <div class="col-md-6 ">
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
-                                        value="{{-- {{ old('name') }} --}}" required autocomplete="name" autofocus>
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="nameError"></small>
@@ -47,9 +47,8 @@
                                 <div class="col-md-6 position-relative">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="" required autocomplete="email"
+                                        value="{{ old('email') }}" required autocomplete="email"
                                         oninput="this.value = this.value.toLowerCase()">
-
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="emailError"></small>
 
@@ -132,7 +131,7 @@
                                     (*)</label>
                                 <input type="text" class="form-control {{-- @error('name') is-invalid @enderror --}}" id="restaurant_name"
                                     name="restaurant_name" placeholder="Scrivi il nome del ristorante"
-                                    value="{{-- {{ old('restaurant_name') }} --}}" required>
+                                    value="{{ old('restaurant_name') }}" required>
                                 {{-- Errori front-office --}}
                                 <div class="tooltip-error col" id="nameRestaurantTooltip">Il Nome del ristorante è
                                     obbligatorio e deve
@@ -151,7 +150,7 @@
                             <div class="col-md-6 position-relative">
                                 <label for="address" class="form-label" id="addressErrorLabel">Indirizzo (*)</label>
                                 <input type="text" class="form-control {{-- @error('address') is-invalid @enderror --}}" id="address"
-                                    name="address" placeholder="Inserisci l'indirizzo" value="{{-- {{ old('address') }} --}}"
+                                    name="address" placeholder="Inserisci l'indirizzo" value="{{ old('address') }}"
                                     required>
                                 {{-- Errori front-office --}}
                                 <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è obbligatorio e
@@ -169,7 +168,7 @@
                                 <label for="piva" class="form-label" id="pivaErrorLabel">P.Iva (11 caratteri)
                                     (*)</label>
                                 <input type="text" class="form-control {{-- @error('piva') is-invalid @enderror --}}" id="piva"
-                                    name="piva" placeholder="Inserisci la tua P.Iva" value="{{-- {{ old('piva') }} --}}"
+                                    name="piva" placeholder="Inserisci la tua P.Iva" value="{{ old('piva') }}"
                                     required pattern="\d{11}">
                                 {{-- Errori front-office --}}
                                 <div class="tooltip-error" id="pivaTooltip">La P.iva del ristorante è obbligatoria e deve
@@ -207,7 +206,8 @@
                                 aria-label="Basic checkbox toggle button group">
                                 @foreach ($types as $type)
                                     <input name="types[]" value="{{ $type->id }}" type="checkbox" class="btn-check"
-                                        id="type-{{ $type->id }}" autocomplete="off" {{-- @if (in_array($type->id, old('types', []))) checked @endif --}}>
+                                        id="type-{{ $type->id }}" autocomplete="off"
+                                        @if (in_array($type->id, old('types', []))) checked @endif>
                                     <label class="btn btn-outline-primary"
                                         for="type-{{ $type->id }}">{{ $type->name }}</label>
                                     <small class="text-danger" name="typesError"></small>
@@ -218,7 +218,12 @@
                             {{-- BOTTONI PER INVIO FORM
                             ******************************************************************************** --}}
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Invia</button>
+
+                                @if ($errors->any())
+                                    <button type="submit" id="retry-button" class="btn btn-primary">Riprova</button>
+                                @else
+                                    <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Invia</button>
+                                @endif
                             </div>
                             <div class="col-12">
                                 <button type="reset" class="btn btn-primary">Cancella</button>
@@ -326,8 +331,27 @@
         //Listener per i campi
         document.getElementById('name').addEventListener('input', checkFormUserName);
         document.getElementById('email').addEventListener('input', checkFormUserEmail);
-        document.getElementById('password').addEventListener('input', checkFormUserPasswordConfirm);
+        document.getElementById('password').addEventListener('input', checkFormUserPassword);
         document.getElementById('password-confirm').addEventListener('input', checkFormUserPasswordConfirm);
+        document.addEventListener('DOMContentLoaded', () => {
+            const retryButton = document.getElementById('retry-button');
+            if (retryButton) {
+                retryButton.addEventListener('click', () => {
+                    // Quando l'utente clicca su retry, vengono richiamate tutte le funzioni di validazione
+                    checkFormUserPassword(); // Controllo della password
+                    checkFormUserPasswordConfirm(); // Controllo della conferma password
+                    checkFormRestaurantName(); // Controllo nome ristorante
+                    checkFormRestaurantAddress(); // Controllo indirizzo ristorante
+                    checkFormRestaurantPiva(); // Controllo PIVA
+                    checkFormUserName(); // Controllo nome utente
+                    checkFormUserEmail(); // Controllo email utente
+                    buttonActivate(); // Riattivazione del pulsante se tutto è valido
+                });
+            } else {
+                console.error('retry-button non trovato nel DOM');
+            }
+        });
+
 
         let validNameR;
         let validAddress;
