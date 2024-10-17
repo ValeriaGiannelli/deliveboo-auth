@@ -20,7 +20,7 @@
                                 <div class="col-md-6 ">
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
-                                        value="{{-- {{ old('name') }} --}}" required autocomplete="name" autofocus>
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="nameError"></small>
@@ -47,7 +47,7 @@
                                 <div class="col-md-6 position-relative">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="" required autocomplete="email"
+                                        value="{{ old('email') }}" required autocomplete="email"
                                         oninput="this.value = this.value.toLowerCase()">
 
                                     {{-- Errori front-end --}}
@@ -132,7 +132,7 @@
                                     (*)</label>
                                 <input type="text" class="form-control {{-- @error('name') is-invalid @enderror --}}" id="restaurant_name"
                                     name="restaurant_name" placeholder="Scrivi il nome del ristorante"
-                                    value="{{-- {{ old('restaurant_name') }} --}}" required>
+                                    value="{{ old('restaurant_name') }}" required>
                                 {{-- Errori front-office --}}
                                 <div class="tooltip-error col" id="nameRestaurantTooltip">Il Nome del ristorante è
                                     obbligatorio e deve
@@ -151,7 +151,7 @@
                             <div class="col-md-6 position-relative">
                                 <label for="address" class="form-label" id="addressErrorLabel">Indirizzo (*)</label>
                                 <input type="text" class="form-control {{-- @error('address') is-invalid @enderror --}}" id="address"
-                                    name="address" placeholder="Inserisci l'indirizzo" value="{{-- {{ old('address') }} --}}"
+                                    name="address" placeholder="Inserisci l'indirizzo" value="{{ old('address') }}"
                                     required>
                                 {{-- Errori front-office --}}
                                 <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è obbligatorio e
@@ -169,7 +169,7 @@
                                 <label for="piva" class="form-label" id="pivaErrorLabel">P.Iva (11 caratteri)
                                     (*)</label>
                                 <input type="text" class="form-control {{-- @error('piva') is-invalid @enderror --}}" id="piva"
-                                    name="piva" placeholder="Inserisci la tua P.Iva" value="{{-- {{ old('piva') }} --}}"
+                                    name="piva" placeholder="Inserisci la tua P.Iva" value="{{ old('piva') }}"
                                     required pattern="\d{11}">
                                 {{-- Errori front-office --}}
                                 <div class="tooltip-error" id="pivaTooltip">La P.iva del ristorante è obbligatoria e deve
@@ -207,7 +207,7 @@
                                 aria-label="Basic checkbox toggle button group">
                                 @foreach ($types as $type)
                                     <input name="types[]" value="{{ $type->id }}" type="checkbox" class="btn-check"
-                                        id="type-{{ $type->id }}" autocomplete="off" {{-- @if (in_array($type->id, old('types', []))) checked @endif --}}>
+                                        id="type-{{ $type->id }}" autocomplete="off" @if (in_array($type->id, old('types', []))) checked @endif>
                                     <label class="btn btn-outline-primary"
                                         for="type-{{ $type->id }}">{{ $type->name }}</label>
                                     <small class="text-danger" name="typesError"></small>
@@ -318,195 +318,119 @@
             return valid;
         }
 
+//Listener per i campi
+document.getElementById('restaurant_name').addEventListener('input', checkFormRestaurantName);
+document.getElementById('address').addEventListener('input', checkFormRestaurantAddress);
+document.getElementById('piva').addEventListener('input', checkFormRestaurantPiva);
+document.getElementById('name').addEventListener('input', checkFormUserName);
+document.getElementById('email').addEventListener('input', checkFormUserEmail);
+document.getElementById('password').addEventListener('input', checkFormUserPassword);
+document.getElementById('password-confirm').addEventListener('input', checkFormUserPasswordConfirm);
 
-        //Listener per i campi
-        document.getElementById('restaurant_name').addEventListener('input', checkFormRestaurantName);
-        document.getElementById('address').addEventListener('input', checkFormRestaurantAddress);
-        document.getElementById('piva').addEventListener('input', checkFormRestaurantPiva);
-        //Listener per i campi
-        document.getElementById('name').addEventListener('input', checkFormUserName);
-        document.getElementById('email').addEventListener('input', checkFormUserEmail);
-        document.getElementById('password').addEventListener('input', checkFormUserPasswordConfirm);
-        document.getElementById('password-confirm').addEventListener('input', checkFormUserPasswordConfirm);
+let validNameR = false;
+let validAddress = false;
+let validPiva = false;
+let validName = false;
+let validEmail = false;
+let validPswd = false;
+let validPswdConfirm = false;
+let validTypes = false;
 
-        let validNameR;
-        let validAddress;
-        let validPiva;
-        let validName;
-        let validEmail;
-        let validPswd;
-        let validPswdConfirm;
-        let validTypes;
-        //Check campi
-        function checkFormRestaurantName() {
-            //restaurant
-            const nameR = document.getElementById('restaurant_name').value;
-            const nameTooltipR = document.getElementById('nameRestaurantTooltip');
-            //controllo campo nome
-            if (nameR.length >= 0 && nameR.length < 2) {
-                nameTooltipR.classList.add('visible');
-                validNameR = false;
-                buttonActivate()
-                return validNameR;
-            } else {
-                nameTooltipR.classList.remove('visible');
-                validNameR = true;
-                buttonActivate();
-                return validNameR;
-            }
+// Funzioni di validazione per i singoli campi
+function checkFormRestaurantName() {
+    const nameR = document.getElementById('restaurant_name').value;
+    const nameTooltipR = document.getElementById('nameRestaurantTooltip');
+    validNameR = nameR.length >= 2;
+    toggleTooltip(validNameR, nameTooltipR);
+    buttonActivate();
+}
 
-        }
+function checkFormRestaurantAddress() {
+    const address = document.getElementById('address').value;
+    const addressTooltip = document.getElementById('addressTooltip');
+    validAddress = address.length >= 5;
+    toggleTooltip(validAddress, addressTooltip);
+    buttonActivate();
+}
 
-        function checkFormRestaurantAddress() {
+function checkFormRestaurantPiva() {
+    const piva = document.getElementById('piva').value;
+    const pivaTooltip = document.getElementById('pivaTooltip');
+    validPiva = piva.length === 11;
+    toggleTooltip(validPiva, pivaTooltip);
+    buttonActivate();
+}
 
-            const address = document.getElementById('address').value;
-            const addressTooltip = document.getElementById('addressTooltip');
-            //Controllo indirizzo
-            if (address.length >= 0 && address.length < 5) {
-                addressTooltip.classList.add('visible');
-                validAddress = false;
-                buttonActivate()
-                return validAddress;
-            } else {
-                validAddress = true;
-                addressTooltip.classList.remove('visible');
-                buttonActivate();
-                return validAddress;
-            }
-        }
+function checkFormUserName() {
+    const name = document.getElementById('name').value;
+    const nameTooltip = document.getElementById('nameTooltip');
+    validName = name.length >= 2;
+    toggleTooltip(validName, nameTooltip);
+    buttonActivate();
+}
 
-        function checkFormRestaurantPiva() {
+function checkFormUserEmail() {
+    const email = document.getElementById('email').value;
+    const emailTooltip = document.getElementById('emailTooltip');
+    validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    toggleTooltip(validEmail, emailTooltip);
+    buttonActivate();
+}
 
-            const piva = document.getElementById('piva').value;
-            const pivaTooltip = document.getElementById('pivaTooltip');
-            //Controllo Piva
-            if (piva.length >= 0 && piva.length != 11) {
-                pivaTooltip.classList.add('visible');
-                validPiva = false;
-                buttonActivate();
-                return validPiva;
-            } else {
-                validPiva = true;
-                pivaTooltip.classList.remove('visible');
-                buttonActivate();
-                return validPiva;
-            }
-        }
+function checkFormUserPassword() {
+    const password = document.getElementById('password').value;
+    const passwordTooltip = document.getElementById('passwordTooltip');
+    validPswd = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
+    toggleTooltip(validPswd, passwordTooltip);
+    buttonActivate();
+}
 
-        function checkFormUserName() {
-            const name = document.getElementById('name').value;
-            const nameTooltip = document.getElementById('nameTooltip');
-            //controllo campo nome
-            if (name.length >= 0 && name.length < 2) {
-                nameTooltip.classList.add('visible');
-                validName = false;
-                buttonActivate();
-                return validName;
-            } else {
-                validName = true;
-                nameTooltip.classList.remove('visible');
-                buttonActivate();
-                return validName;
-            }
-        }
+function checkFormUserPasswordConfirm() {
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+    const passwordConfirmTooltip = document.getElementById('password-confirmTooltip');
+    validPswdConfirm = password === passwordConfirm;
+    toggleTooltip(validPswdConfirm, passwordConfirmTooltip);
+    buttonActivate();
+}
 
-        function checkFormUserEmail() {
-            const email = document.getElementById('email').value;
-            const emailTooltip = document.getElementById('emailTooltip');
-            //Controllo indirizzo
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                emailTooltip.classList.add('visible');
-                validEmail = false;
-                buttonActivate();
-                return validEmail;
-            } else {
-                validEmail = true;
-                emailTooltip.classList.remove('visible');
-                buttonActivate();
-                return validEmail;
-            }
-        }
+// Funzione per mostrare o nascondere le tooltip
+function toggleTooltip(isValid, tooltipElement) {
+    if (isValid) {
+        tooltipElement.classList.remove('visible');
+    } else {
+        tooltipElement.classList.add('visible');
+    }
+}
 
-        function checkFormUserPassword() {
+// Funzione per abilitare o disabilitare il bottone di invio
+function buttonActivate() {
+    const allValid = validNameR && validAddress && validPiva && validName && validEmail && validPswd && validPswdConfirm && validTypes;
+    document.getElementById('submitBtn').disabled = !allValid;
+}
 
-            const password = document.getElementById('password').value;
-            const passwordTooltip = document.getElementById('passwordTooltip');
-            // Controllo Password
-            if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password)) {
-                passwordTooltip.classList.add('visible');
-                validPswd = false;
-                buttonActivate();
-                return validPswd;
-            } else {
-                passwordTooltip.classList.remove('visible');
-                validPswd = true;
-                buttonActivate();
-                return validPswd;
-            }
+// TYPES VALIDATION
+const typeCheckboxes = document.querySelectorAll('input[name="types[]"]');
+typeCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', checkFormRestaurantTypes);
+});
 
-        }
+function checkFormRestaurantTypes() {
+    validTypes = Array.from(typeCheckboxes).some(checkbox => checkbox.checked);
+    const typesError = document.getElementById('typesError');
+    if (validTypes) {
+        typesError.style.display = 'none';
+    } else {
+        typesError.style.display = 'inline';
+    }
+    buttonActivate();
+}
 
-        function checkFormUserPasswordConfirm() {
-            const password = document.getElementById('password').value;
-            const passwordConfirm = document.getElementById('password-confirm').value;
-            const passwordConfirmTooltip = document.getElementById('password-confirmTooltip');
-            // Controllo Password di conferma
-            if (passwordConfirm !== password) {
-                passwordConfirmTooltip.classList.add('visible');
-                validPswdConfirm = false;
-                buttonActivate();
-                return validPswdConfirm;
-            } else {
-                validPswdConfirm = true;
-                passwordConfirmTooltip.classList.remove('visible');
-                buttonActivate();
-                return validPswdConfirm;
-            }
+// funzione che cambia l'anteprima del file caricato (opzionale)
+// function showImg(event) {
+//     const thumb = document.getElementById('thumb');
+//     thumb.src = URL.createObjectURL(event.target.files[0]);
+// }
 
-        }
-
-        function buttonActivate() {
-            if (validNameR &&
-                validAddress && validPiva && validName && validEmail && validPswdConfirm && validTypes /* && validPswd */
-            ) {
-                document.getElementById('submitBtn').disabled = false;
-            } else {
-                document.getElementById('submitBtn').disabled = true;
-            }
-        }
-
-        /* TYPES VALIDATION */
-        const typeCheckboxes = document.querySelectorAll('input[name="types[]"]');
-        typeCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', checkFormRestaurantTypes);
-        });
-
-        // Function to validate the types checkboxes
-        function checkFormRestaurantTypes() {
-            const typesError = document.getElementById('typesError');
-
-            // Check if at least one checkbox is checked
-            typeCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    validTypes = true;
-                    buttonActivate();
-                    return validTypes;
-                }
-            });
-
-            // Show or hide error message based on the validation
-            if (!validTypes) {
-                typesError.style.display = 'inline';
-            } else {
-                typesError.style.display = 'none';
-            }
-        }
-
-
-        // funzione che cambia l'anteprima del file caricato
-        /* function showImg(event) {
-            const thumb = document.getElementById('thumb');
-            thumb.src = URL.createObjectURL(event.target.files[0]);
-        } */
     </script>
 @endsection
