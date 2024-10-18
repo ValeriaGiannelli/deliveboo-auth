@@ -119,80 +119,97 @@
     {{-- funzioni --}}
     <script>
         //Listener per i campi
-        document.getElementById('name').addEventListener('input', checkForm);
-        document.getElementById('ingredients_descriptions').addEventListener('input', checkForm);
-        document.getElementById('price').addEventListener('input', checkForm);
-        document.getElementById('visible').addEventListener('click', checkForm);
-        document.getElementById('not_visible').addEventListener('click', checkForm);
+        document.getElementById('name').addEventListener('input', checkFormProductName);
+        document.getElementById('ingredients_descriptions').addEventListener('input', checkFormProductIngredients);
+        document.getElementById('price').addEventListener('input', checkFormProductPrice);
+        document.getElementById('visible').addEventListener('click', checkboxValidate);
+        document.getElementById('not_visible').addEventListener('click', checkboxValidate);
+        let validName;
+        let validIngredients;
+        let validPrice;
+        let validCheck;
 
-
-        //Check campi
-        function checkForm() {
-            let validName = false;
-            let validIngredients = false;
-            let validPrice = false;
+        function checkFormProductName() {
+            //restaurant
             const name = document.getElementById('name').value;
-            const ingredients_descriptions = document.getElementById('ingredients_descriptions').value;
-            const price = document.getElementById('price').value;
             const nameTooltip = document.getElementById('nameTooltip');
-            const ingredientsTooltip = document.getElementById('ingredientsTooltip');
-            const priceTooltip = document.getElementById('priceTooltip');
-
-
-
             //controllo campo nome
             if (name.length >= 0 && name.length < 2) {
                 nameTooltip.classList.add('visible');
                 validName = false;
+                buttonActivate();
+                return validName;
             } else {
-                validName = true;
                 nameTooltip.classList.remove('visible');
+                validName = true;
+                buttonActivate();
+                return validName;
             }
+        }
+
+        function checkFormProductIngredients() {
+            const ingredients_descriptions = document.getElementById('ingredients_descriptions').value;
+            const ingredientsTooltip = document.getElementById('ingredientsTooltip');
             //Controllo ingredienti
             if (ingredients_descriptions.length >= 0 && ingredients_descriptions.length < 2) {
                 ingredientsTooltip.classList.add('visible');
                 validIngredients = false;
+                buttonActivate();
+                return validIngredients;
             } else {
-                validIngredients = true;
                 ingredientsTooltip.classList.remove('visible');
-
+                validIngredients = true;
+                buttonActivate();
+                return validIngredients;
             }
+        }
+
+        function checkFormProductPrice() {
+            const price = document.getElementById('price').value;
+            const priceTooltip = document.getElementById('priceTooltip');
             //Controllo price
             if (!isNaN(price) && price > 0) {
                 priceTooltip.classList.remove('visible');
                 validPrice = true;
-                console.log(validPrice);
+                buttonActivate();
+                return validPrice;
 
             } else {
                 validPrice = false;
                 priceTooltip.classList.add('visible');
-                console.log(validPrice);
-
+                buttonActivate();
+                return validPrice;
             }
+        }
 
-            checkboxValidate();
-
-            //Bottoni
-            if (validName && validIngredients && validPrice && checkboxValidate()) {
+        function buttonActivate() {
+            if (validName && validPrice && validIngredients && validCheck) {
                 document.getElementById('submitBtn').disabled = false;
-            } else {
+            } else if ((validName || validPrice || validIngredients || validCheck)) {
                 document.getElementById('submitBtn').disabled = true;
             }
-
         }
 
         function checkboxValidate() {
-            const visibleChecked = document.querySelector('input[name="visible"]:checked');
+            //const visibleChecked = document.querySelector('input[name="visible"]');
+            const visible = document.getElementById('visible');
+            const notvisible = document.getElementById('not_visible');
             const visibleError = document.getElementById('visibleError');
 
-            if (!visibleChecked) {
+            if (!visible.checked && !notvisible.checked) {
                 visibleError.style.display = 'block';
-                return false;
-            } else {
+                validCheck = false;
+                buttonActivate();
+                return validCheck;
+            } else if (visible.checked || notvisible.checked) {
                 visibleError.style.display = 'none';
-                return true;
+                validCheck = true;
+                buttonActivate();
+                return validCheck;
             }
         }
+
+
 
 
         // funzione che cambia l'anteprima del file caricato
