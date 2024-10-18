@@ -79,6 +79,7 @@
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="passwordError"></small>
 
+                                    {{-- errori back-end --}}
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -96,6 +97,7 @@
                             <div class="mb-4 row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right"
                                     id="password-confirmErrorLabel">{{ __('Confirm Password') }}</label>
+
                                 {{-- CONTROLLO PASSWORD --}}
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
@@ -111,35 +113,30 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="mb-4 row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary" id="btn-register" disabled>
-                                        {{ __('Register') }}
-                                    </button>
-                                </div>
-                            </div> --}}
-                            {{-- </form> --}}
-                            {{-- ************************************************************************************ --}}
-                            {{-- Form ristorante --}}
-                            {{-- Name --}}
-                            {{-- <form class="row g-3" method="POST"
-                            enctype="multipart/form-data" onsubmit="return validateForm()" id="form2">
-                            @csrf --}}
-                            <div class="col-md-6 position-relative">
-                                <label for="restaurant_name" class="form-label " id="nameErrorLabelRestaurant">Nome del
+                            {{-- FORM RISTORANTE --}}
+
+                            <div class="mb-4 row">
+                                <label for="restaurant_name" class="col-md-4 col-form-label text-md-right" id="nameErrorLabelRestaurant">Nome del
                                     ristorante
                                     (*)</label>
-                                <input type="text" class="form-control {{-- @error('name') is-invalid @enderror --}}" id="restaurant_name"
+
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="restaurant_name"
                                     name="restaurant_name" placeholder="Scrivi il nome del ristorante"
                                     value="{{ old('restaurant_name') }}" required>
-                                {{-- Errori front-office --}}
-                                <div class="tooltip-error col" id="nameRestaurantTooltip">Il Nome del ristorante è
-                                    obbligatorio e deve
-                                    avere
-                                    almeno 2
-                                    caratteri.</div>
+                                </div>
+
                                 <small class="text-danger" id="nameErrorRestaurant"></small>
-                                {{-- Errorri back-office --}}
+                                {{-- Errori front-end --}}
+                                <div class="col-md-6 position-relative">
+                                    <div class="tooltip-error col" id="nameRestaurantTooltip">Il Nome del ristorante è
+                                        obbligatorio e deve
+                                        avere
+                                        almeno 2
+                                        caratteri.</div>
+                                </div>
+
+                                {{-- Errorri back-end --}}
                                 {{-- se esiste l'errore name stampa un messaggio anche sotto l'input --}}
                                 @error('restaurant_name')
                                     <small class="text-danger"> {{ $message }} </small>
@@ -147,74 +144,109 @@
 
                             </div>
                             {{-- Address --}}
-                            <div class="col-md-6 position-relative">
-                                <label for="address" class="form-label" id="addressErrorLabel">Indirizzo (*)</label>
-                                <input type="text" class="form-control {{-- @error('address') is-invalid @enderror --}}" id="address"
-                                    name="address" placeholder="Inserisci l'indirizzo" value="{{ old('address') }}"
-                                    required>
-                                {{-- Errori front-office --}}
-                                <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è obbligatorio e
-                                    deve avere
-                                    almeno
-                                    5
-                                    caratteri.</div>
+                            <div class="mb-4 row">
+                                <label for="address" class="col-md-4 col-form-label text-md-right" id="addressErrorLabel">Indirizzo (*)</label>
+
+                                <div class="col-md-6 ">
+                                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
+                                        name="address" placeholder="Inserisci l'indirizzo" value="{{ old('address') }}"
+                                        required>
+                                </div>
+
                                 <small class="text-danger" id="addressError"></small>
-                                {{-- @error('address')
-                                <small class="text-danger"> {{ $message }} </small>
-                            @enderror --}}
+
+                                {{-- Errori front-end --}}
+                                <div class="col md-6 position-relative">
+                                    <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è obbligatorio e
+                                        deve avere
+                                        almeno
+                                        5
+                                        caratteri.</div>
+
+                                </div>
+
+                                {{-- errori back-end --}}
+                                @error('address')
+                                    <small class="text-danger"> {{ $message }} </small>
+                                @enderror
+
                             </div>
                             {{-- Piva --}}
-                            <div class="col-md-6 position-relative">
-                                <label for="piva" class="form-label" id="pivaErrorLabel">P.Iva (11 caratteri)
+                            <div class="mb-4 row">
+                                <label for="piva" class="col-md-4 col-form-label text-md-right" id="pivaErrorLabel">P.Iva (11 caratteri)
                                     (*)</label>
-                                <input type="text" class="form-control {{-- @error('piva') is-invalid @enderror --}}" id="piva"
-                                    name="piva" placeholder="Inserisci la tua P.Iva" value="{{ old('piva') }}"
-                                    required pattern="\d{11}">
-                                {{-- Errori front-office --}}
-                                <div class="tooltip-error" id="pivaTooltip">La P.iva del ristorante è obbligatoria e deve
-                                    avere 11
-                                    caratteri.</div>
+
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control @error('piva') is-invalid @enderror" id="piva"
+                                        name="piva" placeholder="Inserisci la tua P.Iva" value="{{ old('piva') }}"
+                                        required pattern="\d{11}">
+                                </div>
+
                                 <small class="text-danger" id="pivaError"></small>
-                                {{-- @error('piva')
+                                {{-- Errori front-end --}}
+
+                                <div class="col md-6 position-relative">
+                                    <div class="tooltip-error" id="pivaTooltip">La P.iva del ristorante è obbligatoria e deve
+                                        avere 11
+                                        caratteri.</div>
+                                </div>
+
+                                {{-- errori back-end --}}
+                                @error('piva')
                                     <small class="text-danger"> {{ $message }} </small>
-                                @enderror --}}
+                                @enderror
                             </div>
 
                             {{-- caricamento img --}}
-                            <div class="col-12">
-                                <label for="img" class="form-label">Immagine (*)</label>
-                                <input type="file" name="img" id="img" class="form-control" multiple
-                                    accept="image/*" required>
+                            <div class="mb-4 row">
+                                <label for="img" class="col-md-4 col-form-label text-md-right">Immagine (*)</label>
+
+                                <div class="col-md-6">
+                                    <input type="file" name="img" id="img" class="form-control" multiple
+                                        accept="image/*" required>
+                                </div>
 
                                 {{-- anteprima dell'immagine caricata --}}
                                 {{-- <img src="/img/no_img.jpg" class="thumb-mini" id="thumb"> --}}
                             </div>
-                            {{-- @error('img')
-                                    <small class="text-danger"> {{ $message }} </small>
-                                @enderror --}}
+
+                            {{-- errori back-end --}}
+                            @error('img')
+                                <small class="text-danger"> {{ $message }} </small>
+                            @enderror
 
                             {{-- Descrizione --}}
-                            <div class="col-12">
-                                <label for="description" class="form-label">Descrizione del ristorante</label>
-                                <textarea class="form-control" name="description" id="description" cols="30" rows="10"
-                                    placeholder="Descrivi il tuo ristorante">{{ old('description') }}</textarea>
+                            <div class="mb-4 row">
+                                <label for="description" class="col-md-4 col-form-label text-md-right">Descrizione del ristorante</label>
+
+                                <div class="col-md-6">
+                                    <textarea class="form-control" name="description" id="description" cols="30" rows="5"
+                                        placeholder="Descrivi il tuo ristorante">{{ old('description') }}</textarea>
+                                </div>
                             </div>
 
-                            {{-- chechbox per le Tipologia di ristorante --}}
-                            <label for="types" class="form-label">Tipologia di ristorante: (*)</label>
-                            <div class="btn-group d-flex flex-wrap" role="group"
-                                aria-label="Basic checkbox toggle button group">
-                                @foreach ($types as $type)
-                                    <input name="types[]" value="{{ $type->id }}" type="checkbox" class="btn-check"
-                                        id="type-{{ $type->id }}" autocomplete="off"
-                                        @if (in_array($type->id, old('types', []))) checked @endif>
-                                    <label class="btn btn-outline-primary"
-                                        for="type-{{ $type->id }}">{{ $type->name }}</label>
-                                    <small class="text-danger" name="typesError"></small>
-                                @endforeach
-                                <small class="text-danger" id="typesError" style="display:none;">Seleziona almeno una
-                                    tipologia di ristorante.</small>
+
+                            {{-- Descrizione --}}
+                            <div class="mb-4 row">
+                                <label for="types" class="col-md-4 col-form-label text-md-right">Tipologia di ristorante: (*)</label>
+
+                                <div class="col-md-6 d-flex flex-wrap">
+                                    @foreach ($types as $type)
+                                        <div class="form-check">
+                                            <input name="types[]" value="{{ $type->id }}" type="checkbox" class="form-check-input"
+                                                id="type-{{ $type->id }}" autocomplete="off"
+                                                @if (in_array($type->id, old('types', []))) checked @endif>
+                                            <label class="form-check-label me-3"
+                                                for="type-{{ $type->id }}">{{ $type->name }}</label>
+                                        </div>
+                                    @endforeach
+                                    <small class="text-danger" id="typesError" style="display:none">Seleziona almeno una
+                                        tipologia di ristorante.</small>
+                                </div>
+
                             </div>
+
+
                             {{-- BOTTONI PER INVIO FORM
                             ******************************************************************************** --}}
                             <div class="col-12">
