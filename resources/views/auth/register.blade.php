@@ -7,6 +7,18 @@
                 <div class="card">
                     <div class="card-header">{{ __('Register') }}</div>
 
+                    {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
+                    @if($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    @endif
+
                     <div class="card-body">
                         {{-- FORM UTENTE --}}
                         <form method="POST" action="{{ route('register') }}" onsubmit="return validateForm()"
@@ -249,6 +261,11 @@
 
                                     <small class="text-danger" id="typesError" style="display:none">Seleziona almeno una
                                         tipologia di ristorante.</small>
+
+                                    {{-- errori back-end --}}
+                                    @error('types')
+                                        <small class="text-danger"> {{ $message }} </small>
+                                    @enderror
                                 </div>
 
                             </div>

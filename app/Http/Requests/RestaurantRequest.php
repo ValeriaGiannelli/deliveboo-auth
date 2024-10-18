@@ -32,6 +32,8 @@ class RestaurantRequest extends FormRequest
             'piva' => 'required|min:11|max:11',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'max:500',
+            'types' => 'required|array|min:1',
+            'types.*' => 'exists:types,id',
         ];
     }
 
@@ -64,6 +66,8 @@ class RestaurantRequest extends FormRequest
             'img.mimes' => 'Le immagini devono essere di tipo jpeg, png, jpg o gif.',
             'img.max' => 'L\'immagine non deve superare i 2 MB.',
             'description.max' => 'La descrizione deve avere massimo :max caratteri',
+            'types.required' => 'Devi selezionare almeno una tipologia di ristorante.',
+            'types.*.exists' => 'La tipologia selezionata non è valida.',
         ];
     }
 }
