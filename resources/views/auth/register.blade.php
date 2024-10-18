@@ -246,6 +246,7 @@
                                                 for="type-{{ $type->id }}">{{ $type->name }}</label>
                                         </div>
                                     @endforeach
+
                                     <small class="text-danger" id="typesError" style="display:none">Seleziona almeno una
                                         tipologia di ristorante.</small>
                                 </div>
@@ -401,7 +402,7 @@
         let validEmail;
         let validPswd;
         let validPswdConfirm;
-        let validTypes;
+        let validTypes = false;
         //Check campi
         function checkFormRestaurantName() {
             //restaurant
@@ -564,18 +565,20 @@
         /* TYPES VALIDATION */
         const typeCheckboxes = document.querySelectorAll('input[name="types[]"]');
         typeCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', checkFormRestaurantTypes);
+            checkbox.addEventListener('click', checkFormRestaurantTypes);
         });
 
         // Function to validate the types checkboxes
         function checkFormRestaurantTypes() {
+            validTypes = false;
             const typesError = document.getElementById('typesError');
 
             // Check if at least one checkbox is checked
             typeCheckboxes.forEach(checkbox => {
                 if (checkbox.checked) {
                     validTypes = true;
-                    buttonActivate();
+                    // typesError.style.display = 'none';
+
                     return validTypes;
                 }
             });
@@ -586,6 +589,8 @@
             } else {
                 typesError.style.display = 'none';
             }
+
+            buttonActivate();
         }
 
 
