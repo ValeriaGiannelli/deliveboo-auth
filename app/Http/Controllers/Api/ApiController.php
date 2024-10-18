@@ -50,6 +50,15 @@ class ApiController extends Controller
         
     }
 
+    public function restaurant(Restaurant $restaurant){
+        
+        // recupero il singolo ristorante con l'id
+        $restaurant = Restaurant::where('id', $restaurant->id)->first();
+
+        return response()->json($restaurant);
+    }
+
+
     // tutti i prodotti del ristorante selezionato
     public function restaurantProducts(Restaurant $restaurant){
 
