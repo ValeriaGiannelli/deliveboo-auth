@@ -58,7 +58,7 @@
                     <div class="col-12">
                         <label for="img" class="form-label">Immagine prodotto (*)</label>
                         <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)"
-                            required>
+                        accept="image/*" required>
 
 
                         {{-- Errori front-end --}}
