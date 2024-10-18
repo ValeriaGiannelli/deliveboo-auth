@@ -34,9 +34,20 @@ class ApiController extends Controller
             $data = Restaurant::whereHas('types', function ($query) use ($typeNamesArray){
                 $query->whereIn('name', $typeNamesArray);
             })->orderBy('restaurant_name')->get();
+
+            // mando immagine all'api
+            foreach($data as $restaurant){
+                $restaurant->img = url('storage/' . $restaurant->img);
+            }
         } else {
+
             // se gli id non ci sono come query, prendo tutti i ristoranti in ordine alfabetico
             $data = Restaurant::orderBy('restaurant_name')->get();
+
+            // mando immagine all'api
+            foreach($data as $restaurant){
+                $restaurant->img = url('storage/' . $restaurant->img);
+            }
         }
 
         // se data ha almeno un risultato mando un json con le informazioni
@@ -55,6 +66,10 @@ class ApiController extends Controller
         // recupero il singolo ristorante con l'id
         $restaurant = Restaurant::where('id', $restaurant->id)->first();
 
+        // mandare immagine all'API
+        $restaurant->img = url('storage/' . $restaurant->img);
+        
+
         return response()->json($restaurant);
     }
 
@@ -64,6 +79,11 @@ class ApiController extends Controller
 
         // Recupero i prodotti del ristorante selezionato
         $products = Product::where('restaurant_id', $restaurant->id)->orderBy('name')->get();
+
+        // mandare immagine all'API
+        foreach($products as $product){
+            $product->img = url('storage/' . $product->img);
+        }
     
         // Restituisco i dati al front-end in formato JSON
         return response()->json($products);
