@@ -40,11 +40,12 @@ class ApiController extends Controller
         }
 
         // se data ha almeno un risultato mando un json con le informazioni
-        if (count($data)){
+        if ($data->isNotEmpty()){
             return response()->json($data);
         } else {
             // altrimenti mando un messaggio di errore
-        }   return response()->json(['message' => 'Non ci sono ristoranti con queste tipologie'], 404);
+            return response()->json(['message' => 'Non ci sono ristoranti con queste tipologie'], 404);
+        }   
 
         
     }
