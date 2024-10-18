@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// sulla home ci servono tutte le tipologie
+Route::get('/types', [ApiController::class, 'types']);
+
+// tutti i ristoranti filtrati o no, da mandare sulla home in ordine alfabetico, per filtrarli aggiunge la query types=1,2,3...
+Route::get('/restaurants', [ApiController::class, 'restaurants']);
+
+// tutti i prodotti del ristorante selezionato
+Route::get('/restaurants/{restaurant}/products', [ApiController::class, 'restaurantProducts']);
+
