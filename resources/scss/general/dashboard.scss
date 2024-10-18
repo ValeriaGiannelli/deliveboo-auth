@@ -28,3 +28,7 @@
 .thumb-mini{
     width: 50px;
 }
+
+.title {
+    @include font-size(4rem);
+}

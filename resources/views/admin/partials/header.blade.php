@@ -1,12 +1,11 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container-fluid d-flex justify-content-between">
+    <div class="container-fluid d-flex flex-nowrap justify-content-between">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <div>
-                <img style="max-height: 50px" src="{{ asset('images/FULL_LOGO.svg') }}" alt="">
+            <div class="col-8">
+                <img class="logo" src="{{ asset('images/FULL_LOGO.svg') }}" alt="">
             </div>
             {{-- config('app.name', 'Laravel') --}}
         </a>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>

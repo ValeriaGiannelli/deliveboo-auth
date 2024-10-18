@@ -1,18 +1,28 @@
 <aside class="my-3">
-    <ul class="list-group navbar-nav">
+    <ul class="list-group">
         <li class="{{ Route::is('admin.restaurants.index') ? 'active' : '' }}">
-            <a href="{{ route('home') }}"><span>Home</span></a>
+            <a href="{{ route('home') }}">
+                <i class="fas fa-home"></i>
+                <span class="nav-text ms-2 d-none d-md-inline">Home</span>
+            </a>
         </li>
         <li class="{{ Route::is('admin.products.index') ? 'active' : '' }}">
-            <a href="{{ route('admin.products.index') }}"><span>Menu</span></a>
+            <a href="{{ route('admin.products.index') }}">
+                <i class="fas fa-utensils"></i>
+                <span class="nav-text ms-2 d-none d-md-inline">Menu</span>
+            </a>
         </li>
         <li class="{{ Route::is('admin.products.create') ? 'active' : '' }}">
-            <a href="{{ route('admin.products.create') }}"><span>Aggiungi
-                    piatti</span></a>
+            <a href="{{ route('admin.products.create') }}">
+                <i class="fas fa-plus"></i>
+                <span class="nav-text ms-2 d-none d-md-inline">Aggiungi piatti</span>
+            </a>
         </li>
         <li class="{{ Route::is('admin.sales.index') ? 'active' : '' }}">
-            <a href="{{ route('admin.sales.index') }}"><span>Gestione
-                    Ordini</span></a>
+            <a href="{{ route('admin.sales.index') }}">
+                <i class="fas fa-receipt"></i>
+                <span class="nav-text ms-2 d-none d-md-inline">Gestione Ordini</span>
+            </a>
         </li>
     </ul>
 </aside>
