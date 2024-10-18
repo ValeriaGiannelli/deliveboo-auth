@@ -16,7 +16,7 @@
                     <div class="mb-3">
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <img src="{{ $restaurant->img }}" class="img-fluid rounded-start"
+                                <img src="{{ asset('storage/' . $restaurant->img) }}" class="img-fluid rounded-start"
                                     alt="{{ $restaurant->name }}">
                             </div>
                             <div class="col-md-8">
