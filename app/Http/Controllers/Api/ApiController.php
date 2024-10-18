@@ -24,15 +24,15 @@ class ApiController extends Controller
     public function restaurants(Request $request){
 
         // ID tramite query
-        $typeIds = $request->query('types');
+        $typeNames = $request->query('types');
 
         // se ci sono gli id, divido la stringa in un array
-        if ($typeIds){
-            $typeIdsArray = explode(',', $typeIds);
+        if ($typeNames){
+            $typeNamesArray = explode(',', $typeNames);
 
             // filtro i ristoranti in base all'array degli id delle tipologie, e li ordino in nome alfabetico
-            $data = Restaurant::whereHas('types', function ($query) use ($typeIdsArray){
-                $query->whereIn('type_id', $typeIdsArray);
+            $data = Restaurant::whereHas('types', function ($query) use ($typeNamesArray){
+                $query->whereIn('name', $typeNamesArray);
             })->orderBy('restaurant_name')->get();
         } else {
             // se gli id non ci sono come query, prendo tutti i ristoranti in ordine alfabetico
