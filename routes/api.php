@@ -25,6 +25,9 @@ Route::get('/types', [ApiController::class, 'types']);
 // tutti i ristoranti filtrati o no, da mandare sulla home in ordine alfabetico, per filtrarli aggiunge la query types=1,2,3...
 Route::get('/restaurants', [ApiController::class, 'restaurants']);
 
+// singolo ristorante
+Route::get('restaurant/{restaurant}', [ApiController::class, 'restaurant']);
+
 // tutti i prodotti del ristorante selezionato
 Route::get('/restaurants/{restaurant}/products', [ApiController::class, 'restaurantProducts']);
 
