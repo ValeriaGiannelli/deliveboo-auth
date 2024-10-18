@@ -553,7 +553,7 @@
 
         function buttonActivate() {
             if (validNameR &&
-                validAddress && validPiva && validName && validEmail && validPswdConfirm && validTypes /* && validPswd */
+                validAddress && validPiva && validName && validEmail && validPswdConfirm && validTypes && validImg
             ) {
                 document.getElementById('submitBtn').disabled = false;
             } else {

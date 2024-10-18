@@ -60,6 +60,13 @@
                         <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)"
                             required>
 
+
+                        {{-- Errori front-end --}}
+
+                        <div class="col-md-6 position-relative">
+                            <div class="tooltip-error" id="imgTooltip">L'immagine è obbligatoria.</div>
+                        </div>
+
                         {{-- anteprima dell'immagine caricata --}}
                         <img src="{{ asset('storage/uploads/no_img.jpg') }}" class="thumb-mini" id="thumb">
 
@@ -124,8 +131,12 @@
         document.getElementById('price').addEventListener('input', checkFormProductPrice);
         document.getElementById('visible').addEventListener('click', checkboxValidate);
         document.getElementById('not_visible').addEventListener('click', checkboxValidate);
+        document.getElementById('img').addEventListener('click', checkFormRestaurantImg);
+        document.getElementById('img').addEventListener('input', checkFormRestaurantImg);
+
         let validName;
         let validIngredients;
+        let validImg;
         let validPrice;
         let validCheck;
 
@@ -164,6 +175,26 @@
             }
         }
 
+        function checkFormRestaurantImg() {
+            // se valore non esiste alert
+            const img = document.getElementById('img').value;
+            const imgTooltip = document.getElementById('imgTooltip');
+            //Controllo Piva
+            if (img.length > 0 ) {
+                // console.log('aggiunto un file');
+                validImg = true;
+                imgTooltip.classList.remove('visible');
+                buttonActivate();
+                return validImg;
+            } else {
+                // console.log('Non ci sono file');
+                imgTooltip.classList.add('visible');
+                validImg = false;
+                buttonActivate();
+                return validImg;
+            }
+        }
+
         function checkFormProductPrice() {
             const price = document.getElementById('price').value;
             const priceTooltip = document.getElementById('priceTooltip');
@@ -183,7 +214,7 @@
         }
 
         function buttonActivate() {
-            if (validName && validPrice && validIngredients && validCheck) {
+            if (validName && validPrice && validIngredients && validCheck && validImg) {
                 document.getElementById('submitBtn').disabled = false;
             } else if ((validName || validPrice || validIngredients || validCheck)) {
                 document.getElementById('submitBtn').disabled = true;

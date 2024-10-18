@@ -58,7 +58,7 @@
 
                 {{-- caricamento img --}}
                 <div class="col-12 position-relative">
-                    <label for="img" class="form-label">Immagine prodotto (*)</label>
+                    <label for="img" class="form-label">Scegli una nuova immagine</label>
                     <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)"
                         accept="image/*">
 
@@ -70,6 +70,7 @@
                         <small class="text-danger"> {{ $message }} </small>
                     @enderror
 
+                    <small class="form-label">Immagine attuale</small>
                     <img src="{{ old('img') ? asset('storage/' . old(img)) : asset('storage/' . $product->img) }}"
                         alt="{{ $product->name }}" onerror="this.src='{{ asset('storage/uploads/no_img.jpg') }}'"
                         class="thumb-mini" id="thumb">
