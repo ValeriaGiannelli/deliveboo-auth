@@ -206,6 +206,12 @@
                                         accept="image/*" required>
                                 </div>
 
+                                {{-- Errori front-end --}}
+
+                                <div class="col-md-6 position-relative">
+                                    <div class="tooltip-error" id="imgTooltip">L'immagine è obbligatoria.</div>
+                                </div>
+
                                 {{-- anteprima dell'immagine caricata --}}
                                 {{-- <img src="/img/no_img.jpg" class="thumb-mini" id="thumb"> --}}
                             </div>
@@ -360,6 +366,8 @@
         document.getElementById('restaurant_name').addEventListener('input', checkFormRestaurantName);
         document.getElementById('address').addEventListener('input', checkFormRestaurantAddress);
         document.getElementById('piva').addEventListener('input', checkFormRestaurantPiva);
+        document.getElementById('img').addEventListener('click', checkFormRestaurantImg);
+        document.getElementById('img').addEventListener('input', checkFormRestaurantImg);
         //Listener per i campi
         document.getElementById('name').addEventListener('input', checkFormUserName);
         document.getElementById('email').addEventListener('input', checkFormUserEmail);
@@ -388,6 +396,7 @@
         let validNameR;
         let validAddress;
         let validPiva;
+        let validImg;
         let validName;
         let validEmail;
         let validPswd;
@@ -446,6 +455,27 @@
                 pivaTooltip.classList.remove('visible');
                 buttonActivate();
                 return validPiva;
+            }
+        }
+
+
+        function checkFormRestaurantImg() {
+            // se valore non esiste alert
+            const img = document.getElementById('img').value;
+            const imgTooltip = document.getElementById('imgTooltip');
+            //Controllo Piva
+            if (img.length > 0 ) {
+                // console.log('aggiunto un file');
+                validImg = true;
+                imgTooltip.classList.remove('visible');
+                buttonActivate();
+                return validImg;
+            } else {
+                // console.log('Non ci sono file');
+                imgTooltip.classList.add('visible');
+                validImg = false;
+                buttonActivate();
+                return validImg;
             }
         }
 
