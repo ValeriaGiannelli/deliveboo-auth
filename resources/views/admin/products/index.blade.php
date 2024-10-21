@@ -1,3 +1,7 @@
+@section('titlePage')
+    Menu
+@endsection
+
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid d-flex my-4">
@@ -32,12 +36,12 @@
                                 <a class="btn btn-warning" href="{{route('admin.products.edit', $product)}}">
                                     Modifica
                                 </a>
-                    
+
                                 <!-- Trigger della Modal -->
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $product->id }}">
                                     Elimina
                                 </button>
-                    
+
                                 <!-- Modal -->
                                 <div class="modal fade" id="deleteModal{{ $product->id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ $product->id }}" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -67,9 +71,9 @@
                     </tbody>
                 </table>
             </div>
-            
+
         @else
-            <div class="container-fluid my-5 text-center">  
+            <div class="container-fluid my-5 text-center">
                 <h2 class="text-center my-5">Non ci sono prodotti</h2>
 
                 <a href="{{ route('admin.products.create') }}" class="btn btn-warning">Aggiungi Nuovo Piatto</a>
@@ -81,9 +85,9 @@
         function deleteProduct(){
             document.getElementById("delete-product").submit();
         }
-        
+
     </script>
 
-    
+
 @endsection
 

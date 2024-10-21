@@ -1,3 +1,7 @@
+@section('titlePage')
+    Registrazione
+@endsection
+
 @extends('layouts.app')
 
 @section('content')
