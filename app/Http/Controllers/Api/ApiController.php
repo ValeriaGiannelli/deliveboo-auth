@@ -20,51 +20,55 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    // tutti i ristoranti da mandare sulla home in ordine alfabetico
     public function restaurants(Request $request){
 
-        // ID tramite query
+        // Tipologie tramite query (ad es. 'ITALIANO,CINESE')
         $typeNames = $request->query('types');
-
-        // se ci sono gli id, divido la stringa in un array
-        if ($typeNames){
+    
+        // se ci sono le tipologie, divido la stringa in un array
+        if ($typeNames) {
             $typeNamesArray = explode(',', $typeNames);
-
-            // filtro i ristoranti in base all'array degli id delle tipologie, e li ordino in nome alfabetico
-            $data = Restaurant::whereHas('types', function ($query) use ($typeNamesArray){
-                $query->whereIn('name', $typeNamesArray);
-            })->orderBy('restaurant_name')->get();
-
-            // mando immagine all'api
-            foreach($data as $restaurant){
+    
+            // Filtro i ristoranti che hanno tutte le tipologie selezionate e carico anche le tipologie associate
+            $data = Restaurant::where(function ($query) use ($typeNamesArray) {
+                foreach ($typeNamesArray as $typeName) {
+                    $query->whereHas('types', function ($query) use ($typeName) {
+                        $query->where('name', $typeName);
+                    });
+                }
+            })->with('types') // Carica anche le tipologie con i ristoranti
+              ->orderBy('restaurant_name')->get();
+    
+            // mando immagine all'api e aggiungo le tipologie
+            foreach($data as $restaurant) {
                 $restaurant->img = url('storage/' . $restaurant->img);
+    
             }
+    
         } else {
-
-            // se gli id non ci sono come query, prendo tutti i ristoranti in ordine alfabetico
-            $data = Restaurant::orderBy('restaurant_name')->get();
-
-            // mando immagine all'api
-            foreach($data as $restaurant){
+            // Se non ci sono tipologie nella query, prendo tutti i ristoranti in ordine alfabetico e le loro tipologie
+            $data = Restaurant::with('types')->orderBy('restaurant_name')->get();
+    
+            // mando immagine all'api e aggiungo le tipologie
+            foreach($data as $restaurant) {
                 $restaurant->img = url('storage/' . $restaurant->img);
+    
             }
         }
-
-        // se data ha almeno un risultato mando un json con le informazioni
-        if ($data->isNotEmpty()){
+    
+        // Se ci sono risultati, restituisco i dati, altrimenti un messaggio di errore
+        if ($data->isNotEmpty()) {
             return response()->json($data);
         } else {
-            // altrimenti mando un messaggio di errore
             return response()->json(['message' => 'Non ci sono ristoranti con queste tipologie'], 404);
-        }   
-
-        
+        }
     }
+    
 
     public function restaurant(Restaurant $restaurant){
         
         // recupero il singolo ristorante con l'id
-        $restaurant = Restaurant::where('id', $restaurant->id)->first();
+        $restaurant = Restaurant::where('id', $restaurant->id)->with('types')->first();
 
         // mandare immagine all'API
         $restaurant->img = url('storage/' . $restaurant->img);

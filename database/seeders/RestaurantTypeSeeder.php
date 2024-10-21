@@ -15,17 +15,35 @@ class RestaurantTypeSeeder extends Seeder
     public function run(): void
     {
         //estrazione random dei tipi per i 5 ristoranti
-        for($i = 0; $i < 15; $i++){
+        for($i = 1; $i < 6; $i++){
+            
             // estraggo ristorante
-            $restaurant = Restaurant::inRandomOrder()->first();
+            $restaurant = Restaurant::where('id', $i)->first();
 
-            // estraggo l'id di un type
-            $type_id = Type::inRandomOrder()->first()->id;
+            $random = rand(1,3);
 
-            // dump($restaurant);
+            // Assegniamo tipologie uniche fino a raggiungere il numero desiderato
+            $assignedTypes = [];
+            
+            for($e = 1; $e <= $random; $e++){
+                
+                do {
 
-            // aggiungo la relazione fra il ristorante estratto e l'ide del type estratto
-            $restaurant->types()->attach($type_id);
+                    // Estrai casualmente un id di type
+                    $type_id = Type::inRandomOrder()->first()->id;
+
+                    // Controlla se il type_id è già stato associato a questo ristorante
+                    $alreadyAttached = $restaurant->types()->where('type_id', $type_id)->exists();
+
+                } while ($alreadyAttached || in_array($type_id, $assignedTypes));
+
+                    // Aggiungi alla lista di tipi assegnati
+                    $assignedTypes[] = $type_id;
+
+                    // Aggiungi la relazione tra il ristorante e il tipo estratto
+                    $restaurant->types()->attach($type_id);
+                
+            }
         }
     }
 }
