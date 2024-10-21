@@ -1,3 +1,7 @@
+@section('titlePage')
+    Login
+@endsection
+
 @extends('layouts.app')
 
 @section('content')

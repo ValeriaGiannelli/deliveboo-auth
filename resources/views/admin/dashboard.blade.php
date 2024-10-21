@@ -1,3 +1,7 @@
+@section('titlePage')
+    Home
+@endsection
+
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid my-4">

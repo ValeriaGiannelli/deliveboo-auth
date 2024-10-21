@@ -1,3 +1,7 @@
+@section('titlePage')
+    Nuovo piatto
+@endsection
+
 {{-- questa view estende il file main.blade.php che è dentro la cartella view/layouts --}}
 @extends('layouts.app')
 

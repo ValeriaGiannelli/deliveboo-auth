@@ -1,3 +1,7 @@
+@section('titlePage')
+    Ordini
+@endsection
+
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid d-flex my-4">

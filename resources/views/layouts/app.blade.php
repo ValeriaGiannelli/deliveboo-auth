@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Deliveboo - dashboard</title>
+    <title>Deliveboo - @yield('titlePage')</title>
 
      <link rel="icon" href="{{ asset('images/LOGO.svg') }}" type="image/svg+xml">
 
