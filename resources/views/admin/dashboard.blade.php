@@ -20,7 +20,7 @@
                     <div class="mb-3">
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <img src="{{ $restaurant->image ? asset('storage/' . $restaurant->img) : asset('storage/uploads/no_img.jpg') }}"
+                                <img src="{{ $restaurant->img ? asset('storage/' . $restaurant->img) : asset('storage/uploads/no_img.jpg') }}"
                                     class="img-fluid rounded-start" alt="{{ $restaurant->name }}">
                             </div>
                             <div class="col-md-8">
