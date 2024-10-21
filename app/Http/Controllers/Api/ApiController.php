@@ -60,7 +60,7 @@ class ApiController extends Controller
         if ($data->isNotEmpty()) {
             return response()->json($data);
         } else {
-            return response()->json(['message' => 'Non ci sono ristoranti con queste tipologie'], 404);
+            return response()->json(['message' => 'Non ci sono ristoranti con queste tipologie']);
         }
     }
     
