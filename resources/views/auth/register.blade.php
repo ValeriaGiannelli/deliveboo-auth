@@ -12,15 +12,14 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
-                    @if($errors->any())
+                    @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{$error}}</li>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
-
                     @endif
 
                     <div class="card-body">
@@ -31,12 +30,13 @@
 
                             <div class="mb-4 row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right"
-                                    id="nameErrorLabel">{{ __('Name') }}</label>
+                                    id="nameErrorLabel">{{ __('Username (*)') }}</label>
                                 {{-- NOME UTENTE --}}
                                 <div class="col-md-6 ">
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
-                                        value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        value="{{ old('name') }}" required autocomplete="name" autofocus
+                                        placeholder="Inserisci username">
 
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="nameError"></small>
@@ -58,13 +58,13 @@
 
                             <div class="mb-4 row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right"
-                                    id="emailErrorLabel">{{ __('E-Mail Address') }}</label>
+                                    id="emailErrorLabel">{{ __('E-Mail Address (*)') }}</label>
                                 {{-- EMAIL --}}
                                 <div class="col-md-6 position-relative">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email"
-                                        oninput="this.value = this.value.toLowerCase()">
+                                        oninput="this.value = this.value.toLowerCase()" placeholder="Inserisci email">
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="emailError"></small>
 
@@ -85,12 +85,12 @@
 
                             <div class="mb-4 row">
                                 <label for="password" class="col-md-4 col-form-label text-md-right"
-                                    id="passwordErrorLable">{{ __('Password') }}</label>
+                                    id="passwordErrorLable">{{ __('Password (*)') }}</label>
                                 {{-- PASSWORD --}}
                                 <div class="col-md-6">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password">
+                                        required autocomplete="new-password" placeholder="Inserisci password">
 
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="passwordError"></small>
@@ -112,7 +112,7 @@
 
                             <div class="mb-4 row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right"
-                                    id="password-confirmErrorLabel">{{ __('Confirm Password') }}</label>
+                                    id="password-confirmErrorLabel">{{ __('Confirm Password (*)') }}</label>
 
                                 {{-- CONTROLLO PASSWORD --}}
                                 <div class="col-md-6">
@@ -132,14 +132,16 @@
                             {{-- FORM RISTORANTE --}}
 
                             <div class="mb-4 row">
-                                <label for="restaurant_name" class="col-md-4 col-form-label text-md-right" id="nameErrorLabelRestaurant">Nome del
+                                <label for="restaurant_name" class="col-md-4 col-form-label text-md-right"
+                                    id="nameErrorLabelRestaurant">Nome del
                                     ristorante
                                     (*)</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="restaurant_name"
-                                    name="restaurant_name" placeholder="Scrivi il nome del ristorante"
-                                    value="{{ old('restaurant_name') }}" required>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="restaurant_name" name="restaurant_name"
+                                        placeholder="Scrivi il nome del ristorante" value="{{ old('restaurant_name') }}"
+                                        required>
                                 </div>
 
                                 <small class="text-danger" id="nameErrorRestaurant"></small>
@@ -161,19 +163,21 @@
                             </div>
                             {{-- Address --}}
                             <div class="mb-4 row">
-                                <label for="address" class="col-md-4 col-form-label text-md-right" id="addressErrorLabel">Indirizzo (*)</label>
+                                <label for="address" class="col-md-4 col-form-label text-md-right"
+                                    id="addressErrorLabel">Indirizzo (*)</label>
 
                                 <div class="col-md-6 ">
-                                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
-                                        name="address" placeholder="Inserisci l'indirizzo" value="{{ old('address') }}"
-                                        required>
+                                    <input type="text" class="form-control @error('address') is-invalid @enderror"
+                                        id="address" name="address" placeholder="Inserisci l'indirizzo"
+                                        value="{{ old('address') }}" required>
                                 </div>
 
                                 <small class="text-danger" id="addressError"></small>
 
                                 {{-- Errori front-end --}}
                                 <div class="col md-6 position-relative">
-                                    <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è obbligatorio e
+                                    <div class="tooltip-error" id="addressTooltip">L'indirizzo del ristorante è
+                                        obbligatorio e
                                         deve avere
                                         almeno
                                         5
@@ -189,20 +193,22 @@
                             </div>
                             {{-- Piva --}}
                             <div class="mb-4 row">
-                                <label for="piva" class="col-md-4 col-form-label text-md-right" id="pivaErrorLabel">P.Iva (11 caratteri)
+                                <label for="piva" class="col-md-4 col-form-label text-md-right"
+                                    id="pivaErrorLabel">P.Iva (11 caratteri)
                                     (*)</label>
 
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control @error('piva') is-invalid @enderror" id="piva"
-                                        name="piva" placeholder="Inserisci la tua P.Iva" value="{{ old('piva') }}"
-                                        required pattern="\d{11}">
+                                    <input type="text" class="form-control @error('piva') is-invalid @enderror"
+                                        id="piva" name="piva" placeholder="Inserisci la tua P.Iva"
+                                        value="{{ old('piva') }}" required pattern="\d{11}">
                                 </div>
 
                                 <small class="text-danger" id="pivaError"></small>
                                 {{-- Errori front-end --}}
 
                                 <div class="col md-6 position-relative">
-                                    <div class="tooltip-error" id="pivaTooltip">La P.iva del ristorante è obbligatoria e deve
+                                    <div class="tooltip-error" id="pivaTooltip">La P.iva del ristorante è obbligatoria e
+                                        deve
                                         avere 11
                                         caratteri.</div>
                                 </div>
@@ -239,7 +245,8 @@
 
                             {{-- Descrizione --}}
                             <div class="mb-4 row">
-                                <label for="description" class="col-md-4 col-form-label text-md-right">Descrizione del ristorante</label>
+                                <label for="description" class="col-md-4 col-form-label text-md-right">Descrizione del
+                                    ristorante</label>
 
                                 <div class="col-md-6">
                                     <textarea class="form-control" name="description" id="description" cols="30" rows="5"
@@ -250,14 +257,15 @@
 
                             {{-- Descrizione --}}
                             <div class="mb-4 row">
-                                <label for="types" class="col-md-4 col-form-label text-md-right">Tipologia di ristorante: (*)</label>
+                                <label for="types" class="col-md-4 col-form-label text-md-right">Tipologia di
+                                    ristorante: (*)</label>
 
                                 <div class="col-md-6 d-flex flex-wrap">
                                     @foreach ($types as $type)
                                         <div class="form-check">
-                                            <input name="types[]" value="{{ $type->id }}" type="checkbox" class="form-check-input"
-                                                id="type-{{ $type->id }}" autocomplete="off"
-                                                @if (in_array($type->id, old('types', []))) checked @endif>
+                                            <input name="types[]" value="{{ $type->id }}" type="checkbox"
+                                                class="form-check-input" id="type-{{ $type->id }}"
+                                                autocomplete="off" @if (in_array($type->id, old('types', []))) checked @endif>
                                             <label class="form-check-label me-3"
                                                 for="type-{{ $type->id }}">{{ $type->name }}</label>
                                         </div>
@@ -273,6 +281,10 @@
                                 </div>
 
                             </div>
+                            {{-- Requisiti obbligatori --}}
+                            <div class="mb-4 row">
+                                <small>*campi obbligatori</small>
+                            </div>
 
 
                             {{-- BOTTONI PER INVIO FORM
@@ -280,13 +292,11 @@
                             <div class="col-12">
 
                                 @if ($errors->any())
-                                    <button type="submit" id="retry-button" class="btn btn-primary">Riprova</button>
+                                    <button type="submit" id="retry-button" class="btn btn-warning">Riprova</button>
                                 @else
                                     <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Invia</button>
                                 @endif
-                            </div>
-                            <div class="col-12">
-                                <button type="reset" class="btn btn-primary">Cancella</button>
+                                <button type="reset" class="btn btn-danger">Cancella</button>
                             </div>
                         </form>
                     </div>
@@ -486,7 +496,7 @@
             const img = document.getElementById('img').value;
             const imgTooltip = document.getElementById('imgTooltip');
             //Controllo Piva
-            if (img.length > 0 ) {
+            if (img.length > 0) {
                 // console.log('aggiunto un file');
                 validImg = true;
                 imgTooltip.classList.remove('visible');
