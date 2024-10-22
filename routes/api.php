@@ -26,8 +26,8 @@ Route::get('/types', [ApiController::class, 'types']);
 Route::get('/restaurants', [ApiController::class, 'restaurants']);
 
 // singolo ristorante
-Route::get('restaurant/{restaurant}', [ApiController::class, 'restaurant']);
+Route::get('restaurant/{restaurant:slug}', [ApiController::class, 'restaurant']);
 
 // tutti i prodotti del ristorante selezionato
-Route::get('/restaurants/{restaurant}/products', [ApiController::class, 'restaurantProducts']);
+Route::get('/restaurant/{restaurant:slug}/products', [ApiController::class, 'restaurantProducts']);
 

@@ -24,11 +24,11 @@ class ApiController extends Controller
 
         // Tipologie tramite query (ad es. 'ITALIANO,CINESE')
         $typeNames = $request->query('types');
-    
+
         // se ci sono le tipologie, divido la stringa in un array
         if ($typeNames) {
             $typeNamesArray = explode(',', $typeNames);
-    
+
             // Filtro i ristoranti che hanno tutte le tipologie selezionate e carico anche le tipologie associate
             $data = Restaurant::where(function ($query) use ($typeNamesArray) {
                 foreach ($typeNamesArray as $typeName) {
@@ -38,24 +38,24 @@ class ApiController extends Controller
                 }
             })->with('types') // Carica anche le tipologie con i ristoranti
               ->orderBy('restaurant_name')->get();
-    
+
             // mando immagine all'api e aggiungo le tipologie
             foreach($data as $restaurant) {
                 $restaurant->img = url('storage/' . $restaurant->img);
-    
+
             }
-    
+
         } else {
             // Se non ci sono tipologie nella query, prendo tutti i ristoranti in ordine alfabetico e le loro tipologie
             $data = Restaurant::with('types')->orderBy('restaurant_name')->get();
-    
+
             // mando immagine all'api e aggiungo le tipologie
             foreach($data as $restaurant) {
                 $restaurant->img = url('storage/' . $restaurant->img);
-    
+
             }
         }
-    
+
         // Se ci sono risultati, restituisco i dati, altrimenti un messaggio di errore
         if ($data->isNotEmpty()) {
             return response()->json($data);
@@ -63,16 +63,22 @@ class ApiController extends Controller
             return response()->json(['message' => 'Non ci sono ristoranti con queste tipologie']);
         }
     }
-    
+
 
     public function restaurant(Restaurant $restaurant){
-        
-        // recupero il singolo ristorante con l'id
-        $restaurant = Restaurant::where('id', $restaurant->id)->with('types')->first();
+
+        // il ristorante è passato col binding del modello
+        // carico la relazione con i tipi di ristorante
+        $restaurant->load('types');
+
+        // se il ristorante non esiste mi da errore
+        if(!$restaurant){
+            return response()->json(['message' => 'Ristorante non trovato'], 404);
+        }
 
         // mandare immagine all'API
         $restaurant->img = url('storage/' . $restaurant->img);
-        
+
 
         return response()->json($restaurant);
     }
@@ -88,7 +94,7 @@ class ApiController extends Controller
         foreach($products as $product){
             $product->img = url('storage/' . $product->img);
         }
-    
+
         // Restituisco i dati al front-end in formato JSON
         return response()->json($products);
     }
