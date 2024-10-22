@@ -26,7 +26,7 @@ class ProductController extends Controller
         if ($restaurant_id) {
             // lista di piatti associati all'id del ristorante se esiste
             $products = Product::orderBy('id')->where('restaurant_id', $restaurant_id)->get();
-            $count = Product::count();
+            $count = Product::where('restaurant_id', $restaurant_id)->count();
 
             return view('admin.products.index', compact('products', 'count'));
         } else {
