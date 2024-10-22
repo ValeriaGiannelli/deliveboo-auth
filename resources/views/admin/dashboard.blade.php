@@ -6,12 +6,10 @@
 @section('content')
     <div class="container-fluid my-4">
         <div class="row">
-            <div class="col-2">
-                @auth
-                    @include('admin.partials.aside')
-                @endauth
-            </div>
-            <div class="col-10" id="dashboard">
+            @auth
+                @include('admin.partials.aside')
+            @endauth
+            <div class="col-sm-11 col-12 my-3" id="dashboard">
                 <div class="info">
                     <h1>Benvenuto nel tuo ristorante</h1>
                     <h2 class="fs-4 text-secondary my-4">
