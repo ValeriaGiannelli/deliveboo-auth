@@ -16,6 +16,7 @@
                             {{session('deleted')}}
                         </div>
                     @endif
+                    <h1 class="text-center">Menu</h1>
                     <h4>
                         Nel tuo ristorante sono presenti {{ $count }} piatti
                     </h4>
