@@ -8,14 +8,12 @@
 
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container-fluid my-4">
         <div class="row">
-            <div class="col-2 my-4">
-                @auth
-                    @include('admin.partials.aside')
-                @endauth
-            </div>
-            <div class="col-10 my-4">
+            @auth
+                @include('admin.partials.aside')
+            @endauth
+            <div class="col-sm-11 col-12 my-3">
                 <h2>Crea un nuovo piatto</h2>
 
                 {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
@@ -62,7 +60,7 @@
                     <div class="col-12">
                         <label for="img" class="form-label">Immagine prodotto (*)</label>
                         <input type="file" name="img" id="img" class="form-control" onchange="showImg(event)"
-                        accept="image/*" required>
+                            accept="image/*" required>
 
 
                         {{-- Errori front-end --}}
@@ -184,7 +182,7 @@
             const img = document.getElementById('img').value;
             const imgTooltip = document.getElementById('imgTooltip');
             //Controllo Piva
-            if (img.length > 0 ) {
+            if (img.length > 0) {
                 // console.log('aggiunto un file');
                 validImg = true;
                 imgTooltip.classList.remove('visible');
