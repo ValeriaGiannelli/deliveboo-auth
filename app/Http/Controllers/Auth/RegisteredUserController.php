@@ -16,6 +16,7 @@ use Illuminate\View\View;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Restaurant;
+use App\Functions\Helper;
 
 class RegisteredUserController extends Controller
 {
@@ -52,7 +53,8 @@ class RegisteredUserController extends Controller
         if ($request->hasFile('img')) {
             $data['img'] = Storage::put('uploads', $request->file('img'));
         }
-
+        // gestione slug
+        $data['slug'] = Helper::generateSlug($data['restaurant_name'], Restaurant::class);
         $restaurant = Restaurant::create($data);
 
         //controllo se sono stati inseriti tipi
