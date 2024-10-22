@@ -32,3 +32,18 @@
 .title {
     @include font-size(4rem);
 }
+
+// modifica del paginator
+.pagination {
+    background-color: #f8f9fa;
+}
+
+.page-item.active .page-link {
+    background-color: #ffc107;
+    border-color: #FE6F61;
+    color: #212529;
+}
+
+.page-link {
+    color: #212529;
+}

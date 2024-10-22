@@ -11,6 +11,11 @@
             @endauth
             @if (count($products))
                 <div class="col-sm-11 col-12 my-3">
+                    @if(session('deleted'))
+                        <div class="alert alert-success">
+                            {{session('deleted')}}
+                        </div>
+                    @endif
                     <h4>
                         Nel tuo ristorante sono presenti {{ $count }} piatti
                     </h4>
@@ -83,6 +88,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{$products->links()}}
                     </div>
 
                 </div>
