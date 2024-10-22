@@ -95,7 +95,17 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        // prendo l'id dell'user
+        $user_id = Auth::id();
+
+        // prendo l'id del ristorante associato all'id dell'user
+        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
+
+        if ($restaurant_id != $product->restaurant_id) {
+            abort(404);
+        } else {
+            return view('admin.products.edit', compact('product'));
+        }
     }
 
     /**
@@ -107,9 +117,9 @@ class ProductController extends Controller
         $data = $request->all();
 
         // se la request ha file img sostituiamo col nuovo
-        if($request->hasFile('img')){
+        if ($request->hasFile('img')) {
             // gestione immagine  dove deve cancellare la relazione precedente
-            if($product->img){
+            if ($product->img) {
                 Storage::delete($product->img);
             }
             // sostituisco con la nuova
@@ -134,7 +144,5 @@ class ProductController extends Controller
         // eliminamo il prodotto
         $product->delete();
         return redirect()->route('admin.products.index')->with('deleted', 'Il piatto ' . $product->name . ' è stato eliminato');
-
     }
-
 }
