@@ -9,6 +9,7 @@ use App\Models\Restaurant;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Type;
 use Illuminate\Support\Facades\Storage;
+use App\Functions\Helper;
 
 class RestaurantController extends Controller
 {
@@ -44,6 +45,9 @@ class RestaurantController extends Controller
         $data['user_id'] = Auth::id();
         // gestione immagini
         $data['img'] = Storage::put('uploads', $data['img']);
+
+        // gestione slug
+        $data['slug'] = Helper::generateSlug($data['restaurant_name'], Restaurant::class);
 
         $restaurant = Restaurant::create($data);
 
