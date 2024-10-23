@@ -46,9 +46,16 @@ class SaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Sale $sale)
     {
-        //
+
+        $data = $request->all();
+
+        $new_sale = Sale::create($data);
+
+
+
+        return response()->json($new_sale);
     }
 
     /**

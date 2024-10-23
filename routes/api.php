@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\SaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiController;
@@ -37,4 +38,7 @@ Route::get('/orders/generate', [ApiController::class, 'generate']);
 
 // rotta pagamento
 Route::post('/orders/make/payment', [ApiController::class, 'makePayment']);
+
+// creazione ordine
+Route::post('/order/create', [SaleController::class, 'store']);
 
