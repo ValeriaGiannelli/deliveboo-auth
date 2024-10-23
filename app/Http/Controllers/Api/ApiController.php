@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Restaurant;
 use App\Models\Type;
+use Braintree\Gateway;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
@@ -97,5 +98,44 @@ class ApiController extends Controller
 
         // Restituisco i dati al front-end in formato JSON
         return response()->json($products);
+    }
+
+    // genero token
+    public function generate(Request $request, Gateway $gateway){
+
+        $token = $gateway->clientToken()->generate();
+
+        $data = [
+            'success' => true,
+            'token' => $token,
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    // pagamento
+    public function makePayment(Request $request, Gateway $gateway){
+        
+        $result = $gateway->transaction()->sale([
+            'amount' => $request->amount,
+            'paymentMethodNonce' => $request->token,
+            'options' => [
+                'submitForSettlement' => true
+            ]
+        ]);
+
+        if($result->success){
+           $data = [
+                'success' => true,
+                'message' => 'Il pagamento è andato a buon fine'
+           ];
+           return response()->json($data, 200);
+        } else {
+            $data = [
+                'success' => false,
+                'message' => 'Il pagamento non è andato a buon fine'
+            ];
+            return response()->json($data, 401);
+        }
     }
 }

@@ -31,3 +31,10 @@ Route::get('restaurant/{restaurant:slug}', [ApiController::class, 'restaurant'])
 // tutti i prodotti del ristorante selezionato
 Route::get('/restaurant/{restaurant:slug}/products', [ApiController::class, 'restaurantProducts']);
 
+// rotta ordine
+Route::get('/orders/generate', [ApiController::class, 'generate']);
+
+
+// rotta pagamento
+Route::post('/orders/make/payment', [ApiController::class, 'makePayment']);
+
