@@ -22,7 +22,7 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token' => 'required|string',
+            'paymentMethodNonce' => 'required',
             'amount' => 'required'
         ];
     }

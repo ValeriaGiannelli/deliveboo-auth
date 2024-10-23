@@ -118,7 +118,7 @@ class ApiController extends Controller
         
         $result = $gateway->transaction()->sale([
             'amount' => $request->amount,
-            'paymentMethodNonce' => $request->token,
+            'paymentMethodNonce' => $request->paymentMethodNonce,
             'options' => [
                 'submitForSettlement' => true
             ]
