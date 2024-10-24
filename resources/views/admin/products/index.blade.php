@@ -10,7 +10,7 @@
                 @include('admin.partials.aside')
             @endauth
             @if (count($products))
-                <div class="col-sm-11 col-12 my-3">
+                <div class="col-sm col-12 my-3">
                     @if(session('deleted'))
                         <div class="alert alert-success">
                             {{session('deleted')}}

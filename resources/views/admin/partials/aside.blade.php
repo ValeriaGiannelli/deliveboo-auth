@@ -1,4 +1,4 @@
-<div class="col-12 col-sm-1 aside-container">
+<div class="col-12 col-sm-auto aside-container">
     <aside class="my-3 bord">
         <ul class="list-group list-unstyled d-flex flex-sm-column flex-row justify-content-between">
             <li class="{{ Route::is('admin.restaurants.index') ? 'active' : '' }}">
