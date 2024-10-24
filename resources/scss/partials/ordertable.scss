@@ -1,0 +1,47 @@
+#orderTable {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+        background-color: #f8f9fa;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #dee2e6;
+    }
+
+    th {
+        text-align: left;
+    }
+
+    @media (max-width: 576px) {
+        thead {
+            display: none; // Nasconde l'intestazione
+        }
+
+        tbody tr {
+            display: block;
+            margin-bottom: 15px; // Spazio tra i blocchi verticali
+        }
+
+        tbody td {
+            display: block;
+            text-align: right;
+            padding-left: 50%; // Allinea il testo a destra
+            position: relative;
+            border: none;
+            border-bottom: 1px solid #dee2e6; // Mantieni il bordo inferiore
+        }
+
+        tbody td:before {
+            content: attr(data-label); // Mostra l'intestazione della colonna come etichetta
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding-left: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+    }
+}

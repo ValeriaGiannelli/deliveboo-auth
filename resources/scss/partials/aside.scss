@@ -35,3 +35,15 @@ aside {
     }
 }
 
+
+
+@media (max-width: 576px){
+    .aside-container {
+        border-right: none;
+    }
+    aside a {
+        font-size: 1.5em;
+    }
+}
+
+
