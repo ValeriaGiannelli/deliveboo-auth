@@ -13,7 +13,7 @@
             @auth
                 @include('admin.partials.aside')
             @endauth
-            <div class="col-sm-11 col-12 my-3">
+            <div class="col-sm col-12 my-3">
                 <h2>Crea un nuovo piatto</h2>
 
                 {{-- se ci sono gli errori stampa un messaggi con gli errori --}}

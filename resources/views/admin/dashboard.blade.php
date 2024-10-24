@@ -9,7 +9,7 @@
             @auth
                 @include('admin.partials.aside')
             @endauth
-            <div class="col-sm-11 col-12 my-3" id="dashboard">
+            <div class="col-sm col-12 my-3" id="dashboard">
                 <div class="info">
                     <h1>Benvenuto nel tuo ristorante</h1>
                     <h2 class="fs-4 text-secondary my-4">
