@@ -51,9 +51,17 @@ class SaleController extends Controller
 
         $data = $request->all();
 
+        $products = $data['products'];
+
         $new_sale = Sale::create($data);
 
-
+        foreach($products as $product){
+            $new_sale->products()->attach($product['id'], [
+                'product_name' => $product['name'],
+                'amount' => $product['quantity'],
+                'price' => $product['price'],
+            ]);
+        }
 
         return response()->json($new_sale);
     }
