@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Type;
 use App\Models\Product;
+use App\Models\Lead;
 
 class Restaurant extends Model
 {
@@ -38,5 +39,11 @@ class Restaurant extends Model
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    // relazione ont to many con leads
+    public function leads()
+    {
+        return $this->hasMany(Lead::class);
     }
 }

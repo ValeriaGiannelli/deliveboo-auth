@@ -17,6 +17,7 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        dump($data);
         $success = true;
 
         $validator = Validator::make(
@@ -44,6 +45,6 @@ class LeadController extends Controller
 
         //inviamo la mail
         Mail::to($new_lead->email)->send(new NewContact($new_lead));
-        return response()->json(compact('success'));
+        return response()->json(compact('success', 'data'));
     }
 }
