@@ -9,7 +9,7 @@ class Lead extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'message'];
+    protected $fillable = ['name', 'email', 'message', 'restaurant_id'];
 
     // relazione one to many con restaurant
     public function restaurant(){
