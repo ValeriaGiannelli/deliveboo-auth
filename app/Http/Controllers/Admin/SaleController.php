@@ -73,9 +73,24 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
+        // prendo l'id dell'user
+        $user_id = Auth::id();
 
+        // prendo l'id del ristorante associato all'id dell'user
+        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
 
-        return view('admin.sales.show', compact('sale'));
+        // Verifica se almeno uno dei prodotti della vendita appartiene al ristorante dell'utente
+        $productBelongsToRestaurant = $sale->products->contains(function ($product) use ($restaurant_id) {
+            return $product->restaurant_id == $restaurant_id;
+        });
+
+        if (!$productBelongsToRestaurant) {
+            abort(404);
+        } else {
+
+            return view('admin.sales.show', compact('sale'));
+        }
+
     }
 
     /**
