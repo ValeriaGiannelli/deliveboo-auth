@@ -20,17 +20,19 @@ class SaleController extends Controller
 
         // prendo l'id dell'user
         $user_id = Auth::id();
-        
+
         // prendo l'id del ristorante associato all'id dell'user
         $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
-        
+
         // array con tutti gli id dei prodotti del ristorante
         $products_ids = Product::where('restaurant_id', $restaurant_id)->get('id');
-        
+
         // query basta sulla relazione tra sale e product, che filtra tutti gli ordini che comprendono i prodotti presenti nell'array
         $sales = Sale::whereHas('products', function ($query) use ($products_ids){
             $query->whereIn('product_id', $products_ids);
-        })->get();
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return view('admin.sales.index', compact('sales'));
     }
@@ -71,7 +73,7 @@ class SaleController extends Controller
      */
     public function show(Sale $sale)
     {
-    
+
 
         return view('admin.sales.show', compact('sale'));
     }
