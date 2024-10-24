@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LeadController;
 use App\Http\Controllers\Admin\SaleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,3 +43,5 @@ Route::post('/orders/make/payment', [ApiController::class, 'makePayment']);
 // creazione ordine
 Route::post('/order/create', [SaleController::class, 'store']);
 
+//Rotta mail
+Route::post('/send-email', [LeadController::class, 'store']);
