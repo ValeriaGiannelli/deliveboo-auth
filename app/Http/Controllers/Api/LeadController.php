@@ -47,8 +47,8 @@ class LeadController extends Controller
 
         // inviare una mail al ristoratore
         $restaurantMail = $new_lead->restaurant->user->email;
-        $message = 'hai un nuovo ordine';
-        Mail::to($restaurantMail)->send(new NewContact($new_lead, $message));
+        /* $message = 'hai un nuovo ordine'; */
+        Mail::to($restaurantMail)->send(new NewContact($new_lead));
 
 
         //inviamo la mail
