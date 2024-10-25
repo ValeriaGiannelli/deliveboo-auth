@@ -149,9 +149,9 @@ class ApiController extends Controller
         $restaurant = Restaurant::where('id', $id)->get('restaurant_name');
 
         if ($restaurant) {
-            return response()->json($restaurant);
+            return response()->json(compact('restaurant'));
         } else {
-            return response()->json(['message' => 'AAAAAAAAAAAAAAAs'], 404);
+            return response()->json(['message' => 'Nome non trovato'], 404);
         }
     }
 }
