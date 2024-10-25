@@ -45,3 +45,6 @@ Route::post('/order/create', [SaleController::class, 'store']);
 
 //Rotta mail
 Route::post('/send-email', [LeadController::class, 'store']);
+
+//Rotta ristorante per id
+Route::get('/restaurant/{id}/name', [ApiController::class, 'restaurantById']);
