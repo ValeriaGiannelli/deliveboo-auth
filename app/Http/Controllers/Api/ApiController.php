@@ -13,7 +13,8 @@ class ApiController extends Controller
 {
 
     // tutti i types da mandare sulla home
-    public function types(){
+    public function types()
+    {
 
         // types ordinati per id
         $data = Type::orderBy('id')->get();
@@ -21,7 +22,8 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    public function restaurants(Request $request){
+    public function restaurants(Request $request)
+    {
 
         // Tipologie tramite query (ad es. 'ITALIANO,CINESE')
         $typeNames = $request->query('types');
@@ -38,22 +40,19 @@ class ApiController extends Controller
                     });
                 }
             })->with('types') // Carica anche le tipologie con i ristoranti
-              ->orderBy('restaurant_name')->get();
+                ->orderBy('restaurant_name')->get();
 
             // mando immagine all'api e aggiungo le tipologie
-            foreach($data as $restaurant) {
+            foreach ($data as $restaurant) {
                 $restaurant->img = url('storage/' . $restaurant->img);
-
             }
-
         } else {
             // Se non ci sono tipologie nella query, prendo tutti i ristoranti in ordine alfabetico e le loro tipologie
             $data = Restaurant::with('types')->orderBy('restaurant_name')->get();
 
             // mando immagine all'api e aggiungo le tipologie
-            foreach($data as $restaurant) {
+            foreach ($data as $restaurant) {
                 $restaurant->img = url('storage/' . $restaurant->img);
-
             }
         }
 
@@ -66,14 +65,15 @@ class ApiController extends Controller
     }
 
 
-    public function restaurant(Restaurant $restaurant){
+    public function restaurant(Restaurant $restaurant)
+    {
 
         // il ristorante è passato col binding del modello
         // carico la relazione con i tipi di ristorante
         $restaurant->load('types');
 
         // se il ristorante non esiste mi da errore
-        if(!$restaurant){
+        if (!$restaurant) {
             return response()->json(['message' => 'Ristorante non trovato'], 404);
         }
 
@@ -86,13 +86,14 @@ class ApiController extends Controller
 
 
     // tutti i prodotti del ristorante selezionato
-    public function restaurantProducts(Restaurant $restaurant){
+    public function restaurantProducts(Restaurant $restaurant)
+    {
 
         // Recupero i prodotti del ristorante selezionato
         $products = Product::where('restaurant_id', $restaurant->id)->orderBy('name')->get();
 
         // mandare immagine all'API
-        foreach($products as $product){
+        foreach ($products as $product) {
             $product->img = url('storage/' . $product->img);
         }
 
@@ -101,7 +102,8 @@ class ApiController extends Controller
     }
 
     // genero token
-    public function generate(Request $request, Gateway $gateway){
+    public function generate(Request $request, Gateway $gateway)
+    {
 
         $token = $gateway->clientToken()->generate();
 
@@ -114,8 +116,9 @@ class ApiController extends Controller
     }
 
     // pagamento
-    public function makePayment(Request $request, Gateway $gateway){
-        
+    public function makePayment(Request $request, Gateway $gateway)
+    {
+
         $result = $gateway->transaction()->sale([
             'amount' => $request->amount,
             'paymentMethodNonce' => $request->paymentMethodNonce,
@@ -124,18 +127,31 @@ class ApiController extends Controller
             ]
         ]);
 
-        if($result->success){
-           $data = [
+        if ($result->success) {
+            $data = [
                 'success' => true,
                 'message' => 'Il pagamento è andato a buon fine'
-           ];
-           return response()->json($data, 200);
+            ];
+            return response()->json($data, 200);
         } else {
             $data = [
                 'success' => false,
                 'message' => 'Il pagamento non è andato a buon fine'
             ];
             return response()->json($data, 401);
+        }
+    }
+
+    /* Nome ristorante da id */
+    public function restaurantById(Request $request, $id)
+    {
+
+        $restaurant = Restaurant::where('id', $id)->get('restaurant_name');
+
+        if ($restaurant) {
+            return response()->json(compact('restaurant'));
+        } else {
+            return response()->json(['message' => 'Nome non trovato'], 404);
         }
     }
 }
