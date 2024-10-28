@@ -121,7 +121,11 @@ class SaleController extends Controller
                 // STATISTICHE //
     /****************************************/
     public function stats(){
+        $data = [
+            'labels' => ['January', 'February', 'March', 'April', 'May'],
+            'data' => [65, 59, 80, 81, 56],
+        ];
 
-        return view('admin.sales.stats');
+        return view('admin.sales.stats', compact('data'));
     }
 }

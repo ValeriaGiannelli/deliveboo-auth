@@ -10,6 +10,10 @@
 
     <title>Deliveboo - @yield('titlePage')</title>
 
+    {{-- import Chart.js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    {{-- icona per il logo --}}
      <link rel="icon" href="{{ asset('images/LOGO.svg') }}" type="image/svg+xml">
 
 
