@@ -52,6 +52,8 @@ Route::middleware(['auth', 'verified'])
             'delete',
             'show'
         ]);
+        // rotte per sales e statistiche
+        Route::get('sales/stats', [SaleController::class, 'stats'])->name('stats');
         Route::resource('sales', SaleController::class);
     });
 require __DIR__ . '/auth.php';

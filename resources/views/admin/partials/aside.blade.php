@@ -25,6 +25,14 @@
                     <span class="nav-text ms-2 d-none d-md-inline">Gestione Ordini</span>
                 </a>
             </li>
+
+            {{-- STATISTICHE --}}
+            <li class="{{ Route::is('admin.stats') ? 'active' : '' }}">
+                <a href="{{ route('admin.stats') }}">
+                    <i class="fas fa-chart-area"></i>
+                    <span class="nav-text ms-2 d-none d-md-inline">Statistiche</span>
+                </a>
+            </li>
         </ul>
     </aside>
 </div>

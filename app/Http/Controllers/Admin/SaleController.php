@@ -116,4 +116,12 @@ class SaleController extends Controller
     {
         //
     }
+
+    /****************************************/
+                // STATISTICHE //
+    /****************************************/
+    public function stats(){
+
+        return view('admin.sales.stats');
+    }
 }
