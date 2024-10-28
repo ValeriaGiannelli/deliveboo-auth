@@ -4,25 +4,25 @@
             <li class="{{ Route::is('admin.restaurants.index') ? 'active' : '' }}">
                 <a href="{{ route('home') }}">
                     <i class="fas fa-home"></i>
-                    <span class="nav-text ms-2 d-none d-md-inline">Home</span>
+                    <span class="nav-text ms-2 d-none d-xl-inline">Home</span>
                 </a>
             </li>
             <li class="{{ Route::is('admin.products.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.products.index') }}">
                     <i class="fas fa-utensils"></i>
-                    <span class="nav-text ms-2 d-none d-md-inline">Menu</span>
+                    <span class="nav-text ms-2 d-none d-xl-inline">Menu</span>
                 </a>
             </li>
             <li class="{{ Route::is('admin.products.create') ? 'active' : '' }}">
                 <a href="{{ route('admin.products.create') }}">
                     <i class="fas fa-plus"></i>
-                    <span class="nav-text ms-2 d-none d-md-inline">Aggiungi piatti</span>
+                    <span class="nav-text ms-2 d-none d-xl-inline">Aggiungi piatti</span>
                 </a>
             </li>
             <li class="{{ Route::is('admin.sales.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.sales.index') }}">
                     <i class="fas fa-receipt"></i>
-                    <span class="nav-text ms-2 d-none d-md-inline">Gestione Ordini</span>
+                    <span class="nav-text ms-2 d-none d-xl-inline">Gestione Ordini</span>
                 </a>
             </li>
 
@@ -30,7 +30,7 @@
             <li class="{{ Route::is('admin.stats') ? 'active' : '' }}">
                 <a href="{{ route('admin.stats') }}">
                     <i class="fas fa-chart-area"></i>
-                    <span class="nav-text ms-2 d-none d-md-inline">Statistiche</span>
+                    <span class="nav-text ms-2 d-none d-xl-inline">Statistiche</span>
                 </a>
             </li>
         </ul>

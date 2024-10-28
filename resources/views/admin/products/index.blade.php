@@ -5,15 +5,15 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid my-4">
-        <div class="row w-100">
+        <div class="row">
             @auth
                 @include('admin.partials.aside')
             @endauth
             @if (count($products))
                 <div class="col-sm col-12 my-3">
-                    @if(session('deleted'))
+                    @if (session('deleted'))
                         <div class="alert alert-success">
-                            {{session('deleted')}}
+                            {{ session('deleted') }}
                         </div>
                     @endif
                     <h1 class="text-center">Menu</h1>
@@ -89,7 +89,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{$products->links()}}
+                        {{ $products->links() }}
                     </div>
 
                 </div>

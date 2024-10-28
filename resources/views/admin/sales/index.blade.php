@@ -5,7 +5,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid my-4">
-        <div class="row w-100">
+        <div class="row">
             @auth
                 @include('admin.partials.aside')
             @endauth

@@ -2,11 +2,11 @@
 @section('content')
 
     <div class="container-fluid my-4">
-        <div class="row w-100">
+        <div class="row">
             @auth
                 @include('admin.partials.aside')
             @endauth
-            <div class="col-sm col-12 my-3">
+            <div class="col-12 col-sm my-3">
                 <h1 class="my-4">Dettagli Ordine</h1>
 
                 <h3 class="my-4">ID Ordine: {{ $sale->id }}</h3>

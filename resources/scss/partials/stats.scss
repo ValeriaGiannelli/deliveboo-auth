@@ -1,0 +1,13 @@
+#chartgraphrotate{
+    display: none;
+}
+
+@media (max-width: 400px){
+    #chartgraph{
+        display: none;
+    }
+    #chartgraphrotate{
+        display: block;
+        text-align: center;
+    }
+}
