@@ -10,10 +10,12 @@
 
     <title>Deliveboo - @yield('titlePage')</title>
 
-     <link rel="icon" href="{{ asset('images/LOGO.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('images/LOGO.svg') }}" type="image/svg+xml">
 
-
+    {{-- chart js --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Fonts -->
+    
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     {{-- Fontawesome --}}

@@ -1,144 +1,25 @@
 <?php
 
+$sales = [];
+
+for ($i = 0; $i < 50; $i++) {
+    // Generiamo una data casuale tra ottobre dell'anno scorso e questo ottobre
+    $startTimestamp = strtotime('-1 year October');
+    $endTimestamp = strtotime('October');
+    $randomTimestamp = mt_rand($startTimestamp, $endTimestamp);
+    $createdAt = date('Y-m-d H:i:s', $randomTimestamp);
+
+    // Generiamo dati unici usando l'indice $i per evitare duplicazioni
+    $sales[] = [
+        'full_name' => "Cliente $i",
+        'email' => "cliente$i@example.com",
+        'address' => "Via Esempio $i, Città $i",
+        'total_price' => rand(0, 100) + rand(0, 99) / 100, // Prezzo casuale tra 0 e 100 con decimali
+        'phone_number' => "123-456-78" . str_pad($i, 2, '0', STR_PAD_LEFT),
+        'created_at' => $createdAt,
+    ];
+}
+
 return [
-    [
-        'full_name' => 'Luca Rossi',
-        'email' => 'luca.rossi@example.com',
-        'address' => 'Via Roma, 123, Milano, 20100',
-        'total_price' => 150.75,
-        'phone_number' => '+39 345 678 9012',
-    ],
-    [
-        'full_name' => 'Giulia Bianchi',
-        'email' => 'giulia.bianchi@example.com',
-        'address' => 'Piazza Garibaldi, 45, Roma, 00100',
-        'total_price' => 299.99,
-        'phone_number' => '+39 334 123 4567',
-    ],
-    [
-        'full_name' => 'Marco Verdi',
-        'email' => 'marco.verdi@example.com',
-        'address' => 'Corso Italia, 78, Napoli, 80100',
-        'total_price' => 89.50,
-        'phone_number' => '+39 366 789 0123',
-    ],
-    [
-        'full_name' => 'Francesca Neri',
-        'email' => 'francesca.neri@example.com',
-        'address' => 'Via Dante, 12, Torino, 10100',
-        'total_price' => 215.00,
-        'phone_number' => '+39 320 456 7890',
-    ],
-    [
-        'full_name' => 'Matteo Conti',
-        'email' => 'matteo.conti@example.com',
-        'address' => 'Via Mazzini, 34, Firenze, 50100',
-        'total_price' => 120.30,
-        'phone_number' => '+39 338 123 0987',
-    ],
-    [
-        'full_name' => 'Elena Ferri',
-        'email' => 'elena.ferri@example.com',
-        'address' => 'Via Manzoni, 56, Bologna, 40100',
-        'total_price' => 400.75,
-        'phone_number' => '+39 327 789 6543',
-    ],
-    [
-        'full_name' => 'Stefano Russo',
-        'email' => 'stefano.russo@example.com',
-        'address' => 'Via Vittorio Veneto, 67, Genova, 16100',
-        'total_price' => 50.00,
-        'phone_number' => '+39 345 345 6789',
-    ],
-    [
-        'full_name' => 'Chiara Esposito',
-        'email' => 'chiara.esposito@example.com',
-        'address' => 'Viale Europa, 23, Palermo, 90100',
-        'total_price' => 250.20,
-        'phone_number' => '+39 333 987 6543',
-    ],
-    [
-        'full_name' => 'Davide Moretti',
-        'email' => 'davide.moretti@example.com',
-        'address' => 'Via Cesare Battisti, 89, Catania, 95100',
-        'total_price' => 89.90,
-        'phone_number' => '+39 347 111 2222',
-    ],
-    [
-        'full_name' => 'Alessandra Rinaldi',
-        'email' => 'alessandra.rinaldi@example.com',
-        'address' => 'Via Foscolo, 101, Bari, 70100',
-        'total_price' => 320.40,
-        'phone_number' => '+39 336 222 3333',
-    ],
-    [
-        'full_name' => 'Simone Galli',
-        'email' => 'simone.galli@example.com',
-        'address' => 'Piazza Duomo, 12, Venezia, 30100',
-        'total_price' => 150.75,
-        'phone_number' => '+39 329 123 4567',
-    ],
-    [
-        'full_name' => 'Claudia Ferrari',
-        'email' => 'claudia.ferrari@example.com',
-        'address' => 'Corso Garibaldi, 65, Verona, 37100',
-        'total_price' => 75.50,
-        'phone_number' => '+39 333 987 4567',
-    ],
-    [
-        'full_name' => 'Antonio De Luca',
-        'email' => 'antonio.deluca@example.com',
-        'address' => 'Via Magenta, 42, Pisa, 56100',
-        'total_price' => 189.99,
-        'phone_number' => '+39 340 654 3210',
-    ],
-    [
-        'full_name' => 'Silvia Greco',
-        'email' => 'silvia.greco@example.com',
-        'address' => 'Via Vittorio Emanuele, 27, Brescia, 25100',
-        'total_price' => 100.00,
-        'phone_number' => '+39 342 567 8901',
-    ],
-    [
-        'full_name' => 'Fabio Martini',
-        'email' => 'fabio.martini@example.com',
-        'address' => 'Viale Italia, 30, Parma, 43100',
-        'total_price' => 210.30,
-        'phone_number' => '+39 328 901 2345',
-    ],
-    [
-        'full_name' => 'Laura Costa',
-        'email' => 'laura.costa@example.com',
-        'address' => 'Via Milano, 75, Reggio Calabria, 89100',
-        'total_price' => 70.10,
-        'phone_number' => '+39 320 567 1234',
-    ],
-    [
-        'full_name' => 'Alberto Longo',
-        'email' => 'alberto.longo@example.com',
-        'address' => 'Via Torino, 88, Trento, 38100',
-        'total_price' => 45.99,
-        'phone_number' => '+39 339 987 6543',
-    ],
-    [
-        'full_name' => 'Marta Vitale',
-        'email' => 'marta.vitale@example.com',
-        'address' => 'Via Verdi, 50, Ancona, 60100',
-        'total_price' => 150.00,
-        'phone_number' => '+39 346 789 4567',
-    ],
-    [
-        'full_name' => 'Nicola Lombardi',
-        'email' => 'nicola.lombardi@example.com',
-        'address' => 'Via Trieste, 20, Perugia, 06100',
-        'total_price' => 99.99,
-        'phone_number' => '+39 348 567 7890',
-    ],
-    [
-        'full_name' => 'Sara Fiore',
-        'email' => 'sara.fiore@example.com',
-        'address' => 'Via Firenze, 90, Livorno, 57100',
-        'total_price' => 230.50,
-        'phone_number' => '+39 331 789 0123',
-    ],
+    'sales' => $sales,
 ];

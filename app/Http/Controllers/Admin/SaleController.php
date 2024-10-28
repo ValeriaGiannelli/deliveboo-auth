@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Sale;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class SaleController extends Controller
 {
@@ -121,7 +122,51 @@ class SaleController extends Controller
                 // STATISTICHE //
     /****************************************/
     public function stats(){
+    // Ottieni l'ID dell'utente e del ristorante
+    $user_id = Auth::id();
+    $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
 
-        return view('admin.sales.stats');
+    // Ottieni gli ID dei prodotti del ristorante
+    $products_ids = Product::where('restaurant_id', $restaurant_id)->pluck('id');
+
+    // Query per ottenere i guadagni mensili per gli ultimi 12 mesi per il ristorante
+    $monthlySales = Sale::whereHas('products', function ($query) use ($products_ids) {
+            $query->whereIn('product_id', $products_ids);
+        })
+        ->select(
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
+            DB::raw('SUM(total_price) as total_sales')
+        )
+        ->where('created_at', '>=', Carbon::now()->subMonths(12))
+        ->groupBy('month')
+        ->orderBy('month', 'asc')
+        ->get()
+        ->keyBy('month'); // Associa le vendite mensili alla chiave "month"
+
+    // Crea l'array con tutti i mesi degli ultimi 12 mesi
+    $allMonths = [];
+    $sales = [];
+    for ($i = 0; $i < 12; $i++) {
+        // Ottieni il nome del mese con l'anno, es. "Ottobre 2023"
+        $month = Carbon::now()->subMonths($i)->locale('it')->isoFormat('MMMM YYYY');
+        $allMonths[] = ucfirst($month); // Capitalizza la prima lettera del mese
+        
+        // Se il mese ha vendite, le inseriamo; altrimenti mettiamo 0
+        $monthKey = Carbon::now()->subMonths($i)->format('Y-m'); // "YYYY-MM" per match con i dati
+        $sales[] = $monthlySales->has($monthKey) ? $monthlySales[$monthKey]->total_sales : 0;
+    }
+
+
+    // Inverti l'ordine dei mesi e delle vendite per partire dal mese più vecchio
+    $allMonths = array_reverse($allMonths);
+    $sales = array_reverse($sales);
+
+    $totalSales = 0;
+
+    foreach ($sales as $sale){
+        $totalSales += $sale;
+    }
+
+    return view('admin.sales.stats', compact('allMonths', 'sales', 'totalSales'));
     }
 }
