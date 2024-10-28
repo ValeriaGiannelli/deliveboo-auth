@@ -25,10 +25,12 @@ class LeadController extends Controller
             [
                 'name' => 'required',
                 'email' => 'required|email',
+                'message' => 'required'
             ],
             [
                 'name.required' => 'campo obbligatorio',
-                'email.required' => 'campo obbligatorio'
+                'email.required' => 'campo obbligatorio',
+                'message.required' => 'campo obbligatorio'
             ]
         );
 
