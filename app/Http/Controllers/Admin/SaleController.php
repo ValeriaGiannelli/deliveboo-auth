@@ -33,7 +33,7 @@ class SaleController extends Controller
             $query->whereIn('product_id', $products_ids);
         })
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10);
 
         return view('admin.sales.index', compact('sales'));
     }
@@ -150,7 +150,7 @@ class SaleController extends Controller
         // Ottieni il nome del mese con l'anno, es. "Ottobre 2023"
         $month = Carbon::now()->subMonths($i)->locale('it')->isoFormat('MMMM YYYY');
         $allMonths[] = ucfirst($month); // Capitalizza la prima lettera del mese
-        
+
         // Se il mese ha vendite, le inseriamo; altrimenti mettiamo 0
         $monthKey = Carbon::now()->subMonths($i)->format('Y-m'); // "YYYY-MM" per match con i dati
         $sales[] = $monthlySales->has($monthKey) ? $monthlySales[$monthKey]->total_sales : 0;

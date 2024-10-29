@@ -29,7 +29,7 @@
             {{-- STATISTICHE --}}
             <li class="{{ Route::is('admin.stats') ? 'active' : '' }}">
                 <a href="{{ route('admin.stats') }}">
-                    <i class="fas fa-chart-area"></i>
+                    <i class="fas fa-chart-column"></i>
                     <span class="nav-text ms-2 d-none d-xl-inline">Statistiche</span>
                 </a>
             </li>
