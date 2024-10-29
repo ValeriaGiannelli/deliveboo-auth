@@ -38,14 +38,21 @@
                             </thead>
                             <tbody>
                                 @foreach ($sale->products as $product)
-                                    <tr>
-                                        <td data-label="Piatto">{{ $product->name }}</td>
+                                    <tr class="text-end">
+                                        <td class="text-start" data-label="Piatto">{{ $product->name }}</td>
                                         <td data-label="Prezzo Singolo">{{ $product->price }}&euro;</td>
                                         <td data-label="Quantità">{{ $product->pivot->amount }}</td>
                                         <td data-label="Totale Quantità">
-                                            {{ $product->pivot->price * $product->pivot->amount }}&euro;</td>
+                                            {{ number_format($product->pivot->price * $product->pivot->amount, 2) }} &euro;
+                                        </td>
                                     </tr>
                                 @endforeach
+                                <tr class="text-end">
+                                    <td></td>
+                                    <td></td>
+                                    <td ><strong>TOTALE:</strong></td>
+                                    <td data-label="Totale Ordine"><strong>{{ ($sale->total_price) }}&euro;</strong></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
