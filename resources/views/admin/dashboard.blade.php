@@ -12,9 +12,6 @@
             <div class="col-sm col-12 my-3" id="dashboard">
                 <div class="info">
                     <h1>Benvenuto nel tuo ristorante</h1>
-                    <h2 class="fs-4 text-secondary my-4">
-                        Dashboard
-                    </h2>
                     <div class="mb-3">
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
@@ -29,18 +26,24 @@
                                     <p class="card-text"><small
                                             class="text-muted">{{ $restaurant->description ?? 'Nessuna descrizione disponibile.' }}</small>
                                     </p>
+                                    <div">
+                                        <a class="btn btn-warning text-secondary" href="http://localhost:5174/">Vai al
+                                            sito</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col">
-                            <a href="{{ route('admin.products.index') }}" class="btn btn-warning">Gestione menu</a>
-                            <a href="{{ route('admin.sales.index') }}" class="btn btn-warning">Gestione ordini</a>
-                        </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col ">
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-warning text-secondary">Gestione
+                            menu</a>
+                        <a href="{{ route('admin.sales.index') }}" class="btn btn-warning text-secondary">Gestione
+                            ordini</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
