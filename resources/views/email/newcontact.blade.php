@@ -13,5 +13,6 @@
     </ul>
 
     {{-- messaggio con i prodotti --}}
-    <p style="font-size: 16px; color: #333; line-height: 1.6; margin-top: 20px;">{{ $lead->message }}</p>
+    {{-- <p style="font-size: 16px; color: #333; line-height: 1.6; margin-top: 20px;">{{ $lead->message }}</p> --}}
+    {!! $lead->message !!}
 </div>
