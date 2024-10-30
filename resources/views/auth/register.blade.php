@@ -25,7 +25,7 @@
                     <div class="card-body">
                         {{-- FORM UTENTE --}}
                         <form method="POST" action="{{ route('register') }}" onsubmit="return validateForm()"
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" autocomplete="off">
                             @csrf
 
                             <div class="mb-4 row">
