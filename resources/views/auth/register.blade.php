@@ -30,13 +30,13 @@
 
                             <div class="mb-4 row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right"
-                                    id="nameErrorLabel">{{ __('Username (*)') }}</label>
+                                    id="nameErrorLabel">{{ __('Nome (*)') }}</label>
                                 {{-- NOME UTENTE --}}
                                 <div class="col-md-6 ">
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
                                         value="{{ old('name') }}" required autocomplete="name" autofocus
-                                        placeholder="Inserisci username">
+                                        placeholder="Inserisci il tuo nome">
 
                                     {{-- Errori front-end --}}
                                     <small class="text-danger" id="nameError"></small>
@@ -58,7 +58,7 @@
 
                             <div class="mb-4 row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right"
-                                    id="emailErrorLabel">{{ __('E-Mail Address (*)') }}</label>
+                                    id="emailErrorLabel">{{ __('Indirizzo E-Mail (*)') }}</label>
                                 {{-- EMAIL --}}
                                 <div class="col-md-6 position-relative">
                                     <input id="email" type="email"
@@ -112,7 +112,7 @@
 
                             <div class="mb-4 row">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right"
-                                    id="password-confirmErrorLabel">{{ __('Confirm Password (*)') }}</label>
+                                    id="password-confirmErrorLabel">{{ __('Conferma Password (*)') }}</label>
 
                                 {{-- CONTROLLO PASSWORD --}}
                                 <div class="col-md-6">
