@@ -12,6 +12,7 @@
         <li style="margin-bottom: 5px;"><strong>Email:</strong> {{ $lead->email }}</li>
     </ul>
 
+    <h3 style="color: #5a5a5a; font-size: 18px; margin-bottom: 10px;">Prodotti:</h3>
     {{-- messaggio con i prodotti --}}
     {{-- <p style="font-size: 16px; color: #333; line-height: 1.6; margin-top: 20px;">{{ $lead->message }}</p> --}}
     {!! $lead->message !!}
