@@ -94,7 +94,7 @@
 
                 </div>
             @else
-                <div class="col-8 col-sm-12 text-center">
+                <div class="col-12 col-sm text-center">
                     <h2 class="text-center my-5">Non ci sono prodotti</h2>
 
                     <a href="{{ route('admin.products.create') }}" class="btn btn-warning">Aggiungi Nuovo Piatto</a>
