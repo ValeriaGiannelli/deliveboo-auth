@@ -14,7 +14,7 @@ return [
         'address' => 'via Fasulla 321',
         'piva' => '12345468900',
         'img' => '0',
-        'description' => 'Tanta carne di cavallo, poca partita iva'
+        'description' => 'Uploads/sapuri.jpg'
     ],
 
     [

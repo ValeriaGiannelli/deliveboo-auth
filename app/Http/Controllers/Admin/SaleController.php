@@ -29,11 +29,11 @@ class SaleController extends Controller
         $products_ids = Product::where('restaurant_id', $restaurant_id)->get('id');
 
         // query basta sulla relazione tra sale e product, che filtra tutti gli ordini che comprendono i prodotti presenti nell'array
-        $sales = Sale::whereHas('products', function ($query) use ($products_ids){
+        $sales = Sale::whereHas('products', function ($query) use ($products_ids) {
             $query->whereIn('product_id', $products_ids);
         })
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('admin.sales.index', compact('sales'));
     }
@@ -58,7 +58,7 @@ class SaleController extends Controller
 
         $new_sale = Sale::create($data);
 
-        foreach($products as $product){
+        foreach ($products as $product) {
             $new_sale->products()->attach($product['id'], [
                 'product_name' => $product['name'],
                 'amount' => $product['quantity'],
@@ -91,7 +91,6 @@ class SaleController extends Controller
 
             return view('admin.sales.show', compact('sale'));
         }
-
     }
 
     /**
@@ -119,54 +118,55 @@ class SaleController extends Controller
     }
 
     /****************************************/
-                // STATISTICHE //
+    // STATISTICHE //
     /****************************************/
-    public function stats(){
-    // Ottieni l'ID dell'utente e del ristorante
-    $user_id = Auth::id();
-    $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
+    public function stats()
+    {
+        // Ottieni l'ID dell'utente e del ristorante
+        $user_id = Auth::id();
+        $restaurant_id = Restaurant::where('user_id', $user_id)->value('id');
 
-    // Ottieni gli ID dei prodotti del ristorante
-    $products_ids = Product::where('restaurant_id', $restaurant_id)->pluck('id');
+        // Ottieni gli ID dei prodotti del ristorante
+        $products_ids = Product::where('restaurant_id', $restaurant_id)->pluck('id');
 
-    // Query per ottenere i guadagni mensili per gli ultimi 12 mesi per il ristorante
-    $monthlySales = Sale::whereHas('products', function ($query) use ($products_ids) {
+        // Query per ottenere i guadagni mensili per gli ultimi 12 mesi per il ristorante
+        $monthlySales = Sale::whereHas('products', function ($query) use ($products_ids) {
             $query->whereIn('product_id', $products_ids);
         })
-        ->select(
-            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
-            DB::raw('SUM(total_price) as total_sales')
-        )
-        ->where('created_at', '>=', Carbon::now()->subMonths(12))
-        ->groupBy('month')
-        ->orderBy('month', 'asc')
-        ->get()
-        ->keyBy('month'); // Associa le vendite mensili alla chiave "month"
+            ->select(
+                DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
+                DB::raw('SUM(total_price) as total_sales')
+            )
+            ->where('created_at', '>=', Carbon::now()->startOfMonth()->subMonths(11)) // Precisamente ultimi 12 mesi
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get()
+            ->keyBy('month'); // Associa le vendite mensili alla chiave "month"
 
-    // Crea l'array con tutti i mesi degli ultimi 12 mesi
-    $allMonths = [];
-    $sales = [];
-    for ($i = 0; $i < 12; $i++) {
-        // Ottieni il nome del mese con l'anno, es. "Ottobre 2023"
-        $month = Carbon::now()->subMonths($i)->locale('it')->isoFormat('MMMM YYYY');
-        $allMonths[] = ucfirst($month); // Capitalizza la prima lettera del mese
+        // Crea un array con esattamente gli ultimi 12 mesi
+        $allMonths = [];
+        $sales = [];
+        $currentDate = Carbon::now()->startOfMonth();
 
-        // Se il mese ha vendite, le inseriamo; altrimenti mettiamo 0
-        $monthKey = Carbon::now()->subMonths($i)->format('Y-m'); // "YYYY-MM" per match con i dati
-        $sales[] = $monthlySales->has($monthKey) ? $monthlySales[$monthKey]->total_sales : 0;
-    }
+        for ($i = 0; $i < 12; $i++) {
+            // Ottieni la chiave mese in formato "YYYY-MM"
+            $monthKey = $currentDate->copy()->subMonths($i)->format('Y-m');
 
+            // Ottieni il nome del mese per l'output
+            $monthLabel = $currentDate->copy()->subMonths($i)->locale('it')->isoFormat('MMMM YYYY');
+            $allMonths[] = ucfirst($monthLabel); // Capitalizza la prima lettera
 
-    // Inverti l'ordine dei mesi e delle vendite per partire dal mese più vecchio
-    $allMonths = array_reverse($allMonths);
-    $sales = array_reverse($sales);
+            // Inserisci il valore delle vendite o 0 se non ci sono dati
+            $sales[] = $monthlySales->has($monthKey) ? $monthlySales[$monthKey]->total_sales : 0;
+        }
 
-    $totalSales = 0;
+        // Inverti l'ordine dei mesi e delle vendite per partire dal mese più vecchio
+        $allMonths = array_reverse($allMonths);
+        $sales = array_reverse($sales);
 
-    foreach ($sales as $sale){
-        $totalSales += $sale;
-    }
+        // Calcola il totale delle vendite
+        $totalSales = array_sum($sales);
 
-    return view('admin.sales.stats', compact('allMonths', 'sales', 'totalSales'));
+        return view('admin.sales.stats', compact('allMonths', 'sales', 'totalSales'));
     }
 }
