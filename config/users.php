@@ -23,7 +23,7 @@ return [
     ],
     [
         "name" => "Francesco Cuboni",
-        "email" => "stefano@corradi.com",
+        "email" => "fra@fra.com",
         "password" => "12341234",
     ],
 ];
