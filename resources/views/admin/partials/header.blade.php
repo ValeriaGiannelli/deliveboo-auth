@@ -1,13 +1,15 @@
 <div class="container-fluid">
     <div class="row navbar navbar-light bg-white shadow-sm">
+
+        {{-- logo del sito --}}
         <div class="col-8">
             <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
                 <div>
                     <img class="logo" src="{{ asset('images/FULL_LOGO.svg') }}" alt="">
                 </div>
-                {{-- config('app.name', 'Laravel') --}}
             </a>
         </div>
+
         <div class="col-4 text-end">
             <nav class="navbar navbar-expand-md justify-content-end">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -17,9 +19,10 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Right Side Of Navbar -->
+                    <!-- Parte destra della navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
+
+                        <!-- se l'utente non è registrato -->
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -30,12 +33,16 @@
                                 </li>
                             @endif
                         @else
+
+                        {{-- se è registrato --}}
                             <li class="nav-item dropdown">
+                                {{-- nome dell'utente --}}
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
 
+                                {{-- dropdown menu per dashboard - profilo - logout --}}
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ url('dashboard') }}">{{ __('Dashboard') }}</a>
                                     <a class="dropdown-item" href="{{ url('profile') }}">{{ __('Profilo') }}</a>

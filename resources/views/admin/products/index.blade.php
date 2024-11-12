@@ -6,21 +6,30 @@
 @section('content')
     <div class="container-fluid my-4">
         <div class="row">
+            {{-- inserimento sidebar --}}
             @auth
                 @include('admin.partials.aside')
             @endauth
+
             @if (count($products))
                 <div class="col-sm col-12 my-3">
+                    {{-- messaggio di cancellazione avvenuta --}}
                     @if (session('deleted'))
                         <div class="alert alert-success">
                             {{ session('deleted') }}
                         </div>
                     @endif
+
+                    {{-- titolo --}}
                     <h1 class="text-center">Menu</h1>
                     <h4>
                         Nel tuo ristorante sono presenti {{ $count }} piatti
                     </h4>
+
+                    {{-- bottono aggiungi piatto --}}
                     <a href="{{ route('admin.products.create') }}" class="btn btn-warning my-3">Aggiungi Nuovo Piatto</a>
+
+                    {{-- tabella di visualizzazione menu --}}
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -35,12 +44,21 @@
                             <tbody>
                                 @foreach ($products as $product)
                                     <tr>
+                                        {{-- immagine prodotto --}}
                                         <td class="d-none d-sm-table-cell"><img class="thumb-mini"
                                                 src="{{ asset('storage/' . $product->img) }}" alt="{{ $product->name }}"
                                                 onerror="this.src='{{ asset('storage/uploads/no_img.jpg') }}'"></td>
+
+                                        {{-- nome --}}
                                         <td>{{ $product->name }}</td>
+
+                                        {{-- prezzo --}}
                                         <td class="d-none d-md-table-cell">{{ $product->price }}&euro;</td>
+
+                                        {{-- visibile --}}
                                         <td>{{ $product->visible ? 'Si' : 'No' }}</td>
+
+                                        {{-- icone di modifica e cancellazione --}}
                                         <td>
                                             <a class="btn btn-warning" href="{{ route('admin.products.edit', $product) }}">
                                                 <i class="fas fa-utensils"></i>
@@ -89,10 +107,13 @@
                                 @endforeach
                             </tbody>
                         </table>
+
+                        {{-- impaginazione --}}
                         {{ $products->links() }}
                     </div>
 
                 </div>
+            {{-- in assenza di prodotti --}}
             @else
                 <div class="col-12 col-sm text-center">
                     <h2 class="text-center my-5">Non ci sono prodotti</h2>
@@ -105,6 +126,7 @@
     </div>
 
     <script>
+        // funzione per cancellare il prodotto
         function deleteProduct() {
             document.getElementById("delete-product").submit();
         }

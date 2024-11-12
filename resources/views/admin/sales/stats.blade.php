@@ -7,15 +7,16 @@
     <div class="container-fluid my-4">
 
         <div class="row w-100">
+            {{-- includere side bar --}}
             @auth
                 @include('admin.partials.aside')
             @endauth
+
             <div class="col-sm-10 col-12 my-3" id="chartgraph">
                 GRAFICO DELLA STATISTICA
 
                 HAI GUADAGNATO UN TOTALE DI {{ $totalSales }}&euro;
 
-                <!-- <div style="width: 500px;"><canvas id="dimensions"></canvas></div><br/> -->
                 <div class="chart-container" style="position: relative; height:80vh; max-width:100%; min-width:200px">
                     <canvas id="acquisitions"></canvas>
                 </div>
@@ -77,6 +78,7 @@
                 </script>
 
             </div>
+            {{-- in caso di visualizzazione da mobile --}}
             <div class="col-sm-10 col-12 my-3" id="chartgraphrotate">
                 HAI GUADAGNATO UN TOTALE DI {{ $totalSales }}&euro;
                 Ruota il telefono per vedere il grafico!

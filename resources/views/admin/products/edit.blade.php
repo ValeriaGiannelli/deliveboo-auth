@@ -10,9 +10,11 @@
 @section('content')
     <div class="container-fluid my-4">
         <div class="row">
+            {{-- inclusione della side bar --}}
             @auth
                 @include('admin.partials.aside')
             @endauth
+
             <div class="col-sm col-12 my-3">
 
                 {{-- se ci sono gli errori stampa un messaggi con gli errori --}}
@@ -26,10 +28,13 @@
                     </div>
                 @endif
 
+                {{-- form di modifica del piatto --}}
                 <form class="row g-3" action="{{ route('admin.products.update', $product) }}" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
+                    {{-- nome --}}
                     <div class="col-md-6 position-relative">
                         <label for="name" class="form-label">Nome del piatto (*)</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -46,6 +51,7 @@
 
                     </div>
 
+                    {{-- ingredienti --}}
                     <div class="col-md-12 position-relative">
                         <label for="ingredients_descriptions" class="form-label">Ingredienti / Descrizione (*)</label>
                         <input type="text" class="form-control @error('ingredients_descriptions') is-invalid @enderror"
@@ -76,6 +82,7 @@
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
 
+                        {{-- anteprima dell'immagine caricata --}}
                         <small class="form-label">Immagine attuale</small>
                         <img src="{{ old('img') ? asset('storage/' . old(img)) : asset('storage/' . $product->img) }}"
                             alt="{{ $product->name }}" onerror="this.src='{{ asset('storage/uploads/no_img.jpg') }}'"
@@ -113,9 +120,11 @@
                             <label class="custom-control-label" for="not_visible">No</label>
                         </div>
 
+                        {{-- Errori client --}}
                         <small id="visibleError" class="text-danger" style="display: none;">Devi selezionare una delle
                             opzioni.</small>
 
+                        {{-- errori back-end --}}
                         @error('visible')
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
@@ -171,6 +180,7 @@
                 validName = true;
                 nameTooltip.classList.remove('visible');
             }
+
             //Controllo ingredienti
             if (ingredients_descriptions.length >= 0 && ingredients_descriptions.length < 2) {
                 ingredientsTooltip.classList.add('visible');
@@ -180,6 +190,7 @@
                 ingredientsTooltip.classList.remove('visible');
 
             }
+
             //Controllo price
             if (!isNaN(price) && price > 0) {
                 priceTooltip.classList.remove('visible');
@@ -191,27 +202,6 @@
                 priceTooltip.classList.add('visible');
                 console.log(validPrice);
             }
-            // //Controllo img
-            // if (img) {
-            //     const fileType = file.type; // Ottieni il tipo di file
-            //     const fileSize = file.size; // Ottieni la dimensione del file in byte
-            // // Controlla i formati e la dimensione
-            //     if (
-            //         (fileType === 'image/jpeg' || fileType === 'image/png' || fileType === 'image/jpg' || fileType === 'image/gif') &&
-            //         fileSize <= 2048 * 1024 // Converti KB in byte
-            //     ) {
-            //         imgTooltip.classList.remove('visible'); // Nascondi il tooltip
-            //         validImage = true;
-            //     } else {
-            //         imgTooltip.classList.add('visible'); // Mostra il tooltip
-            //         imgTooltip.innerHTML = "Formato immagine non valido o dimensione superiore a 2 MB. Formati consentiti: JPEG, PNG, JPG, GIF.";
-            //         validImage = false;
-            //     }
-            // } else {
-            //     imgTooltip.classList.add('visible'); // Mostra il tooltip se non è stato selezionato alcun file
-            //     imgTooltip.innerHTML = "È necessario caricare un'immagine.";
-            //     validImage = false;
-            // }
 
 
             //Bottoni

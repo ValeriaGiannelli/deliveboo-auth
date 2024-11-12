@@ -6,11 +6,16 @@
 @section('content')
     <div class="container-fluid my-4">
         <div class="row">
+            {{-- incorporazione side bar --}}
             @auth
                 @include('admin.partials.aside')
             @endauth
+
             <div class="col-sm col-12 my-3">
+                {{-- titolo --}}
                 <h1 class="text-center my-3">Lista Ordini</h1>
+
+                {{-- tabella degli ordini --}}
                 <table class="table">
                     <thead>
                         <tr>
@@ -36,6 +41,8 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                {{-- impaginazione --}}
                 {{ $sales->links() }}
             </div>
         </div>

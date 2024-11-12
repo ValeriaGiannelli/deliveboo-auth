@@ -27,8 +27,10 @@
                     </div>
                 @endif
 
+                {{-- form di creazione del piatto --}}
                 <form class="row g-3" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
                     {{-- Name --}}
                     <div class="col-md-6 position-relative">
                         <label for="name" class="form-label">Nome del piatto (*)</label>
@@ -36,12 +38,13 @@
                             name="name" placeholder="Scrivi il nome del piatto" value="{{ old('name') }}" required>
                         {{-- Errori client --}}
                         <div class="tooltip-error" id="nameTooltip">Il nome è obbligatorio e deve avere due caratteri</div>
-                        {{-- se esiste l'errore title stampa un messaggio anche sotto l'input --}}
+                        {{-- se esiste l'errore stampa un messaggio anche sotto l'input --}}
                         @error('name')
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
 
                     </div>
+
                     {{-- Ingredienti --}}
                     <div class="col-md-12 position-relative">
                         <label for="ingredients_descriptions" class="form-label">Ingredienti / Descrizione (*)</label>
@@ -51,6 +54,8 @@
                             value="{{ old('ingredients_descriptions') }}" required>
                         {{-- Errori client --}}
                         <div class="tooltip-error" id="ingredientsTooltip">Campo obbligatorio</div>
+
+                        {{-- se esiste l'errore stampa un messaggio anche sotto l'input --}}
                         @error('ingredients_descriptions')
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
@@ -63,8 +68,7 @@
                             accept="image/*" required>
 
 
-                        {{-- Errori front-end --}}
-
+                        {{-- Errori client --}}
                         <div class="col-md-6 position-relative">
                             <div class="tooltip-error" id="imgTooltip">L'immagine è obbligatoria.</div>
                         </div>
@@ -72,6 +76,7 @@
                         {{-- anteprima dell'immagine caricata --}}
                         <img src="{{ asset('storage/uploads/no_img.jpg') }}" class="thumb-mini" id="thumb">
 
+                        {{-- se esiste l'errore stampa un messaggio anche sotto l'input --}}
                         @error('img')
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
@@ -83,8 +88,11 @@
                         <input type="text" class="form-control @error('price') is-invalid @enderror" id="price"
                             name="price" placeholder="Inserisci il prezzo" value="{{ old('price') }}" step="0.01"
                             required>
+
                         {{-- Errori client --}}
                         <div class="tooltip-error" id="priceTooltip">Il prezzo è obbligatorio e deve essere un numero</div>
+
+                        {{-- se esiste l'errore stampa un messaggio anche sotto l'input --}}
                         @error('price')
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
@@ -103,9 +111,10 @@
                             <label class="custom-control-label" for="not_visible">No</label>
                         </div>
 
+                        {{-- Errori client --}}
                         <small id="visibleError" class="text-danger" style="display: none;">Devi selezionare una delle
                             opzioni.</small>
-
+                        {{-- se esiste l'errore stampa un messaggio anche sotto l'input --}}
                         @error('visible')
                             <small class="text-danger"> {{ $message }} </small>
                         @enderror
@@ -142,6 +151,8 @@
         let validPrice;
         let validCheck;
 
+    // check per i campi
+        // nome
         function checkFormProductName() {
             //restaurant
             const name = document.getElementById('name').value;
@@ -160,6 +171,7 @@
             }
         }
 
+        // ingredienti
         function checkFormProductIngredients() {
             const ingredients_descriptions = document.getElementById('ingredients_descriptions').value;
             const ingredientsTooltip = document.getElementById('ingredientsTooltip');
@@ -177,6 +189,7 @@
             }
         }
 
+        // immagine
         function checkFormRestaurantImg() {
             // se valore non esiste alert
             const img = document.getElementById('img').value;
@@ -197,6 +210,7 @@
             }
         }
 
+        // prezzo
         function checkFormProductPrice() {
             const price = document.getElementById('price').value;
             const priceTooltip = document.getElementById('priceTooltip');
@@ -215,6 +229,7 @@
             }
         }
 
+        // se tutti i campi sono corretti il bottone diventa attivo
         function buttonActivate() {
             if (validName && validPrice && validIngredients && validCheck && validImg) {
                 document.getElementById('submitBtn').disabled = false;
@@ -223,6 +238,7 @@
             }
         }
 
+        // funzione sui radio button
         function checkboxValidate() {
             //const visibleChecked = document.querySelector('input[name="visible"]');
             const visible = document.getElementById('visible');
@@ -241,8 +257,6 @@
                 return validCheck;
             }
         }
-
-
 
 
         // funzione che cambia l'anteprima del file caricato

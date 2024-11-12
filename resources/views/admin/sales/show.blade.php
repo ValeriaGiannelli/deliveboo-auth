@@ -3,15 +3,19 @@
 
     <div class="container-fluid my-4">
         <div class="row">
+            {{-- inserimento sidebar --}}
             @auth
                 @include('admin.partials.aside')
             @endauth
             <div class="col-12 col-sm my-3">
+                {{-- titolo --}}
                 <h1 class="my-4">Dettagli Ordine</h1>
 
                 <h3 class="my-4">ID Ordine: {{ $sale->id }}</h3>
 
                 <h4 class="my-4">Dettagli</h4>
+
+                {{-- elenco del dettaglio dell'ordine --}}
                 <ul class="list-group list-group-flush my-3">
                     <li class="list-group-item"><span class="fw-bold">Nome: </span>{{ $sale->full_name }}</li>
                     <li class="list-group-item"><span class="fw-bold">Email: </span>{{ $sale->email }}</li>
@@ -24,6 +28,7 @@
                         </span>{{ $sale->created_at->format('d-m-Y H:i') }}</li>
                 </ul>
 
+                {{-- dettaglio dei piatti ordinati --}}
                 @if (count($sale->products))
                     <h4 class="my-4">Piatti ordinati:</h4>
                     <div class="table-responsive">
@@ -60,6 +65,7 @@
                     <h4 class="my-4">Nessun piatto presente</h4>
                 @endif
 
+                {{-- link per tornare all'elenco precedente --}}
                 <a href="{{ route('admin.sales.index') }}" class="btn btn-primary">Torna all'elenco degli ordini</a>
             </div>
         </div>
