@@ -1,66 +1,164 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# **Deliveboo**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Deliveboo è un'applicazione ispirata a Deliveroo, progettata per semplificare l'interazione tra ristoratori e clienti.  
+- **Backend (Laravel):** Fornisce un gestionale per i ristoratori, inclusa la gestione del menu e il monitoraggio delle performance.  
+- **Frontend (Vue.js):** Consente ai clienti di sfogliare i ristoranti, aggiungere piatti al carrello e completare gli acquisti tramite Braintree.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Sommario
+1. [Caratteristiche](#caratteristiche)
+2. [Requisiti](#requisiti)
+3. [Struttura del Progetto](#struttura-del-progetto)
+4. [Installazione](#installazione)
+   - [Backend (Laravel)](#backend-laravel)
+   - [Frontend (Vue.js)](#frontend-vuejs)
+5. [Utilizzo](#utilizzo)
+6. [Tecnologie Usate](#tecnologie-usate)
+7. [Licenza](#licenza)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## Caratteristiche
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend (Laravel):**
+  - Gestione dei ristoranti e del menu.
+  - Monitoraggio delle entrate tramite statistiche (Chart.js).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Frontend (Vue.js):**
+  - Visualizzazione dei ristoranti e dei piatti disponibili.
+  - Carrello interattivo con salvataggio in `localStorage`.
+  - Integrazione con Braintree per pagamenti sicuri.
+  - Integrazione con Mailtrap per notifiche email.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Requisiti
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Requisiti Generali
+- **PHP:** >= 8.1  
+- **Composer:** >= 2.x  
+- **Node.js:** >= 16.x  
+- **NPM/Yarn:** >= 6.x  
+- **Database:** MySQL o SQLite  
+- **Chiavi API:**  
+  - **Braintree** (pagamenti)  
+  - **Mailtrap** (email testing)
 
-### Premium Partners
+### Dipendenze Specifiche
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+#### **Backend (Laravel)**
 
-## Contributing
+- **Framework Laravel:** ^10.0
+- **Braintree SDK:** 6.20.0
+- **Guzzle HTTP:** ^7.9
+- **Sanctum:** ^3.2
+- **Tinker:** ^2.8
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### **Frontend (Vue.js)**
 
-## Code of Conduct
+- **Vue:** ^3.5.10
+- **Vue Router:** ^4.4.5
+- **Braintree Drop-In:** ^1.43.0
+- **Axios:** ^1.7.7
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Struttura del Progetto
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Il progetto è organizzato in due repository separati:  
 
-## License
+1. **Backend (Laravel):**
+   ```plaintext
+   /app
+     ├── Models            # Modelli Eloquent
+     ├── Http/Controllers  # Logica delle API
+   /resources/views         # Template Blade
+   /database                # Migrazioni e Seeder
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2. **Frontend(Vue.js):**
+   ```plaintext
+/src
+  ├── components    # Componenti Vue
+  ├── views         # Pagine principali
+  ├── router        # Configurazione delle rotte
+
+---
+
+## Installazione
+
+### Backend (Laravel)
+
+1. Clona il repository:
+   ```bash
+   git clone https://github.com/ValeriaGiannelli/deliveboo-auth
+   cd deliveboo-auth
+
+2. Installa le dipendenze con Composer:
+   ```bash
+   composer install
+3. Configura il file .env:
+   cp .env.example .env
+Configura le seguenti variabili:
+•	Database: MySQL
+•	Braintree: Crea un account e importa le tue credenziali API per i pagamenti e inseriscile nel file env:
+BRAINTREE_ENVIRONMENT=sandbox
+BRAINTREE_MERCHANT_ID=il_tuo_merchant_id
+BRAINTREE_PUBLIC_KEY=la_tua_public_key
+BRAINTREE_PRIVATE_KEY=la_tua_private_key
+•	Mailtrap: Crea un account su Mailtrap e prendi le credenziali SMTP dalla tua inbox di Mailtrap. Aggiungi queste configurazioni nel file .env:
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=il_tuo_username
+MAIL_PASSWORD=la_tua_password
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS=info@deliveboo.com
+MAIL_FROM_NAME="Deliveboo"
+4. Genera a chiave dell’applicazione e prepara il database:
+   php artisan key:generate 
+   php artisan migrate –seed
+5. Avvia il server di sviluppo:
+   php artisan serve
+
+### Frontend (Vue.js)
+
+1. Clona il repository:
+   ```bash
+   git clone https://github.com/ValeriaGiannelli/deliveboo-front
+   cd deliveboo-front
+
+2. Installa le dipendenze con NPM:
+   ```bash
+   npm install
+3. Avvia il server di sviluppo:
+   npm run dev	
+
+---
+
+## Utilizzo
+
+### Backend (Laravel)
+•	Accedi all'area amministrativa per gestire ristoranti, piatti e statistiche.
+
+### Frontend (Vue.js)
+•	Usa l'interfaccia cliente per esplorare i ristoranti, aggiungere piatti al carrello e completare gli acquisti con Braintree.
+•	Visualizza le email inviate tramite Mailtrap.
+
+## Tecnologie usate
+
+### Backend (Laravel)
+•	Laravel 10.x
+•	Braintree SDK
+•	Guzzle
+•	Sanctum
+•	Chart.js
+•	Mailtrap
+### Frontend (Vue.js)
+•	Vue 3.x
+•	Vue Router
+•	Axios
+•	Braintree Drop-In
+•	Sass
+
